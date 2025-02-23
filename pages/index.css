@@ -1,7 +1,3 @@
-body {
-  background-color: #000000d8;
-}
+@import url(../vendor/normalize.css);
 
-.page {
-  background-color: #000000;
-}
+@import url(../vendor/fonts.css);
