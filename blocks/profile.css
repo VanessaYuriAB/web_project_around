@@ -1,0 +1,26 @@
+.profile__photo {
+  background-image: url(../images/my-photo.jpg);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+
+/*VERIFICAR CONFIGURAÇÕES PARA TAMANHO RESPONSIVO DA FOTO*/
+/*FLEX-GROW E FLEX-SHRINK?*/
+
+.profile__infos {
+  margin-left: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(2, auto);
+  grid-gap: 16px 18px;
+  align-items: baseline;
+  grid-template-areas:
+    "name edit-btn"
+    "about about";
+}
+
+.profile__add-btn {
+  max-width: 150px;
+  margin-left: auto;
+}

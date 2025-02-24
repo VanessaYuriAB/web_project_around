@@ -11,3 +11,9 @@
   margin: 0 auto;
   padding-top: 45px;
 }
+
+.page__content {
+  max-width: 880px;
+  margin: 0 auto;
+  padding-top: 40px;
+}
