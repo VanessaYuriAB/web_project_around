@@ -3,10 +3,12 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .profile__infos {
   margin-left: 30px;
+  margin-right: 30px;
   display: grid;
   grid-template-columns: repeat(2, auto);
   grid-template-rows: repeat(2, auto);

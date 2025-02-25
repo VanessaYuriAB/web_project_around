@@ -5,6 +5,7 @@
   text-rendering: optimizeLegibility;
   margin: 0;
   grid-area: name;
+  width: max-content;
 }
 
 .infos__about {
