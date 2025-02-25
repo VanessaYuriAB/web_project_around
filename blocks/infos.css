@@ -1,7 +1,7 @@
 .infos__name {
   font-weight: 500;
   font-size: 42px;
-  line-height: 48px;
+  line-height: 1.14;
   text-rendering: optimizeLegibility;
   margin: 0;
   grid-area: name;
@@ -11,7 +11,7 @@
   margin: 0;
   font-weight: 400;
   font-size: 18px;
-  line-height: 21.78px;
+  line-height: 1.21;
   text-rendering: optimizeLegibility;
   grid-area: about;
 }
