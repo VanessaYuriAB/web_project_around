@@ -5,9 +5,6 @@
   border-radius: 50%;
 }
 
-/*VERIFICAR CONFIGURAÇÕES PARA TAMANHO RESPONSIVO DA FOTO*/
-/*FLEX-GROW E FLEX-SHRINK?*/
-
 .profile__infos {
   margin-left: 30px;
   display: grid;
@@ -21,6 +18,9 @@
 }
 
 .profile__add-btn {
-  max-width: 150px;
   margin-left: auto;
+}
+
+.profile__add-btn:hover {
+  opacity: 0.6;
 }

@@ -19,3 +19,7 @@
 .infos__edit-btn {
   grid-area: edit-btn;
 }
+
+.infos__edit-btn:hover {
+  opacity: 0.6;
+}
