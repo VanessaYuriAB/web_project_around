@@ -1,4 +1,14 @@
 .content__profile {
   display: flex;
   align-items: center;
+  width: 100%;
+}
+
+.content__elements {
+  padding-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px 17px;
+  width: 100%;
+  border: 1.5px solid #000000;
 }
