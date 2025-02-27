@@ -25,6 +25,11 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  padding-bottom: 10px;
+}
+
+.card__like-btn {
+  padding-bottom: 10px;
 }
 
 .card__like-btn:hover {
