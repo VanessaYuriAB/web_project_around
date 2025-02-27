@@ -29,3 +29,41 @@
 .infos__edit-btn:hover {
   opacity: 0.6;
 }
+
+.infos__img-edit-btn {
+  width: 24px;
+  height: 24px;
+  background-image: url(../images/edit-btn.svg);
+  background-position: center;
+  background-size: contain;
+}
+
+@media screen and (min-width: 471px) and (max-width: 640px) {
+  /*suavização do redimensionamento do tamanho da fonte*/
+
+  .infos__name {
+    font-size: 32px;
+  }
+
+  .infos__about {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 470px) {
+  /*320*/
+
+  .infos__name {
+    font-size: 22px;
+    line-height: 1.21;
+  }
+
+  .infos__about {
+    font-size: 14px;
+  }
+
+  .infos__img-edit-btn {
+    width: 18px;
+    height: 18px;
+  }
+}
