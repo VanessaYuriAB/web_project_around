@@ -5,7 +5,9 @@
   text-rendering: optimizeLegibility;
   margin: 0;
   grid-area: name;
-  width: max-content;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .infos__about {
@@ -15,6 +17,9 @@
   line-height: 1.21;
   text-rendering: optimizeLegibility;
   grid-area: about;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .infos__edit-btn {
