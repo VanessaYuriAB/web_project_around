@@ -15,6 +15,9 @@ let closeBtn = document.querySelector(".popup__close-btn");
 
 function closePopup() {
   popupBox.classList.toggle("popup_opened");
+  alert(
+    'Nenhuma nova informação foi salva. Caso existam novos dados para inserir e tenha fechado o formulário sem querer, é preciso fazer a edição novamente e clicar no botão "Salvar" antes de fechar o popup.'
+  );
 }
 
 closeBtn.addEventListener("click", closePopup);
