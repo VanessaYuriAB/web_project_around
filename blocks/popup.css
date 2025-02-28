@@ -1,5 +1,6 @@
 .popup {
-  display: none;
+  display: flex;
+  justify-content: center;
   width: 100%;
   max-width: 1280px;
   height: 100%;
@@ -11,8 +12,7 @@
 }
 
 .popup_opened {
-  display: flex;
-  justify-content: center;
+  display: none;
 }
 
 .popup__container {
