@@ -21,6 +21,8 @@
 
 .profile__add-btn {
   margin-left: auto;
+  display: inline-block;
+  text-decoration: none;
 }
 
 .profile__add-btn:hover {

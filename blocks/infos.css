@@ -24,6 +24,8 @@
 
 .infos__edit-btn {
   grid-area: edit-btn;
+  display: inline-block;
+  text-decoration: none;
 }
 
 .infos__edit-btn:hover {

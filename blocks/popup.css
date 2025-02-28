@@ -11,8 +11,8 @@
 }
 
 .popup_opened {
-  display: flex;
-  justify-content: center;
+  /*display: flex;
+  justify-content: center;*/
 }
 
 .popup__close-icon {
