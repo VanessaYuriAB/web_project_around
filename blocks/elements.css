@@ -4,6 +4,7 @@
   list-style-type: none;
   display: grid;
   grid-template-columns: repeat(3, 282px);
+  grid-template-rows: auto;
   gap: 20px 17px;
   max-width: 880px;
 }

@@ -1,0 +1,10 @@
+.template-model-card__card {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  width: 282px;
+  height: 361px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  display: grid;
+}

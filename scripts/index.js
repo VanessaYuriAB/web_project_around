@@ -84,7 +84,7 @@ formElement.addEventListener("submit", handleProfileFormSubmit);
 // código para inserir os cards iniciais na página, via <template>
 
 const initialCards = document.querySelector("#template-cards").content;
-const sectionElements = document.querySelector(".content__elements");
+const sectionElements = document.querySelector(".elements__cards");
 
 sectionElements.append(initialCards);
 
@@ -111,3 +111,49 @@ function closePopupAdd() {
 }
 
 closeBtnAdd.addEventListener("click", closePopupAdd);
+
+//para salvar as informações do formulário add*/
+
+const formAddElement = document.querySelector(".popup-add");
+
+function handleProfileFormAddSubmit(evt) {
+  evt.preventDefault();
+
+  const inputsFormAdd = formAddElement.querySelectorAll(
+    ".popup-add__input-form"
+  );
+  const placeInput = inputsFormAdd[0];
+  const imageInput = inputsFormAdd[1];
+
+  const templateNewCard = document.querySelector(
+    "#template-model-card"
+  ).content;
+  const boxNewCard = templateNewCard
+    .querySelector(".template-model-card__card")
+    .cloneNode(true);
+
+  const titleCard = boxNewCard.querySelector(".card__name");
+  const imageCard = boxNewCard.querySelector(".card__image");
+
+  titleCard.textContent = placeInput.value;
+  imageCard.src = imageInput.value;
+
+  const listCards = initialCards.querySelector(".elements__cards");
+
+  sectionElements.prepend(boxNewCard);
+
+  placeInput.value = "";
+  imageInput.value = "";
+
+  alert("O novo cartão foi incluso com sucesso!");
+
+  const closeFormAdd = document.querySelector(".popup-add__close-btn");
+
+  function closePopupAdd() {
+    popupAddBox.classList.toggle("popup-add_opened");
+  }
+
+  closePopupAdd();
+}
+
+formAddElement.addEventListener("submit", handleProfileFormAddSubmit);
