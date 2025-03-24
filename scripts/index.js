@@ -80,3 +80,10 @@ function handleProfileFormSubmit(evt) {
 // Conecte o handler ao formulário:
 // ele vai observar o evento de submit
 formElement.addEventListener("submit", handleProfileFormSubmit);
+
+// para inserir os cards na página
+
+const initialCards = document.querySelector("#template-cards").content;
+const sectionElements = document.querySelector(".content__elements");
+
+sectionElements.append(initialCards);
