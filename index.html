@@ -37,24 +37,47 @@
             </a>
             <h2 class="about infos__about">Dev em desenvolvimento</h2>
           </div>
-          <div class="popup popup_opened">
-            <form class="popup__container">
-              <h3 class="popup__title-form">Editar perfil</h3>
-              <input class="popup__input-form" type="text" placeholder="Nome" />
+          <div class="popup-edt popup-edt_opened">
+            <form class="popup-edt__container">
+              <h3 class="popup-edt__title-form">Editar perfil</h3>
               <input
-                class="popup__input-form"
+                class="popup-edt__input-form"
+                type="text"
+                placeholder="Nome"
+              />
+              <input
+                class="popup-edt__input-form"
                 type="text"
                 placeholder="Sobre mim"
               />
-              <button class="popup__btn-form" type="submit">Salvar</button>
+              <button class="popup-edt__btn-form" type="submit">Salvar</button>
             </form>
-            <a class="close-btn popup__close-btn" href="#"
-              ><div class="icon-close-btn popup__icon-close-btn"></div
+            <a class="close-btn popup-edt__close-btn" href="#"
+              ><div class="icon-close-btn popup-edt__icon-close-btn"></div
             ></a>
           </div>
           <a class="add-btn profile__add-btn" href="#">
             <div class="img-add-btn profile__img-add-btn"></div>
           </a>
+          <div class="popup-add popup-add_opened">
+            <form class="popup-add__container">
+              <h3 class="popup-add__title-form">Novo local</h3>
+              <input
+                class="popup-add__input-form"
+                type="text"
+                placeholder="Título"
+              />
+              <input
+                class="popup-add__input-form"
+                type="text"
+                placeholder="Link de imagem"
+              />
+              <button class="popup-add__btn-form" type="submit">Criar</button>
+            </form>
+            <a class="close-btn popup-add__close-btn" href="#"
+              ><div class="icon-close-btn popup-add__icon-close-btn"></div
+            ></a>
+          </div>
         </section>
         <section class="elements content__elements">
           <!--Seção inserida por JS, por <template>-->

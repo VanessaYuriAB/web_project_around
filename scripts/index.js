@@ -1,12 +1,12 @@
-/*para abrir o formulário com as infos do perfil*/
+/*para abrir o formulário edt*/
 
 let editBtn = document.querySelector(".infos__edit-btn");
-let popupBox = document.querySelector(".popup");
+let popupBox = document.querySelector(".popup-edt");
 
 function openPopup() {
-  popupBox.classList.toggle("popup_opened");
+  popupBox.classList.toggle("popup-edt_opened");
 
-  let inputsPopups = popupBox.querySelectorAll(".popup__input-form");
+  let inputsPopups = popupBox.querySelectorAll(".popup-edt__input-form");
   let nameProfile = document.querySelector(".infos__name");
   let aboutProfile = document.querySelector(".infos__about");
 
@@ -16,12 +16,12 @@ function openPopup() {
 
 editBtn.addEventListener("click", openPopup);
 
-/*para fechar o formulário*/
+/*para fechar o formulário edt*/
 
-let closeBtn = document.querySelector(".popup__close-btn");
+let closeBtn = document.querySelector(".popup-edt__close-btn");
 
 function closePopup() {
-  popupBox.classList.toggle("popup_opened");
+  popupBox.classList.toggle("popup-edt_opened");
   alert(
     'Nenhuma nova informação foi salva. Caso existam novos dados para inserir e tenha fechado o formulário sem querer, é preciso fazer a edição novamente e clicar no botão "Salvar" antes de fechar o popup.'
   );
@@ -29,12 +29,12 @@ function closePopup() {
 
 closeBtn.addEventListener("click", closePopup);
 
-/*para salvar as informações*/
+/*para salvar as informações do formulário edt*/
 
 /* CÓDIGO DA PLATAFORMA PARA O EVENTO ESPECIAL SUBMIT: */
 
 // Vamos encontrar o formulário no DOM
-let formElement = document.querySelector(".popup");
+let formElement = document.querySelector(".popup-edt");
 
 // Em seguida vem o handler do submit
 // ainda não vai enviar para lugar nenhum
@@ -49,7 +49,7 @@ function handleProfileFormSubmit(evt) {
   // Explicaremos em mais detalhes posteriormente.
 
   // Vamos encontrar os campos de formulário do DOM
-  let inputsForm = formElement.querySelectorAll(".popup__input-form");
+  let inputsForm = formElement.querySelectorAll(".popup-edt__input-form");
   let nameInput = inputsForm[0]; // Use querySelector()
   let jobInput = inputsForm[1]; // Use querySelector()
 
@@ -68,10 +68,10 @@ function handleProfileFormSubmit(evt) {
 
   alert("As informações do perfil foram atualizadas com sucesso!");
 
-  let closeForm = document.querySelector(".popup__close-btn");
+  let closeForm = document.querySelector(".popup-edt__close-btn");
 
   function closePopup() {
-    popupBox.classList.toggle("popup_opened");
+    popupBox.classList.toggle("popup-edt_opened");
   }
 
   closePopup();
@@ -81,9 +81,33 @@ function handleProfileFormSubmit(evt) {
 // ele vai observar o evento de submit
 formElement.addEventListener("submit", handleProfileFormSubmit);
 
-// para inserir os cards na página
+// código para inserir os cards iniciais na página, via <template>
 
 const initialCards = document.querySelector("#template-cards").content;
 const sectionElements = document.querySelector(".content__elements");
 
 sectionElements.append(initialCards);
+
+// para abrir o formulário add
+
+const addBtn = document.querySelector(".profile__add-btn");
+const popupAddBox = document.querySelector(".popup-add");
+
+function openPopupAdd() {
+  popupAddBox.classList.toggle("popup-add_opened");
+}
+
+addBtn.addEventListener("click", openPopupAdd);
+
+/*para fechar o formulário add*/
+
+const closeBtnAdd = document.querySelector(".popup-add__close-btn");
+
+function closePopupAdd() {
+  popupAddBox.classList.toggle("popup-add_opened");
+  alert(
+    'Nenhuma nova informação foi salva. Caso existam novos dados para inserir e tenha fechado o formulário sem querer, é preciso fazer a edição novamente e clicar no botão "Salvar" antes de fechar o popup.'
+  );
+}
+
+closeBtnAdd.addEventListener("click", closePopupAdd);
