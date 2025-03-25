@@ -1,3 +1,11 @@
+.card-elements {
+  width: 282px;
+  height: 361px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  display: grid;
+}
+
 .card__image {
   width: 282px;
   height: 282px;
@@ -25,11 +33,12 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  padding-bottom: 10px;
 }
 
 .card__like-btn {
-  padding-bottom: 10px;
+  background-image: url(../images/like-btn.svg);
+  width: 21px;
+  height: 19px;
 }
 
 .card__like-btn:hover {
@@ -38,6 +47,8 @@
 
 /*VER TAREFA SOBRE :ACTIVE*/
 
-.card__like-btn:active {
+.card__like-btn_active {
   background-image: url(../images/like-btn-black.svg);
+  width: 21px;
+  height: 19px;
 }

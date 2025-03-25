@@ -81,10 +81,29 @@ function handleProfileFormSubmit(evt) {
 // ele vai observar o evento de submit
 formElement.addEventListener("submit", handleProfileFormSubmit);
 
-// código para inserir os cards iniciais na página, via <template>
+// para inserir os cards iniciais na página, via <template>
 
 const initialCards = document.querySelector("#template-cards").content;
 const sectionElements = document.querySelector(".elements__cards");
+
+/*
+function desactiveLikeBtn() {
+  likeBtn.classList.remove(".card__like-btn_active");
+}
+
+desactiveLikeBtn();
+*/
+
+// para configurar o botão curtir dos cartões
+
+/*const likeBtn = initialCards.querySelectorAll(".card__like-btn");
+
+const arrayLikeBtns = Array.from(likeBtn);
+
+arrayLikeBtns.addEventListener("click", function (evt) {
+  evt.target.classList.toggle(".card__like-btn_active");
+});
+*/
 
 sectionElements.append(initialCards);
 
@@ -129,7 +148,7 @@ function handleProfileFormAddSubmit(evt) {
     "#template-model-card"
   ).content;
   const boxNewCard = templateNewCard
-    .querySelector(".template-model-card__card")
+    .querySelector(".card-model")
     .cloneNode(true);
 
   const titleCard = boxNewCard.querySelector(".card__name");
@@ -137,8 +156,6 @@ function handleProfileFormAddSubmit(evt) {
 
   titleCard.textContent = placeInput.value;
   imageCard.src = imageInput.value;
-
-  const listCards = initialCards.querySelector(".elements__cards");
 
   sectionElements.prepend(boxNewCard);
 
