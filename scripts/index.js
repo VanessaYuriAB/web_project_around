@@ -83,29 +83,29 @@ formElement.addEventListener("submit", handleProfileFormSubmit);
 
 // para inserir os cards iniciais na página, via <template>
 
-const initialCards = document.querySelector("#template-cards").content;
+const templateInitialCards = document.querySelector("#template-cards").content;
 const sectionElements = document.querySelector(".elements__cards");
 
-/*
-function desactiveLikeBtn() {
-  likeBtn.classList.remove(".card__like-btn_active");
+function loadInitialCards() {
+  const initialCards = templateInitialCards.querySelectorAll(".card-elements");
+
+  initialCards.forEach((card) => {
+    const cardClone = card.cloneNode(true);
+
+    const likeBtn = cardClone.querySelector(".card__like-btn");
+
+    likeBtn.classList.remove("card__like-btn_active");
+
+    // para configurar o botão curtir de cada cartão
+    likeBtn.addEventListener("click", function (evt) {
+      evt.target.classList.toggle("card__like-btn_active");
+    });
+
+    sectionElements.append(cardClone);
+  });
 }
 
-desactiveLikeBtn();
-*/
-
-// para configurar o botão curtir dos cartões
-
-/*const likeBtn = initialCards.querySelectorAll(".card__like-btn");
-
-const arrayLikeBtns = Array.from(likeBtn);
-
-arrayLikeBtns.addEventListener("click", function (evt) {
-  evt.target.classList.toggle(".card__like-btn_active");
-});
-*/
-
-sectionElements.append(initialCards);
+loadInitialCards();
 
 // para abrir o formulário add
 
@@ -156,6 +156,15 @@ function handleProfileFormAddSubmit(evt) {
 
   titleCard.textContent = placeInput.value;
   imageCard.src = imageInput.value;
+
+  // para configurar o botão curtir do novo cartão
+  const likeButton = boxNewCard.querySelector(".card__like-btn");
+
+  likeButton.classList.remove("card__like-btn_active");
+
+  likeButton.addEventListener("click", function (evt) {
+    evt.target.classList.toggle("card__like-btn_active");
+  });
 
   sectionElements.prepend(boxNewCard);
 
