@@ -92,15 +92,24 @@ function loadInitialCards() {
   initialCards.forEach((card) => {
     const cardClone = card.cloneNode(true);
 
+    // para configurar o botão curtir de cada cartão
     const likeBtn = cardClone.querySelector(".card__like-btn");
 
     likeBtn.classList.remove("card__like-btn_active");
 
-    // para configurar o botão curtir de cada cartão
     likeBtn.addEventListener("click", function (evt) {
       evt.target.classList.toggle("card__like-btn_active");
     });
 
+    // para configurar o botão trash de cada cartão
+    const trashBtn = cardClone.querySelector(".card__trash-btn");
+
+    trashBtn.addEventListener("click", function (evt) {
+      const cardItem = trashBtn.closest(".card-elements");
+      cardItem.remove();
+    });
+
+    // para adicionar cada cartão na seção
     sectionElements.append(cardClone);
   });
 }
@@ -166,8 +175,18 @@ function handleProfileFormAddSubmit(evt) {
     evt.target.classList.toggle("card__like-btn_active");
   });
 
+  // para configurar o botão trash do novo cartão
+  const trashButton = boxNewCard.querySelector(".card__trash-btn");
+
+  trashButton.addEventListener("click", function (evt) {
+    const newCardItem = trashButton.closest(".card-model");
+    newCardItem.remove();
+  });
+
+  // para adicinar o novo cartão no início da seção
   sectionElements.prepend(boxNewCard);
 
+  // para resetar os inputs do formulário
   placeInput.value = "";
   imageInput.value = "";
 
