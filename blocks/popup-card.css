@@ -1,0 +1,83 @@
+.popup-card {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1280px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.popup-card__figure {
+  margin: 90px 0 0 40px;
+}
+
+.popup-card__image {
+  max-width: 75vw;
+  max-height: 75vh;
+  margin-bottom: 10px;
+}
+
+.popup-card__title {
+  font-size: 12px;
+  line-height: 100%;
+}
+
+.popup-card__close-btn {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.popup-card__close-btn:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.popup-card__icon-close-btn {
+  width: 40px;
+  height: 40px;
+  background-image: url(../images/close-icon_40.svg);
+  background-position: center;
+  background-size: contain;
+  margin-top: 41px;
+  z-index: 2;
+}
+
+@media screen and (min-width: 641px) and (max-width: 960px) {
+  /*800px*/
+
+  .popup-card {
+    max-width: 960px;
+  }
+
+  .popup-card__figure {
+    margin: 90px 0 0 36px;
+  }
+
+  .popup-card__icon-close-btn {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 640px) {
+  /*320px*/
+
+  .popup-card {
+    max-width: 640px;
+  }
+
+  .popup-card__figure {
+    margin: 136px 0 0 26px;
+  }
+
+  .popup-card__icon-close-btn {
+    width: 30px;
+    height: 30px;
+    background-image: url(../images/close-icon_26.svg);
+    margin-top: 100px;
+  }
+}

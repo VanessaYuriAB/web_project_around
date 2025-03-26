@@ -202,3 +202,35 @@ function handleProfileFormAddSubmit(evt) {
 }
 
 formAddElement.addEventListener("submit", handleProfileFormAddSubmit);
+
+// para abrir o popup do cartão
+const sectionCards = document.querySelector(".elements__cards");
+
+sectionCards.addEventListener("click", function (evt) {
+  const imgCard = evt.target.closest(".card__image");
+
+  if (!imgCard) return;
+
+  const templatePopupImg = document.querySelector(
+    "#template-popup-img"
+  ).content;
+  const popupCard = templatePopupImg.cloneNode(true).firstElementChild;
+
+  const imgPopup = popupCard.querySelector(".popup-card__image");
+
+  imgPopup.src = imgCard.src;
+
+  const titlePopup = popupCard.querySelector(".popup-card__title");
+  const titleCard = imgCard.closest(".card").querySelector(".card__name");
+
+  titlePopup.textContent = titleCard.textContent;
+
+  sectionCards.prepend(popupCard);
+
+  // para fechar o popup do cartão
+  const closeBtnPopup = popupCard.querySelector(".popup-card__close-btn");
+
+  closeBtnPopup.addEventListener("click", function () {
+    popupCard.remove();
+  });
+});

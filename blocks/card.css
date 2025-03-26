@@ -7,6 +7,12 @@
   position: relative;
 }
 
+.card__link-img {
+  text-decoration: none;
+  width: 282px;
+  height: 282px;
+}
+
 .card__image {
   width: 282px;
   height: 282px;
