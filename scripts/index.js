@@ -1,14 +1,14 @@
 /*para abrir o formulário edt*/
 
-let editBtn = document.querySelector(".infos__edit-btn");
-let popupBox = document.querySelector(".popup-edt");
+const editBtn = document.querySelector(".infos__edit-btn");
+const popupBox = document.querySelector(".popup-edt");
 
 function openPopup() {
   popupBox.classList.toggle("popup-edt_opened");
 
-  let inputsPopups = popupBox.querySelectorAll(".popup-edt__input-form");
-  let nameProfile = document.querySelector(".infos__name");
-  let aboutProfile = document.querySelector(".infos__about");
+  const inputsPopups = popupBox.querySelectorAll(".popup-edt__input-form");
+  const nameProfile = document.querySelector(".infos__name");
+  const aboutProfile = document.querySelector(".infos__about");
 
   inputsPopups[0].value = nameProfile.textContent;
   inputsPopups[1].value = aboutProfile.textContent;
@@ -18,7 +18,7 @@ editBtn.addEventListener("click", openPopup);
 
 /*para fechar o formulário edt*/
 
-let closeBtn = document.querySelector(".popup-edt__close-btn");
+const closeBtn = document.querySelector(".popup-edt__close-btn");
 
 function closePopup() {
   popupBox.classList.toggle("popup-edt_opened");
@@ -34,7 +34,7 @@ closeBtn.addEventListener("click", closePopup);
 /* CÓDIGO DA PLATAFORMA PARA O EVENTO ESPECIAL SUBMIT: */
 
 // Vamos encontrar o formulário no DOM
-let formElement = document.querySelector(".popup-edt");
+const formElement = document.querySelector(".popup-edt");
 
 // Em seguida vem o handler do submit
 // ainda não vai enviar para lugar nenhum
@@ -49,17 +49,17 @@ function handleProfileFormSubmit(evt) {
   // Explicaremos em mais detalhes posteriormente.
 
   // Vamos encontrar os campos de formulário do DOM
-  let inputsForm = formElement.querySelectorAll(".popup-edt__input-form");
-  let nameInput = inputsForm[0]; // Use querySelector()
-  let jobInput = inputsForm[1]; // Use querySelector()
+  const inputsForm = formElement.querySelectorAll(".popup-edt__input-form");
+  const nameInput = inputsForm[0]; // Use querySelector()
+  const jobInput = inputsForm[1]; // Use querySelector()
 
   // Pegue os valores de cada campo do valor da propriedade correspondente
   nameInput = nameInput.value;
   jobInput = jobInput.value;
 
   // Selecione os elementos aos quais os valores dos campos serão inseridos
-  let nameProfile = document.querySelector(".infos__name");
-  let jobProfile = document.querySelector(".infos__about");
+  const nameProfile = document.querySelector(".infos__name");
+  const jobProfile = document.querySelector(".infos__about");
 
   // Insira novos valores usando a
   // propriedade textContent
@@ -68,7 +68,7 @@ function handleProfileFormSubmit(evt) {
 
   alert("As informações do perfil foram atualizadas com sucesso!");
 
-  let closeForm = document.querySelector(".popup-edt__close-btn");
+  const closeForm = document.querySelector(".popup-edt__close-btn");
 
   function closePopup() {
     popupBox.classList.toggle("popup-edt_opened");
