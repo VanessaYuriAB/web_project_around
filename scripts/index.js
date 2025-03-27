@@ -33,42 +33,37 @@ closeBtn.addEventListener("click", closePopup);
 
 /* CÓDIGO DA PLATAFORMA PARA O EVENTO ESPECIAL SUBMIT: */
 
-// Vamos encontrar o formulário no DOM
-const formElement = document.querySelector(".popup-edt");
+// VAMOS ENCONTRAR O FORMULÁRIO NO DOM
+let formElement = document.querySelector(".popup-edt");
 
-// Em seguida vem o handler do submit
-// ainda não vai enviar para lugar nenhum
+// EM SEGUIDA VEM O HANDLER DO SUBMIT, AINDA NÃO VAI ENVIAR PARA LUGAR NENHUM
 
-// Observe que o nome da função começa com um verbo
-// e descreve exatamente o que a função faz
+// OBSERVE QUE O NOME DA FUNÇÃO COMEÇA COM UM VERBO E DESCREVE EXATAMENTE O QUE A FUNÇÃO FAZ
 function handleProfileFormSubmit(evt) {
-  // Esta linha impede o navegador
-  // de enviar o formulário da forma padrão.
+  // ESTA LINHA IMPEDE O NAVEGADOR DE ENVIAR O FORMULÁRIO DA FORMA PADRÃO
   evt.preventDefault();
-  // Fazendo isso, podemos definir nossa própria forma de enviar o formulário.
-  // Explicaremos em mais detalhes posteriormente.
+  // FZD ISSO, PODEMOS DEFINIR NOSSA PRÓPRIA FORMA DE ENVIAR O FORMULÁRIO. EXPLICAREMOS MAIS DETALHES POSTERIORMENTE.
 
-  // Vamos encontrar os campos de formulário do DOM
-  const inputsForm = formElement.querySelectorAll(".popup-edt__input-form");
-  const nameInput = inputsForm[0]; // Use querySelector()
-  const jobInput = inputsForm[1]; // Use querySelector()
+  // VMS ENCONTRAR OS CAMPOS DE FORMULÁRIO DO DOM
+  let inputsForm = formElement.querySelectorAll(".popup-edt__input-form");
+  let nameInput = inputsForm[0]; // USE QUERYSELECTOR()
+  let jobInput = inputsForm[1]; // USE QUERYSELECTOR()
 
-  // Pegue os valores de cada campo do valor da propriedade correspondente
+  // PEQUE OS VALORES DE CADA CAMPO DO VALOR DA PROPRIEDADE CORRESPONDENTE
   nameInput = nameInput.value;
   jobInput = jobInput.value;
 
-  // Selecione os elementos aos quais os valores dos campos serão inseridos
-  const nameProfile = document.querySelector(".infos__name");
-  const jobProfile = document.querySelector(".infos__about");
+  // SELECIONE OS ELEMENTOS AOS QUAIS OS VALORES DOS CAMPOS SERÃO INSERIDOS
+  let nameProfile = document.querySelector(".infos__name");
+  let jobProfile = document.querySelector(".infos__about");
 
-  // Insira novos valores usando a
-  // propriedade textContent
+  // INSIRA NOVOS VALORES USANDO A PROPRIEDADE .TEXTCONTENT
   nameProfile.textContent = nameInput;
   jobProfile.textContent = jobInput;
 
   alert("As informações do perfil foram atualizadas com sucesso!");
 
-  const closeForm = document.querySelector(".popup-edt__close-btn");
+  let closeForm = document.querySelector(".popup__close-btn");
 
   function closePopup() {
     popupBox.classList.toggle("popup-edt_opened");
@@ -77,8 +72,7 @@ function handleProfileFormSubmit(evt) {
   closePopup();
 }
 
-// Conecte o handler ao formulário:
-// ele vai observar o evento de submit
+// CONECTE O HANDLER AO FORMLÁRIO, ELE VAI OBSERVAR O EVENTO DE SUBMIT
 formElement.addEventListener("submit", handleProfileFormSubmit);
 
 // para inserir os cards iniciais na página, via <template>
