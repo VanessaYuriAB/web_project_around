@@ -166,6 +166,8 @@ function handleProfileFormAddSubmit(evt) {
   titleCard.textContent = placeInput.value;
   imageCard.src = imageInput.value;
 
+  imageCard.alt = `${placeInput.value}`;
+
   // para configurar o botão curtir do novo cartão
   const likeButton = boxNewCard.querySelector(".card__like-btn");
 
