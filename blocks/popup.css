@@ -194,16 +194,39 @@
   .popup-edt__input-form,
   .popup-add__input-form {
     width: 238px;
-    margin: 0 0 30px;
   }
 
   .popup-edt__input-form:last-of-type,
   .popup-add__input-form:last-of-type {
-    margin-bottom: 46px;
+    margin-top: 13px;
+  }
+
+  .popup-edt__input-form:invalid,
+  .popup-add__input-form:invalid {
+    border-bottom: 1px solid #ff0000;
+  }
+
+  .popup-edt__input-form:first-of-type:valid,
+  .popup-add__input-form:first-of-type:valid {
+    margin-bottom: calc(29.74px - 13px - 5px);
+  }
+
+  .popup-edt__input-form:last-of-type:valid,
+  .popup-add__input-form:last-of-type:valid {
+    margin-bottom: calc(48px - 31.34px - 5px);
+  }
+
+  .popup-edt__input-error,
+  .popup-add__input-error {
+    width: 238px;
+    font-size: 10px;
+    line-height: 100%;
+    margin-left: 22px;
   }
 
   .popup-edt__btn-form,
   .popup-add__btn-form {
+    margin-top: 26.34px;
     margin-bottom: 25px;
     width: 238px;
     height: 46px;
