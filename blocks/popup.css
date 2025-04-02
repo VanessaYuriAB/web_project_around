@@ -48,10 +48,36 @@
   font-size: 14px;
   line-height: 1.21;
   vertical-align: top;
-  margin: 0 0 29.74px;
+  margin: 0;
   padding: 3px 0 13px;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.popup-edt__input-form:last-of-type,
+.popup-add__input-form:last-of-type {
+  margin-top: 13px;
+}
+
+.popup-edt__input-form:invalid,
+.popup-add__input-form:invalid {
+  border-bottom: 1px solid #ff0000;
+}
+
+.popup-edt__input-form:first-of-type:valid {
+  margin-bottom: calc(29.74px - 13px);
+}
+
+.popup-add__input-form:first-of-type:valid {
+  margin-bottom: calc(29.74px - 13px - 5px);
+}
+
+.popup-edt__input-form:last-of-type:valid {
+  margin-bottom: calc(48px - 31.34px);
+}
+
+.popup-add__input-form:last-of-type:valid {
+  margin-bottom: calc(48px - 31.34px - 5px);
 }
 
 .popup-edt__input-form::placeholder,
@@ -61,16 +87,25 @@
   line-height: 100%;
 }
 
-.popup-edt__input-form:last-of-type,
-.popup-add__input-form:last-of-type {
-  margin-bottom: 48px;
+.popup-edt__input-error,
+.popup-add__input-error {
+  width: 358px;
+  height: 17px;
+  font-size: 12px;
+  line-height: 100%;
+  color: #ff0000;
+  align-self: self-start;
+  margin-left: 36px;
+  padding-top: 5px;
 }
 
 .popup-edt__btn-form,
 .popup-add__btn-form {
+  margin-top: 31.34px;
   margin-bottom: 36.51px;
   width: 358px;
-  height: 50.15px;
+  min-height: 50.15px;
+  max-height: 50.15px;
   border-radius: 2px;
   border: none;
   background-color: #000000;
@@ -80,6 +115,13 @@
   text-align: center;
   color: #ffffff;
   padding: 4px 0 0;
+}
+
+.popup__btn-form_disabled {
+  opacity: 0.2;
+  color: #000000;
+  border: 1px solid #000000;
+  background-color: #ffffff;
 }
 
 .popup-edt__btn-form:hover,
