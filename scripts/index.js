@@ -59,8 +59,10 @@ function openPopup() {
 
   // para fechar o formulário edt clicando na tela
 
-  popupBox.addEventListener("click", function () {
-    closePopup();
+  popupBox.addEventListener("click", function (evt) {
+    if (!popupFormEdt.contains(evt.target)) {
+      closePopup();
+    }
   });
 
   // para fechar o formulário edt com a tecla esc
@@ -123,8 +125,12 @@ function openPopupAdd() {
 
   // para fechar o formulário add clicando na tela
 
-  popupAddBox.addEventListener("click", function () {
-    closePopupAdd();
+  const popupFormAdd = popupAddBox.querySelector(".popup-add__container");
+
+  popupAddBox.addEventListener("click", function (evt) {
+    if (!popupFormAdd.contains(evt.target)) {
+      closePopupAdd();
+    }
   });
 
   //para fechar o formulário add com a tecla esc
@@ -244,8 +250,10 @@ sectionCards.addEventListener("click", function (evt) {
 
   const closeBackgroundPopup = document.querySelector(".popup-card");
 
-  closeBackgroundPopup.addEventListener("click", function () {
-    popupCard.remove();
+  closeBackgroundPopup.addEventListener("click", function (evt) {
+    if (!imgPopup.contains(evt.target) && !titlePopup.contains(evt.target)) {
+      popupCard.remove();
+    }
   });
 
   // para fechar o popup do cartão pela tecla esc
