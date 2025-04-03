@@ -1,80 +1,3 @@
-/*para abrir o formulário edt*/
-
-const editBtn = document.querySelector(".infos__edit-btn");
-const popupBox = document.querySelector(".popup-edt");
-
-function openPopup() {
-  popupBox.classList.toggle("popup-edt_opened");
-
-  const inputsPopups = popupBox.querySelectorAll(".popup-edt__input-form");
-  const nameProfile = document.querySelector(".infos__name");
-  const aboutProfile = document.querySelector(".infos__about");
-
-  inputsPopups[0].value = nameProfile.textContent;
-  inputsPopups[1].value = aboutProfile.textContent;
-}
-
-editBtn.addEventListener("click", openPopup);
-
-/*para fechar o formulário edt*/
-
-const closeBtn = document.querySelector(".popup-edt__close-btn");
-
-function closePopup() {
-  popupBox.classList.toggle("popup-edt_opened");
-  alert(
-    'Nenhuma nova informação foi salva. Caso existam novos dados para inserir e tenha fechado o formulário sem querer, é preciso fazer a edição novamente e clicar no botão "Salvar" antes de fechar o popup.'
-  );
-}
-
-closeBtn.addEventListener("click", closePopup);
-
-/*para salvar as informações do formulário edt*/
-
-/* CÓDIGO DA PLATAFORMA PARA O EVENTO ESPECIAL SUBMIT: */
-
-// VAMOS ENCONTRAR O FORMULÁRIO NO DOM
-let formElement = document.querySelector(".popup-edt");
-
-// EM SEGUIDA VEM O HANDLER DO SUBMIT, AINDA NÃO VAI ENVIAR PARA LUGAR NENHUM
-
-// OBSERVE QUE O NOME DA FUNÇÃO COMEÇA COM UM VERBO E DESCREVE EXATAMENTE O QUE A FUNÇÃO FAZ
-function handleProfileFormSubmit(evt) {
-  // ESTA LINHA IMPEDE O NAVEGADOR DE ENVIAR O FORMULÁRIO DA FORMA PADRÃO
-  evt.preventDefault();
-  // FZD ISSO, PODEMOS DEFINIR NOSSA PRÓPRIA FORMA DE ENVIAR O FORMULÁRIO. EXPLICAREMOS MAIS DETALHES POSTERIORMENTE.
-
-  // VMS ENCONTRAR OS CAMPOS DE FORMULÁRIO DO DOM
-  let inputsForm = formElement.querySelectorAll(".popup-edt__input-form");
-  let nameInput = inputsForm[0]; // USE QUERYSELECTOR()
-  let jobInput = inputsForm[1]; // USE QUERYSELECTOR()
-
-  // PEQUE OS VALORES DE CADA CAMPO DO VALOR DA PROPRIEDADE CORRESPONDENTE
-  nameInput = nameInput.value;
-  jobInput = jobInput.value;
-
-  // SELECIONE OS ELEMENTOS AOS QUAIS OS VALORES DOS CAMPOS SERÃO INSERIDOS
-  let nameProfile = document.querySelector(".infos__name");
-  let jobProfile = document.querySelector(".infos__about");
-
-  // INSIRA NOVOS VALORES USANDO A PROPRIEDADE .TEXTCONTENT
-  nameProfile.textContent = nameInput;
-  jobProfile.textContent = jobInput;
-
-  alert("As informações do perfil foram atualizadas com sucesso!");
-
-  let closeForm = document.querySelector(".popup__close-btn");
-
-  function closePopup() {
-    popupBox.classList.toggle("popup-edt_opened");
-  }
-
-  closePopup();
-}
-
-// CONECTE O HANDLER AO FORMLÁRIO, ELE VAI OBSERVAR O EVENTO DE SUBMIT
-formElement.addEventListener("submit", handleProfileFormSubmit);
-
 // para inserir os cards iniciais na página, via <template>
 
 const templateInitialCards = document.querySelector("#template-cards").content;
@@ -110,31 +33,123 @@ function loadInitialCards() {
 
 loadInitialCards();
 
+// para abrir o formulário edt
+
+const editBtn = document.querySelector(".infos__edit-btn");
+const popupBox = document.querySelector(".popup-edt");
+
+function openPopup() {
+  popupBox.classList.remove("popup-edt_closed");
+
+  const inputsPopups = popupBox.querySelectorAll(".popup-edt__input-form");
+  const nameProfile = document.querySelector(".infos__name");
+  const aboutProfile = document.querySelector(".infos__about");
+
+  inputsPopups[0].value = nameProfile.textContent;
+  inputsPopups[1].value = aboutProfile.textContent;
+
+  // para alternar o estado do botão
+
+  const popupFormEdt = document.querySelector(".popup-edt__container");
+
+  const inputsEdt = Array.from(popupFormEdt.querySelectorAll("input"));
+  const buttonEdt = popupFormEdt.querySelector("button");
+
+  toggleButtonState(inputsEdt, buttonEdt);
+
+  // para fechar o formulário edt clicando na tela
+
+  popupBox.addEventListener("click", function () {
+    closePopup();
+  });
+
+  // para fechar o formulário edt com a tecla esc
+
+  document.addEventListener("keydown", function (evt) {
+    if (evt.key === "Escape") {
+      closePopup();
+    }
+  });
+}
+
+editBtn.addEventListener("click", openPopup);
+
+// função para fechar o formulário edt
+
+function closePopup() {
+  popupBox.classList.add("popup-edt_closed");
+}
+
+// para fechar o formulário edt pelo botão de fechar
+
+const closeBtn = document.querySelector(".popup-edt__close-btn");
+
+closeBtn.addEventListener("click", closePopup);
+
+// para salvar as informações do formulário edt
+
+const formElement = document.querySelector(".popup-edt");
+
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault();
+
+  let inputsForm = formElement.querySelectorAll(".popup-edt__input-form");
+  let nameInput = inputsForm[0];
+  let jobInput = inputsForm[1];
+
+  nameInput = nameInput.value;
+  jobInput = jobInput.value;
+
+  let nameProfile = document.querySelector(".infos__name");
+  let jobProfile = document.querySelector(".infos__about");
+
+  nameProfile.textContent = nameInput;
+  jobProfile.textContent = jobInput;
+
+  alert("As informações do perfil foram atualizadas com sucesso!");
+
+  closePopup();
+}
+
+formElement.addEventListener("submit", handleProfileFormSubmit);
+
 // para abrir o formulário add
 
 const addBtn = document.querySelector(".profile__add-btn");
 const popupAddBox = document.querySelector(".popup-add");
 
 function openPopupAdd() {
-  popupAddBox.classList.toggle("popup-add_opened");
+  popupAddBox.classList.remove("popup-add_closed");
+
+  // para fechar o formulário add clicando na tela
+
+  popupAddBox.addEventListener("click", function () {
+    closePopupAdd();
+  });
+
+  //para fechar o formulário add com a tecla esc
+  document.addEventListener("keydown", function (evt) {
+    if (evt.key === "Escape") {
+      closePopupAdd();
+    }
+  });
 }
 
 addBtn.addEventListener("click", openPopupAdd);
 
-/*para fechar o formulário add*/
+// função para fechar o formulário add
+
+function closePopupAdd() {
+  popupAddBox.classList.add("popup-add_closed");
+}
+
+// para fechar o formulário add pelo botão de fechar
 
 const closeBtnAdd = document.querySelector(".popup-add__close-btn");
 
-function closePopupAdd() {
-  popupAddBox.classList.toggle("popup-add_opened");
-  alert(
-    'Nenhuma nova informação foi salva. Caso existam novos dados para inserir e tenha fechado o formulário sem querer, é preciso fazer a edição novamente e clicar no botão "Salvar" antes de fechar o popup.'
-  );
-}
-
 closeBtnAdd.addEventListener("click", closePopupAdd);
 
-//para salvar as informações do formulário add*/
+// para salvar as informações do formulário add
 
 const formAddElement = document.querySelector(".popup-add");
 
@@ -188,12 +203,6 @@ function handleProfileFormAddSubmit(evt) {
 
   alert("O novo cartão foi incluso com sucesso!");
 
-  const closeFormAdd = document.querySelector(".popup-add__close-btn");
-
-  function closePopupAdd() {
-    popupAddBox.classList.toggle("popup-add_opened");
-  }
-
   closePopupAdd();
 }
 
@@ -223,16 +232,33 @@ sectionCards.addEventListener("click", function (evt) {
 
   sectionCards.prepend(popupCard);
 
-  // para fechar o popup do cartão
+  // para fechar o popup do cartão pelo botão de fechar
+
   const closeBtnPopup = popupCard.querySelector(".popup-card__close-btn");
 
   closeBtnPopup.addEventListener("click", function () {
     popupCard.remove();
   });
+
+  // para fechar o popup do cartão clicando na tela
+
+  const closeBackgroundPopup = document.querySelector(".popup-card");
+
+  closeBackgroundPopup.addEventListener("click", function () {
+    popupCard.remove();
+  });
+
+  // para fechar o popup do cartão pela tecla esc
+  document.addEventListener("keydown", function (evt) {
+    if (evt.key === "Escape") {
+      popupCard.remove();
+    }
+  });
 });
 
 // para validar os formulários (edt e add)
 
+// o que acontece quando o campo não está válido? obs: a classe do input foi programada com :invalid
 function showInputError(formElement, inputElement, errorMessage) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 
@@ -240,6 +266,7 @@ function showInputError(formElement, inputElement, errorMessage) {
   errorElement.classList.add("popup-edt__input-error");
 }
 
+// o que acontece quando o campo está válido?
 function hideInputError(formElement, inputElement) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 
@@ -247,6 +274,7 @@ function hideInputError(formElement, inputElement) {
   errorElement.textContent = "";
 }
 
+// verificando se o campo está válido ou não para exibir msgs de erro ao usuário
 function checkInputValidity(formElement, inputElement) {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage);
@@ -255,12 +283,14 @@ function checkInputValidity(formElement, inputElement) {
   }
 }
 
+// há campo inválido? verdadeiro ou falso
 function hasInvalidInput(inputList) {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
 }
 
+// alternando estados dos botões conforme estados dos campos
 function toggleButtonState(inputList, buttonElement) {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add("popup__btn-form_disabled");
@@ -269,6 +299,7 @@ function toggleButtonState(inputList, buttonElement) {
   }
 }
 
+// verificando todos os campos para condicionar o botão
 function setEventListeners(formElement) {
   const inputs = Array.from(formElement.querySelectorAll("input"));
   const button = formElement.querySelector("button");
@@ -283,6 +314,7 @@ function setEventListeners(formElement) {
   });
 }
 
+// ativando verificação total para todos os formulários
 function enableValidation() {
   const forms = Array.from(document.querySelectorAll("form"));
 
