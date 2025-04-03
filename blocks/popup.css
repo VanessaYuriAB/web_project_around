@@ -12,8 +12,8 @@
   left: 0;
 }
 
-.popup-edt_opened,
-.popup-add_opened {
+.popup-edt_closed,
+.popup-add_closed {
   display: none;
 }
 
@@ -62,6 +62,11 @@
 .popup-edt__input-form:invalid,
 .popup-add__input-form:invalid {
   border-bottom: 1px solid #ff0000;
+}
+
+.popup-edt__input-form:placeholder-shown,
+.popup-add__input-form:placeholder-shown {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .popup-edt__input-form:first-of-type:valid {
