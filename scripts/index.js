@@ -99,18 +99,20 @@ function handleProfileFormSubmit(evt) {
   let nameInput = inputsForm[0];
   let jobInput = inputsForm[1];
 
-  nameInput = nameInput.value;
-  jobInput = jobInput.value;
-
   let nameProfile = document.querySelector(".infos__name");
   let jobProfile = document.querySelector(".infos__about");
 
-  nameProfile.textContent = nameInput;
-  jobProfile.textContent = jobInput;
+  // para verificar obrigatoriedade dos campos (popup edt)
+  if (nameInput.value.length > 1 && jobInput.value.length > 1) {
+    nameProfile.textContent = nameInput.value;
+    jobProfile.textContent = jobInput.value;
 
-  alert("As informações do perfil foram atualizadas com sucesso!");
+    alert("As informações do perfil foram atualizadas com sucesso!");
 
-  closePopup();
+    closePopup();
+  } else {
+    alert("Cada campo precisa conter, no mínimo, dois caracteres.");
+  }
 }
 
 formElement.addEventListener("submit", handleProfileFormSubmit);
@@ -200,16 +202,27 @@ function handleProfileFormAddSubmit(evt) {
     newCardItem.remove();
   });
 
-  // para adicinar o novo cartão no início da seção
-  sectionElements.prepend(boxNewCard);
+  // para verificar obrigatoriedade dos campos (popup add)
 
-  // para resetar os inputs do formulário
-  placeInput.value = "";
-  imageInput.value = "";
+  // Using a regular expression to check if the url is a valid one (on DevTools)
+  const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
-  alert("O novo cartão foi incluso com sucesso!");
+  if (placeInput.value.length > 1 && urlRegex.test(imageInput.value)) {
+    // para adicinar o novo cartão no início da seção
+    sectionElements.prepend(boxNewCard);
 
-  closePopupAdd();
+    // para resetar os inputs do formulário
+    placeInput.value = "";
+    imageInput.value = "";
+
+    alert("O novo cartão foi incluso com sucesso!");
+
+    closePopupAdd();
+  } else {
+    alert(
+      "O campo para o título precisa conter, no mínimo, dois caracteres. O campo para o link da imagem precisa ser uma URL."
+    );
+  }
 }
 
 formAddElement.addEventListener("submit", handleProfileFormAddSubmit);
