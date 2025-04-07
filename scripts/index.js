@@ -1,3 +1,6 @@
+// imports
+import { toggleButtonState, hideInputError } from "./validate.js";
+
 // para inserir os cards iniciais na página, via <template>
 
 const templateInitialCards = document.querySelector("#template-cards").content;
@@ -37,6 +40,7 @@ loadInitialCards();
 
 const editBtn = document.querySelector(".infos__edit-btn");
 const popupBox = document.querySelector(".popup-edt");
+const popupFormEdt = document.querySelector(".popup-edt__container");
 
 function openPopup() {
   popupBox.classList.remove("popup-edt_closed");
@@ -48,9 +52,11 @@ function openPopup() {
   inputsPopups[0].value = nameProfile.textContent;
   inputsPopups[1].value = aboutProfile.textContent;
 
-  // para alternar o estado do botão
+  // para resetar as msgs de erro ao abrir (edt)
+  hideInputError(popupFormEdt, inputsPopups[0]);
+  hideInputError(popupFormEdt, inputsPopups[1]);
 
-  const popupFormEdt = document.querySelector(".popup-edt__container");
+  // para alternar o estado do botão
 
   const inputsEdt = Array.from(popupFormEdt.querySelectorAll("input"));
   const buttonEdt = popupFormEdt.querySelector("button");
@@ -121,16 +127,22 @@ formElement.addEventListener("submit", handleProfileFormSubmit);
 
 const addBtn = document.querySelector(".profile__add-btn");
 const popupAddBox = document.querySelector(".popup-add");
+const popupFormAdd = popupAddBox.querySelector(".popup-add__container");
+
+const inputsFormAdd = popupAddBox.querySelectorAll(".popup-add__input-form");
 
 function openPopupAdd() {
   popupAddBox.classList.remove("popup-add_closed");
 
-  // para fechar o formulário add clicando na tela
+  // para resetar as msgs de erro ao abrir (edt)
+  hideInputError(popupFormAdd, inputsFormAdd[0]);
+  hideInputError(popupFormAdd, inputsFormAdd[1]);
 
-  const popupFormAdd = popupAddBox.querySelector(".popup-add__container");
+  // para fechar o formulário add clicando na tela
 
   popupAddBox.addEventListener("click", function (evt) {
     if (!popupFormAdd.contains(evt.target)) {
+      popupFormAdd.reset();
       closePopupAdd();
     }
   });
@@ -138,6 +150,7 @@ function openPopupAdd() {
   //para fechar o formulário add com a tecla esc
   document.addEventListener("keydown", function (evt) {
     if (evt.key === "Escape") {
+      popupFormAdd.reset();
       closePopupAdd();
     }
   });
@@ -148,6 +161,7 @@ addBtn.addEventListener("click", openPopupAdd);
 // função para fechar o formulário add
 
 function closePopupAdd() {
+  popupFormAdd.reset();
   popupAddBox.classList.add("popup-add_closed");
 }
 
@@ -159,14 +173,9 @@ closeBtnAdd.addEventListener("click", closePopupAdd);
 
 // para salvar as informações do formulário add
 
-const formAddElement = document.querySelector(".popup-add");
-
 function handleProfileFormAddSubmit(evt) {
   evt.preventDefault();
 
-  const inputsFormAdd = formAddElement.querySelectorAll(
-    ".popup-add__input-form"
-  );
   const placeInput = inputsFormAdd[0];
   const imageInput = inputsFormAdd[1];
 
@@ -204,7 +213,7 @@ function handleProfileFormAddSubmit(evt) {
 
   // para verificar obrigatoriedade dos campos (popup add)
 
-  // Using a regular expression to check if the url is a valid one (on DevTools)
+  // Using a regular expression to check if the url is a valid one (código do DevTools)
   const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
   if (placeInput.value.length > 1 && urlRegex.test(imageInput.value)) {
@@ -225,7 +234,7 @@ function handleProfileFormAddSubmit(evt) {
   }
 }
 
-formAddElement.addEventListener("submit", handleProfileFormAddSubmit);
+popupAddBox.addEventListener("submit", handleProfileFormAddSubmit);
 
 // para abrir o popup do cartão
 const sectionCards = document.querySelector(".elements__cards");

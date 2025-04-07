@@ -70,3 +70,7 @@ function enableValidation() {
 }
 
 enableValidation();
+
+// export
+
+export { toggleButtonState, hideInputError };
