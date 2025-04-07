@@ -237,7 +237,7 @@ popupAddBox.addEventListener("submit", handleProfileFormAddSubmit);
 // para abrir o popup do cartão
 const sectionCards = document.querySelector(".elements__cards");
 
-sectionCards.addEventListener("click", function (evt) {
+function openPopupCard(evt) {
   const imgCard = evt.target.closest(".card__image");
 
   if (!imgCard) return;
@@ -282,4 +282,6 @@ sectionCards.addEventListener("click", function (evt) {
       popupCard.remove();
     }
   });
-});
+}
+
+sectionCards.addEventListener("click", openPopupCard);
