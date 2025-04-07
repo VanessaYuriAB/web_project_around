@@ -45,20 +45,20 @@ const popupFormEdt = document.querySelector(".popup-edt__container");
 function openPopup() {
   popupBox.classList.remove("popup-edt_closed");
 
-  const inputsPopups = popupBox.querySelectorAll(".popup-edt__input-form");
-  const nameProfile = document.querySelector(".infos__name");
-  const aboutProfile = document.querySelector(".infos__about");
+  let inputsPopup = popupBox.querySelectorAll(".popup-edt__input-form");
+  let nameProfile = document.querySelector(".infos__name");
+  let aboutProfile = document.querySelector(".infos__about");
 
-  inputsPopups[0].value = nameProfile.textContent;
-  inputsPopups[1].value = aboutProfile.textContent;
+  inputsPopup[0].value = nameProfile.textContent;
+  inputsPopup[1].value = aboutProfile.textContent;
 
   // para resetar as msgs de erro ao abrir (edt)
-  hideInputError(popupFormEdt, inputsPopups[0]);
-  hideInputError(popupFormEdt, inputsPopups[1]);
+  hideInputError(popupFormEdt, inputsPopup[0]);
+  hideInputError(popupFormEdt, inputsPopup[1]);
 
   // para alternar o estado do botão
 
-  const inputsEdt = Array.from(popupFormEdt.querySelectorAll("input"));
+  const inputsEdt = Array.from(inputsPopup);
   const buttonEdt = popupFormEdt.querySelector("button");
 
   toggleButtonState(inputsEdt, buttonEdt);
@@ -96,22 +96,20 @@ closeBtn.addEventListener("click", closePopup);
 
 // para salvar as informações do formulário edt
 
-const formElement = document.querySelector(".popup-edt");
-
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
 
-  let inputsForm = formElement.querySelectorAll(".popup-edt__input-form");
-  let nameInput = inputsForm[0];
-  let jobInput = inputsForm[1];
+  let inputsPopup = popupBox.querySelectorAll(".popup-edt__input-form");
+  let nameInput = inputsPopup[0];
+  let aboutInput = inputsPopup[1];
 
   let nameProfile = document.querySelector(".infos__name");
-  let jobProfile = document.querySelector(".infos__about");
+  let aboutProfile = document.querySelector(".infos__about");
 
   // para verificar obrigatoriedade dos campos (popup edt)
-  if (nameInput.value.length > 1 && jobInput.value.length > 1) {
+  if (nameInput.value.length > 1 && aboutInput.value.length > 1) {
     nameProfile.textContent = nameInput.value;
-    jobProfile.textContent = jobInput.value;
+    aboutProfile.textContent = aboutInput.value;
 
     alert("As informações do perfil foram atualizadas com sucesso!");
 
@@ -121,7 +119,7 @@ function handleProfileFormSubmit(evt) {
   }
 }
 
-formElement.addEventListener("submit", handleProfileFormSubmit);
+popupBox.addEventListener("submit", handleProfileFormSubmit);
 
 // para abrir o formulário add
 
