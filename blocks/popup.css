@@ -135,18 +135,6 @@
   cursor: pointer;
 }
 
-.popup-edt__close-btn,
-.popup-add__close-btn {
-  display: inline-block;
-  text-decoration: none;
-}
-
-.popup-edt__close-btn:hover,
-.popup-add__close-btn:hover {
-  opacity: 0.6;
-  cursor: pointer;
-}
-
 .popup-edt__icon-close-btn,
 .popup-add__icon-close-btn {
   width: 40px;
@@ -155,6 +143,12 @@
   background-position: center;
   background-size: contain;
   margin-top: 146.72px;
+}
+
+.popup-edt__icon-close-btn:hover,
+.popup-add__icon-close-btn:hover {
+  opacity: 0.6;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 641px) and (max-width: 960px) {

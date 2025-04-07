@@ -90,7 +90,7 @@ function closePopup() {
 
 // para fechar o formulário edt pelo botão de fechar
 
-const closeBtn = document.querySelector(".popup-edt__close-btn");
+const closeBtn = document.querySelector(".popup-edt__icon-close-btn");
 
 closeBtn.addEventListener("click", closePopup);
 
@@ -167,7 +167,7 @@ function closePopupAdd() {
 
 // para fechar o formulário add pelo botão de fechar
 
-const closeBtnAdd = document.querySelector(".popup-add__close-btn");
+const closeBtnAdd = document.querySelector(".popup-add__icon-close-btn");
 
 closeBtnAdd.addEventListener("click", closePopupAdd);
 
@@ -262,7 +262,7 @@ sectionCards.addEventListener("click", function (evt) {
 
   // para fechar o popup do cartão pelo botão de fechar
 
-  const closeBtnPopup = popupCard.querySelector(".popup-card__close-btn");
+  const closeBtnPopup = popupCard.querySelector(".popup-card__icon-close-btn");
 
   closeBtnPopup.addEventListener("click", function () {
     popupCard.remove();

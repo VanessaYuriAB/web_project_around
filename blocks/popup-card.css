@@ -26,16 +26,6 @@
   line-height: 100%;
 }
 
-.popup-card__close-btn {
-  display: inline-block;
-  text-decoration: none;
-}
-
-.popup-card__close-btn:hover {
-  opacity: 0.6;
-  cursor: pointer;
-}
-
 .popup-card__icon-close-btn {
   width: 40px;
   height: 40px;
@@ -43,6 +33,11 @@
   background-position: center;
   background-size: contain;
   margin-top: 41px;
+}
+
+.popup-card__icon-close-btn:hover {
+  opacity: 0.6;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 641px) and (max-width: 960px) {
