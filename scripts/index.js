@@ -1,5 +1,10 @@
 // imports
-import { toggleButtonState, hideInputError } from "./validate.js";
+import {
+  toggleButtonState,
+  hideInputError,
+  configEdt,
+  configAdd,
+} from "./validate.js";
 
 // para inserir os cards iniciais na página, via <template>
 
@@ -53,15 +58,15 @@ function openPopup() {
   inputsPopup[1].value = aboutProfile.textContent;
 
   // para resetar as msgs de erro ao abrir (edt)
-  hideInputError(popupFormEdt, inputsPopup[0]);
-  hideInputError(popupFormEdt, inputsPopup[1]);
+  hideInputError(popupFormEdt, inputsPopup[0], configEdt);
+  hideInputError(popupFormEdt, inputsPopup[1], configEdt);
 
   // para alternar o estado do botão
 
   const inputsEdt = Array.from(inputsPopup);
   const buttonEdt = popupFormEdt.querySelector("button");
 
-  toggleButtonState(inputsEdt, buttonEdt);
+  toggleButtonState(inputsEdt, buttonEdt, configEdt);
 
   // para fechar o formulário edt clicando na tela
 
@@ -73,19 +78,26 @@ function openPopup() {
 
   // para fechar o formulário edt com a tecla esc
 
-  document.addEventListener("keydown", function (evt) {
-    if (evt.key === "Escape") {
-      closePopup();
-    }
-  });
+  document.addEventListener("keydown", closeEdtWithEsc);
 }
 
 editBtn.addEventListener("click", openPopup);
+
+// função para fechar form edt com tecla esc
+
+function closeEdtWithEsc(evt) {
+  if (evt.key === "Escape") {
+    closePopup();
+  }
+}
 
 // função para fechar o formulário edt
 
 function closePopup() {
   popupBox.classList.add("popup-edt_closed");
+
+  // para remover evento de fechar popups com tecla esc
+  document.removeEventListener("keydown", closeEdtWithEsc);
 }
 
 // para fechar o formulário edt pelo botão de fechar
@@ -106,17 +118,12 @@ function handleProfileFormSubmit(evt) {
   let nameProfile = document.querySelector(".infos__name");
   let aboutProfile = document.querySelector(".infos__about");
 
-  // para verificar obrigatoriedade dos campos (popup edt)
-  if (nameInput.value.length > 1 && aboutInput.value.length > 1) {
-    nameProfile.textContent = nameInput.value;
-    aboutProfile.textContent = aboutInput.value;
+  nameProfile.textContent = nameInput.value;
+  aboutProfile.textContent = aboutInput.value;
 
-    alert("As informações do perfil foram atualizadas com sucesso!");
+  alert("As informações do perfil foram atualizadas com sucesso!");
 
-    closePopup();
-  } else {
-    alert("Cada campo precisa conter, no mínimo, dois caracteres.");
-  }
+  closePopup();
 }
 
 popupBox.addEventListener("submit", handleProfileFormSubmit);
@@ -132,9 +139,9 @@ const inputsFormAdd = popupAddBox.querySelectorAll(".popup-add__input-form");
 function openPopupAdd() {
   popupAddBox.classList.remove("popup-add_closed");
 
-  // para resetar as msgs de erro ao abrir (edt)
-  hideInputError(popupFormAdd, inputsFormAdd[0]);
-  hideInputError(popupFormAdd, inputsFormAdd[1]);
+  // para resetar as msgs de erro ao abrir (add)
+  hideInputError(popupFormAdd, inputsFormAdd[0], configAdd);
+  hideInputError(popupFormAdd, inputsFormAdd[1], configAdd);
 
   // para fechar o formulário add clicando na tela
 
@@ -146,21 +153,27 @@ function openPopupAdd() {
   });
 
   //para fechar o formulário add com a tecla esc
-  document.addEventListener("keydown", function (evt) {
-    if (evt.key === "Escape") {
-      popupFormAdd.reset();
-      closePopupAdd();
-    }
-  });
+  document.addEventListener("keydown", closeAddWithEsc);
 }
 
 addBtn.addEventListener("click", openPopupAdd);
+
+// função para fechar form add com tecla esc
+
+function closeAddWithEsc(evt) {
+  if (evt.key === "Escape") {
+    popupFormAdd.reset();
+    closePopupAdd();
+  }
+}
 
 // função para fechar o formulário add
 
 function closePopupAdd() {
   popupFormAdd.reset();
   popupAddBox.classList.add("popup-add_closed");
+
+  document.removeEventListener("keydown", closeAddWithEsc);
 }
 
 // para fechar o formulário add pelo botão de fechar
@@ -209,27 +222,16 @@ function handleProfileFormAddSubmit(evt) {
     newCardItem.remove();
   });
 
-  // para verificar obrigatoriedade dos campos (popup add)
+  // para adicinar o novo cartão no início da seção
+  sectionElements.prepend(boxNewCard);
 
-  // Using a regular expression to check if the url is a valid one (código do DevTools)
-  const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+  // para resetar os inputs do formulário
+  placeInput.value = "";
+  imageInput.value = "";
 
-  if (placeInput.value.length > 1 && urlRegex.test(imageInput.value)) {
-    // para adicinar o novo cartão no início da seção
-    sectionElements.prepend(boxNewCard);
+  alert("O novo cartão foi incluso com sucesso!");
 
-    // para resetar os inputs do formulário
-    placeInput.value = "";
-    imageInput.value = "";
-
-    alert("O novo cartão foi incluso com sucesso!");
-
-    closePopupAdd();
-  } else {
-    alert(
-      "O campo para o título precisa conter, no mínimo, dois caracteres. O campo para o link da imagem precisa ser uma URL."
-    );
-  }
+  closePopupAdd();
 }
 
 popupAddBox.addEventListener("submit", handleProfileFormAddSubmit);
@@ -237,15 +239,13 @@ popupAddBox.addEventListener("submit", handleProfileFormAddSubmit);
 // para abrir o popup do cartão
 const sectionCards = document.querySelector(".elements__cards");
 
+const templatePopupImg = document.querySelector("#template-popup-img").content;
+const popupCard = templatePopupImg.cloneNode(true).firstElementChild;
+
 function openPopupCard(evt) {
   const imgCard = evt.target.closest(".card__image");
 
   if (!imgCard) return;
-
-  const templatePopupImg = document.querySelector(
-    "#template-popup-img"
-  ).content;
-  const popupCard = templatePopupImg.cloneNode(true).firstElementChild;
 
   const imgPopup = popupCard.querySelector(".popup-card__image");
 
@@ -262,9 +262,7 @@ function openPopupCard(evt) {
 
   const closeBtnPopup = popupCard.querySelector(".popup-card__icon-close-btn");
 
-  closeBtnPopup.addEventListener("click", function () {
-    popupCard.remove();
-  });
+  closeBtnPopup.addEventListener("click", closePopupCard);
 
   // para fechar o popup do cartão clicando na tela
 
@@ -272,16 +270,27 @@ function openPopupCard(evt) {
 
   closeBackgroundPopup.addEventListener("click", function (evt) {
     if (!imgPopup.contains(evt.target) && !titlePopup.contains(evt.target)) {
-      popupCard.remove();
+      closePopupCard();
     }
   });
 
   // para fechar o popup do cartão pela tecla esc
-  document.addEventListener("keydown", function (evt) {
-    if (evt.key === "Escape") {
-      popupCard.remove();
-    }
-  });
+  document.addEventListener("keydown", closePopupWithEsc);
 }
 
 sectionCards.addEventListener("click", openPopupCard);
+
+// função para fechar popup com tecla esc
+
+function closePopupWithEsc(evt) {
+  if (evt.key === "Escape") {
+    closePopupCard();
+  }
+}
+
+// função para fechar o popup
+
+function closePopupCard() {
+  popupCard.remove();
+  document.removeEventListener("keydown", closePopupWithEsc);
+}
