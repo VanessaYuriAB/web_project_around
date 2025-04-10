@@ -94,11 +94,11 @@ Primeiro projeto com JS e segundo design responsivo (com tamanhos de layout forn
 
   ![alt text](./images/readme/JS9-validation1.png)
 
-  ![alt text](./images/readme/JS10%20-%20validation2.png)
+  ![alt text](./images/readme/JS10-validation2.png)
 
-  ![alt text](./images/readme/JS11%20-%20validation_obj.png)
+  ![alt text](./images/readme/JS11-validation_obj.png)
 
-  ![alt text](./images/readme/JS12%20-%20módulo_js.png)
+  ![alt text](./images/readme/JS12-módulo_js.png)
 
 # Link do GitHub Pages
 
