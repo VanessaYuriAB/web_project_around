@@ -251,6 +251,7 @@ function openPopupCard(evt) {
   const titleCard = imgCard.closest(".card").querySelector(".card__name");
 
   titlePopup.textContent = titleCard.textContent;
+  imgPopup.alt = titlePopup.textContent;
 
   sectionCards.prepend(popupCard);
 
