@@ -50,9 +50,9 @@ const popupFormEdt = document.querySelector(".popup-edt__container");
 function openPopup() {
   popupBox.classList.remove("popup-edt_closed");
 
-  let inputsPopup = popupBox.querySelectorAll(".popup-edt__input-form");
-  let nameProfile = document.querySelector(".infos__name");
-  let aboutProfile = document.querySelector(".infos__about");
+  const inputsPopup = popupBox.querySelectorAll(".popup-edt__input-form");
+  const nameProfile = document.querySelector(".infos__name");
+  const aboutProfile = document.querySelector(".infos__about");
 
   inputsPopup[0].value = nameProfile.textContent;
   inputsPopup[1].value = aboutProfile.textContent;
@@ -111,17 +111,15 @@ closeBtn.addEventListener("click", closePopup);
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
 
-  let inputsPopup = popupBox.querySelectorAll(".popup-edt__input-form");
-  let nameInput = inputsPopup[0];
-  let aboutInput = inputsPopup[1];
+  const inputsPopup = popupBox.querySelectorAll(".popup-edt__input-form");
+  const nameInput = inputsPopup[0];
+  const aboutInput = inputsPopup[1];
 
-  let nameProfile = document.querySelector(".infos__name");
-  let aboutProfile = document.querySelector(".infos__about");
+  const nameProfile = document.querySelector(".infos__name");
+  const aboutProfile = document.querySelector(".infos__about");
 
   nameProfile.textContent = nameInput.value;
   aboutProfile.textContent = aboutInput.value;
-
-  alert("As informações do perfil foram atualizadas com sucesso!");
 
   closePopup();
 }
@@ -228,8 +226,6 @@ function handleProfileFormAddSubmit(evt) {
   // para resetar os inputs do formulário
   placeInput.value = "";
   imageInput.value = "";
-
-  alert("O novo cartão foi incluso com sucesso!");
 
   closePopupAdd();
 }
