@@ -1,4 +1,4 @@
-class Card {
+export default class Card {
   constructor(text, imgLink, cardSelector) {
     this._text = text;
     this._imgLink = imgLink;
@@ -53,50 +53,3 @@ class Card {
     });
   }
 }
-
-const templateCards = [
-  {
-    text: "Japão, Monte Fuji",
-    imgLink: "./images/monte-fuji_japão_popup.jpg",
-    cardSelector: "#popup-jp",
-  },
-  {
-    text: "Portugal, Porto",
-    imgLink: "./images/porto_portugal__popup.jpg",
-    cardSelector: "#popup-pt",
-  },
-  {
-    text: "Itália, Matera",
-    imgLink: "./images/matera_itália_popup.jpg",
-    cardSelector: "#popup-it",
-  },
-  {
-    text: "Filipinas, El Nido",
-    imgLink: "./images/el-nido_filipinas_popup.jpg",
-    cardSelector: "#popup-fl",
-  },
-  {
-    text: "Noruega, Lofoten",
-    imgLink: "./images/lofoten_noruega_popup.jpg",
-    cardSelector: "#popup-nr",
-  },
-  {
-    text: "Suécia, Kiruna",
-    imgLink: "./images/kiruna_suécia_popup.jpg",
-    cardSelector: "#popup-sc",
-  },
-];
-
-templateCards.forEach((dataCard) => {
-  const sectionCards = document.querySelector(".elements__cards");
-
-  const cardItem = new Card(
-    dataCard.text,
-    dataCard.imgLink,
-    dataCard.cardSelector
-  );
-
-  cardElement = cardItem.generateCard();
-
-  sectionCards.append(cardElement);
-});

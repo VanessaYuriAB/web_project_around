@@ -1,4 +1,4 @@
-class FormValidator {
+export default class FormValidator {
   constructor(config, formElement) {
     this._config = config;
     this._formElement = formElement;
@@ -19,6 +19,7 @@ class FormValidator {
     }
   }
 
+  // exibe msg de erro do campo
   _showInputError(inputElement, errorMessage) {
     const errorElement = this._formElement.querySelector(
       `.${inputElement.id}-error`
@@ -28,6 +29,7 @@ class FormValidator {
     errorElement.classList.add(this._config.inputErrorClass);
   }
 
+  // recolhe msg de erro do campo
   _hideInputError(inputElement) {
     const errorElement = this._formElement.querySelector(
       `.${inputElement.id}-error`
@@ -48,6 +50,7 @@ class FormValidator {
     }
   }
 
+  // existe campo inválido?
   _hasInvalidInput() {
     return this._inputList.some((inputElement) => !inputElement.validity.valid);
   }
@@ -71,27 +74,3 @@ class FormValidator {
     this._setEventListeners();
   }
 }
-
-const configForms = {
-  edtForm: {
-    formSelector: ".popup-edt__container",
-    inputSelector: ".popup-edt__input-form",
-    submitButtonSelector: ".popup-edt__btn-form",
-    inactiveButtonClass: "popup-edt__btn-form_disabled",
-    inputErrorClass: "popup-edt__input-error",
-  },
-
-  addForm: {
-    formSelector: ".popup-add__container",
-    inputSelector: ".popup-add__input-form",
-    submitButtonSelector: ".popup-add__btn-form",
-    inactiveButtonClass: "popup-add__btn-form_disabled",
-    inputErrorClass: "popup-add__input-error",
-  },
-};
-
-Object.values(configForms).forEach((config) => {
-  const formElement = document.querySelector(config.formSelector);
-  const validator = new FormValidator(config, formElement);
-  validator.enableValidation();
-});
