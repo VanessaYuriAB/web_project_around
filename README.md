@@ -2,11 +2,11 @@
 
 "Around The US" é uma página interativa onde os usuários podem adicionar, remover ou curtir fotos.
 
-Até o momento (09/04/25), são 3 sprints trabalhadas neste projeto (JS Básico e Trabalho com o DOM, Lógica de Programação JS e Métodos, Objetos e Manipulação de Eventos em JS).
+Até o momento (29/04/25), são 4 sprints trabalhadas neste projeto (JS Básico e Trabalho com o DOM, Lógica de Programação JS e Métodos, Objetos e Manipulação de Eventos em JS, Introdução à Programação Orientada a Objetos).
 
-Feita com HTML e CSS avançados, Flexbox, Metodologia BEM / BEM Flat, Figma, Media Queries, Grid Layout e JavaScript.
+Feita com HTML e CSS avançados, Flexbox, Metodologia BEM / BEM Flat, Figma, Media Queries, Grid Layout, JavaScript e POO.
 
-Primeiro projeto com JS e segundo design responsivo (com tamanhos de layout fornecidos no projeto).
+Primeiro projeto com JS e POO. Segundo design responsivo (com tamanhos de layout fornecidos no projeto).
 
 # Técnicas utilizadas
 
@@ -99,6 +99,18 @@ Primeiro projeto com JS e segundo design responsivo (com tamanhos de layout forn
   ![alt text](./images/readme/JS11-validation_obj.png)
 
   ![alt text](./images/readme/JS12-módulo_js.png)
+
+  ![alt text](./images/readme/JS13-modular.png)
+
+  - POO:
+
+  ![alt text](./images/readme/POO1_class-Card.png)
+
+  ![alt text](./images/readme/POO2_class-Card.png)
+
+  ![alt text](./images/readme/POO3_class-FormValidator.png)
+
+  ![alt text](./images/readme/POO4_funções-genéricas.png)
 
 # Link do GitHub Pages
 
