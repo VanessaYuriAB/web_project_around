@@ -138,6 +138,9 @@ function openPopupCard(evt) {
 
   sectionCards.prepend(currentPopupCard);
 
+  // Desativa o scroll do fundo
+  document.body.style.overflow = "hidden";
+
   // para fechar o popup do cartão pelo botão de fechar
 
   const closeBtnPopup = currentPopupCard.querySelector(
@@ -164,6 +167,9 @@ function closePopupWithClickOut(evt) {
   if (!imgPopup.contains(evt.target) && !titlePopup.contains(evt.target)) {
     closePopupCard();
   }
+
+  // Reativa o scroll do fundo
+  document.body.style.overflow = ""; // Reseta para o valor padrão
 }
 
 // função para fechar popup com tecla esc
@@ -171,6 +177,9 @@ function closePopupWithEsc(evt) {
   if (evt.key === "Escape") {
     closePopupCard();
   }
+
+  // Reativa o scroll do fundo
+  document.body.style.overflow = ""; // Reseta para o valor padrão
 }
 
 // função geral para fechar o popup
@@ -178,6 +187,9 @@ function closePopupCard() {
   currentPopupCard.remove();
   document.removeEventListener("keydown", closePopupWithEsc);
   currentPopupCard.removeEventListener("click", closePopupWithClickOut);
+
+  // Reativa o scroll do fundo
+  document.body.style.overflow = ""; // Reseta para o valor padrão
 }
 
 export { closePopup, setupPopupListeners };
