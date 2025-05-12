@@ -3,7 +3,7 @@ import Card from "../../components/Card.js";
 
 import FormValidator from "../../components/FormValidator.js";
 
-import { closePopup } from "../../script/utils.js";
+import { closePopup } from "../../utils/utils.js";
 
 // implementação da class Card
 const templateCards = [

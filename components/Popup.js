@@ -1,4 +1,4 @@
-import { popupHandlers } from "../src/page/index.js";
+import { popupHandlers } from "../src/pages/index.js";
 
 //abre e fecha a janela pop-up
 class Popup {
