@@ -5,7 +5,7 @@ import {
   configEdt,
   configAdd,
   popupHandlers,
-} from "./index.js";
+} from "../src/page/index.js";
 
 // Funções de controle dos POPUP FORM (EDT E ADD)
 // abre e configura popup

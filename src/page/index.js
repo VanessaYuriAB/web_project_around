@@ -1,9 +1,9 @@
 // imports
-import Card from "./card.js";
+import Card from "../../components/Card.js";
 
-import FormValidator from "./formvalidator.js";
+import FormValidator from "../../components/FormValidator.js";
 
-import { closePopup, setupPopupListeners } from "./utils.js";
+import { closePopup } from "../../script/utils.js";
 
 // implementação da class Card
 const templateCards = [

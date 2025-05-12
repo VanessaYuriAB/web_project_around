@@ -1,3 +1,6 @@
+//Transformação da classe Card
+//Conecte a classe Card ao pop-up. Faça Card levar a função handleCardClick() para dentro do construtor. Quando o usuário clicar no cartão, esta função abrirá o pop-up com uma imagem.
+
 export default class Card {
   constructor(text, imgLink, cardSelector) {
     this._text = text;
