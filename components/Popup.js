@@ -1,31 +1,36 @@
-import { popupHandlers } from "../src/pages/index.js";
+import { configAdd, configEdt, popupHandlers } from "../utils/constants.js";
 
-//abre e fecha a janela pop-up
+//Abre e fecha a janela pop-up.
 class Popup {
-  //único parâmetro, que é o seletor do pop-up.
-
+  //Único parâmetro: o seletor do pop-up.
   constructor(popupSelector) {
-    this._popupSelector = document.querySelector(popupSelector);
+    this._element = document.querySelector(popupSelector);
+    if (popupSelector === configEdt.boxFormSelector) {
+      this._config = configEdt;
+    } else if (popupSelector === configAdd.boxFormSelector) {
+      this._config = configAdd;
+    }
+    this._closeBtnElement = this._element.querySelector(
+      this._config.closeButtonSelector
+    );
   }
 
-  //abrirão e fecharão o pop-up.
+  //Abre e fecha o pop-up.
   open() {
-    this._popupSelector.classList.remove(config.closedPopupClass);
-    // VERIFICAR SOBRE A CLASSE A SER REMOVIDA
+    this._element.classList.remove(this._config.closedPopupClass);
+    this._handleEscClose();
   }
 
   close() {
-    this._popupSelector.classList.add(config.closedPopupClass);
-    // VERIFICAR SOBRE A CLASSE A SER REMOVIDA
+    this._element.classList.add(this._config.closedPopupClass);
 
-    // remove listeners
-    this._popupSelector.removeEventListener("click", popupHandlers.clickOut);
+    // remove listeners de fechamento
+    this._element.removeEventListener("click", popupHandlers.clickOut);
     document.removeEventListener("keydown", popupHandlers.keyEsc);
-    popupCloseBtn.removeEventListener("click", popupHandlers.closeBtn);
-    // VERIFICAR SOBRE POPUPcLOSEbTN
+    this._closeBtnElement.removeEventListener("click", popupHandlers.closeBtn);
   }
 
-  //armazena a lógica para fechar o pop-up pressionando a tecla Esc.
+  //Armazena a lógica para fechar o pop-up pressionando a tecla Esc.
   _handleEscClose() {
     popupHandlers.keyEsc = (evt) => {
       if (evt.key === "Escape") {
@@ -36,21 +41,26 @@ class Popup {
     document.addEventListener("keydown", popupHandlers.keyEsc);
   }
 
-  //adiciona um ouvinte de evento click ao ícone de fechamento do popup. A janela modal também deve fechar quando os usuários clicarem na área sombreada em torno do formulário.
+  //Adiciona um ouvinte de evento click ao ícone de fechamento do popup. A janela modal também deve fechar quando os usuários clicarem na área sombreada em torno do formulário.
   setEventListeners() {
     // fecha popup pelo botão fechar
     popupHandlers.closeBtn = () => {
       this.close();
     };
 
-    popupCloseBtn.addEventListener("click", popupHandlers.closeBtn);
-    // VERIFICAR SOBRE POPUPcLOSEbTN
+    this._closeBtnElement.addEventListener("click", popupHandlers.closeBtn);
 
     // fecha popup clicando na tela
     popupHandlers.clickOut = (evt) => {
-      if (!this._popupSelector.contains(evt.target)) {
+      if (
+        !this._element
+          .querySelector(this._config.formSelector)
+          .contains(evt.target)
+      ) {
         this.close();
       }
     };
+
+    this._element.addEventListener("click", popupHandlers.clickOut);
   }
 }
