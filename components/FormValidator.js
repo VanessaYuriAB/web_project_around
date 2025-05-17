@@ -69,8 +69,6 @@ export default class FormValidator {
 
   // habilita a validação do formulário
   enableValidation() {
-    this._formElement.addEventListener("submit", (evt) => evt.preventDefault());
-
     this._setEventListeners();
   }
 }
