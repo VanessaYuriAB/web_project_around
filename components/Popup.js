@@ -1,7 +1,6 @@
 import { configAdd, configEdt, popupHandlers } from "../utils/constants.js";
 
-//Abre e fecha a janela pop-up.
-class Popup {
+export default class Popup {
   //Único parâmetro: o seletor do pop-up.
   constructor(popupSelector) {
     this._element = document.querySelector(popupSelector);

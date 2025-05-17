@@ -1,5 +1,4 @@
-//Responsável por renderizar a informação sobre o usuário na página.
-class UserInfo {
+export default class UserInfo {
   //Pegar um objeto com os seletores de dois elementos no construtor: um contendo o nome do usuário e o outro contendo o trabalho do usuário.
   constructor({ nameSelector, jobSelector }) {
     this._nameElement = document.querySelector(nameSelector);
