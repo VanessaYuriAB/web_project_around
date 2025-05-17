@@ -1,51 +1,52 @@
-//classe filha de Popup
-class PopupWithForm extends Popup {
-  //função de retorno de chamada do envio do formulário como parâmetro do construtor, assim como o seletor do pop-up.
-  constructor(callback, popupSelector) {}
-  // VERIFICAR PARÂMETROS
+import Popup from "./Popup.js";
 
-  // reseta msgs de erro dos inputs
-  const popupForm = popupBox.querySelector(config.formSelector);
-
-  popupInputs.forEach((input) => {
-    hideInputError(popupForm, input, config);
-  });
-
-  // alterna estado do botão conforme inputs
-  const popupSubmitBtn = popupForm.querySelector(config.submitButtonSelector);
-
-  if (extraFunctions && extraFunctions.toggleButtonState) {
-    extraFunctions.toggleButtonState(popupInputs, popupSubmitBtn, config);
+export default class PopupWithForm extends Popup {
+  //Função de retorno de chamada do envio do formulário como parâmetro do construtor, assim como o seletor do pop-up.
+  constructor(popupSelector, handleSubmit) {
+    super(popupSelector);
+    this._formElement = this._element.querySelector(this._config.formSelector);
+    this._submitBtnElement = this._element.querySelector(
+      this._config.submitButtonSelector
+    );
+    this._handleSubmit = (evt) => {
+      evt.preventDefault();
+      handleSubmit(this._getInputValues());
+      // argumento this._formElement ou this._formInputValues?
+      this.close();
+    };
+    this._formInputs = null;
+    this._formInputValues = {};
   }
-  // VERIFICAR SOBRE ESTAS FUNÇÕES
 
-  //coleta dados de todos os campos de entrada.
+  //Coleta dados de todos os campos de entrada.
   _getInputValues() {
-    // const inputsPopup = Array.from(this._popupSelector.querySelectorAll(".CLASSE DOS INPUTS"));
-    }
+    this._formInputs = Array.from(
+      this._formElement.querySelectorAll(this._config.inputSelector)
+    );
 
-  //Modificar o método pai close()
+    this._formInputs.forEach((input) => {
+      this._formInputValues[input.name] = input.value;
+    });
+
+    return this._formInputValues;
+  }
+
+  //Modifica o método pai close(): redefine o formulário assim que o pop-up é fechado.
   close() {
-    // SUPER
-    //redefinir o formulário assim que o pop-up for fechado.
-    if (this._popupSelector.classList.contains("popup-add__container")) {
-      popupForm.reset();
+    super.close();
+
+    this._formElement.removeEventListener("submit", this._handleSubmit);
+
+    //se o formulário for o add -> reseta campos
+    if (this._formElement.classList.contains("popup-add__container")) {
+      this._formElement.reset();
     }
   }
 
-  //Modificar o método pai setEventListeners().
+  //Modifica o método pai setEventListeners(): adiciona o manipulador de eventos Submit ao formulário e o ouvinte de eventos click para o ícone de fechamento.
   setEventListeners() {
-    // SUPER
-    //precisa adicionar o manipulador de eventos Submit ao formulário e o ouvinte de eventos click para o ícone de fechamento.
-    this._popupSelector.addEventListener("submit", nomedafunção);
-    // VERIFICAR SOBRE SELETOR E FUNÇÃO DE CALLBACK. FUNÇÕES SUBMIT DE CADA FORM ESTÃO NO INDEX.JS.
+    super.setEventListeners();
+
+    this._formElement.addEventListener("submit", this._handleSubmit);
   }
 }
-
-//Criar uma instância da classe PopupWithForm para cada pop-up.
-const popupEdtForm = new PopupWithForm();
-
-const popupAddForm = new PopupWithForm();
-
-
-
