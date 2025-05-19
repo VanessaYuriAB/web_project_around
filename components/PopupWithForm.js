@@ -11,21 +11,20 @@ export default class PopupWithForm extends Popup {
     this._handleSubmit = (evt) => {
       evt.preventDefault();
       handleSubmit(this._getInputValues());
-      // argumento this._formElement ou this._formInputValues?
       this.close();
     };
-    this._formInputs = null;
-    this._formInputValues = {};
+    this._formInputs = Array.from(
+      this._formElement.querySelectorAll(this._config.inputSelector)
+    );
   }
 
   //Coleta dados de todos os campos de entrada.
   _getInputValues() {
-    this._formInputs = Array.from(
-      this._formElement.querySelectorAll(this._config.inputSelector)
-    );
+    // evita dados acumulados em chamadas sucessivas, reset do objeto
+    this._formInputValues = {};
 
-    this._formInputs.forEach((input) => {
-      this._formInputValues[input.name] = input.value;
+    this._formInputs.forEach((inputElement) => {
+      this._formInputValues[inputElement.name] = inputElement.value;
     });
 
     return this._formInputValues;
