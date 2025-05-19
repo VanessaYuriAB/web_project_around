@@ -18,6 +18,7 @@ export default class Popup {
   open() {
     this._element.classList.remove(this._config.closedPopupClass);
     this._handleEscClose();
+    this.setEventListeners();
   }
 
   close() {
