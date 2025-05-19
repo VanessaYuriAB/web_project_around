@@ -71,4 +71,12 @@ export default class FormValidator {
   enableValidation() {
     this._setEventListeners();
   }
+
+  // reseta estado da validação visual (msgs de erro e botão)
+  resetValidation() {
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+    });
+    this._toggleButtonState();
+  }
 }
