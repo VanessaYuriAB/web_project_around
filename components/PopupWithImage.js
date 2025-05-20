@@ -1,30 +1,44 @@
-//classe filha de Popup
-class PopupWithImage extends Popup {
-  constructor(parameters) {}
+import Popup from "./Popup.js";
+import { sectionCards } from "../utils/constants.js";
 
-  //alterar o método pai open().
-  open() {
-    //adicionar uma imagem ao pop-up e o atributo src da imagem correspondente junto com uma legenda para a imagem.
-    const imgCard = evt.target.closest(".card__image");
+export default class PopupWithImage extends Popup {
+  constructor(popupSelector) {
+    super(popupSelector);
 
-    if (!imgCard) return;
+    this._imagePopup = this._element.querySelector(this._config.imageSelector);
+    this._captionPopup = this._element.querySelector(
+      this._config.captionSelector
+    );
+  }
 
-    currentPopupCard = templatePopupImg.cloneNode(true).firstElementChild;
+  //Alterar o método pai open(): adicionar uma imagem ao pop-up e o atributo src da imagem correspondente junto com uma legenda para a imagem.
+  open(evt) {
+    const imageCard = evt.target.closest(".card__image");
 
-    const imgPopup = currentPopupCard.querySelector(".popup-card__image");
-    const titlePopup = currentPopupCard.querySelector(".popup-card__title");
-    const titleCard = imgCard.closest(".card").querySelector(".card__name");
+    if (!imageCard) return;
 
-    imgPopup.src = imgCard.src;
-    titlePopup.textContent = titleCard.textContent;
-    imgPopup.alt = titlePopup.textContent;
+    const titleCard = imageCard.closest(".card").querySelector(".card__name");
 
-    sectionCards.prepend(currentPopupCard);
-    // VERIFICAR VARIÁVEIS E SELETORES
+    this._imagePopup.src = imageCard.src;
+    this._captionPopup.textContent = titleCard.textContent;
+    this._imagePopup.alt = this._captionPopup.textContent;
 
-    // Desativa o scroll do fundo
+    sectionCards.prepend(this._element);
+
+    // desativa o scroll do fundo
     document.body.style.overflow = "hidden";
-    // VERIFICAR SOBRE FUNÇÃO
+
+    // abre popup
+    super.open();
+  }
+
+  close() {
+    super.close();
+
+    this._element.remove();
+
+    // Reativa o scroll do fundo
+    document.body.style.overflow = ""; // Reseta para o valor padrão
   }
 }
 

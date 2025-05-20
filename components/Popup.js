@@ -1,27 +1,46 @@
-import { configAdd, configEdt, popupHandlers } from "../utils/constants.js";
+import {
+  configAdd,
+  configEdt,
+  popupHandlers,
+  templatePopupImg,
+  configCard,
+} from "../utils/constants.js";
 
 export default class Popup {
   //Único parâmetro: o seletor do pop-up.
   constructor(popupSelector) {
-    this._element = document.querySelector(popupSelector);
-    if (popupSelector === configEdt.boxFormSelector) {
-      this._config = configEdt;
-    } else if (popupSelector === configAdd.boxFormSelector) {
-      this._config = configAdd;
+    if (popupSelector === configCard.popupSelector) {
+      this._config = configCard;
+      this._element = templatePopupImg
+        .querySelector(this._config.popupSelector)
+        .cloneNode(true);
+    } else {
+      this._element = document.querySelector(popupSelector);
+      if (popupSelector === configEdt.boxFormSelector) {
+        this._config = configEdt;
+      } else if (popupSelector === configAdd.boxFormSelector) {
+        this._config = configAdd;
+      }
     }
+
     this._closeBtnElement = this._element.querySelector(
       this._config.closeButtonSelector
     );
+    this._formSelector = this._element.querySelector(this._config.formSelector);
   }
 
   //Abre e fecha o pop-up.
   open() {
+    // para popups form
     this._element.classList.remove(this._config.closedPopupClass);
+
+    // define listeners de fechamento
     this._handleEscClose();
     this.setEventListeners();
   }
 
   close() {
+    // para popups form
     this._element.classList.add(this._config.closedPopupClass);
 
     // remove listeners de fechamento
