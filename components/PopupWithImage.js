@@ -15,6 +15,7 @@ export default class PopupWithImage extends Popup {
   open(evt) {
     const imageCard = evt.target.closest(".card__image");
 
+    // se não contiver imagem, não abra popup
     if (!imageCard) return;
 
     const titleCard = imageCard.closest(".card").querySelector(".card__name");

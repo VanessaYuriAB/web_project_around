@@ -50,7 +50,7 @@ export default class FormValidator {
     }
   }
 
-  // existe campo inválido?
+  // verifica se há campo inválido
   _hasInvalidInput() {
     return this._inputList.some((inputElement) => !inputElement.validity.valid);
   }
@@ -72,7 +72,7 @@ export default class FormValidator {
     this._setEventListeners();
   }
 
-  // reseta estado da validação visual (msgs de erro e botão)
+  // reseta msgs de erro dos campo e botão
   resetValidation() {
     this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);

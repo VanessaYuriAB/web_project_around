@@ -7,6 +7,7 @@ export default class Card {
 
     this._handleCardClick = handleCardClick;
 
+    // definição dos handlers para listeners
     this._handleLikeClick = (evt) => {
       evt.target.classList.toggle("card__like-btn_active");
     };
@@ -47,7 +48,7 @@ export default class Card {
   }
 
   _prepareCardImageClick() {
-    // Adiciona o listener no clique da imagem para abrir o popup
+    // adiciona o listener no clique da imagem para abrir o popup
     this._imgCard.addEventListener("click", this._handleCardClick);
   }
 
@@ -66,12 +67,12 @@ export default class Card {
   }
 
   _removeCard() {
-    // Remove listeners
+    // remove listeners
     this._imgCard.removeEventListener("click", this._handleCardClick);
     this._likeBtn.removeEventListener("click", this._handleLikeClick);
     this._trashBtn.removeEventListener("click", this._handleTrashClick);
 
-    // Deleta card
+    // deleta card
     this._element.remove();
   }
 }
