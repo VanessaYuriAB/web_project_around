@@ -1,4 +1,3 @@
-//Não tem marcação, recebe marcação por meio da função de retorno de chamada e insere no contêiner.
 export default class Section {
   //Objeto com duas propriedades (items e renderer) como primeiro parâmetro do construtor. A propriedade items serve como um vetor de dados, que você precisa adicionar em uma página ao inicializar a classe. A propriedade renderer é uma função responsável por criar e renderizar dados em uma página. O segundo parâmetro deve ser um seletor de classe CSS onde você adicionará os elementos do cartão.
   constructor({ items, renderer }, containerSelector) {

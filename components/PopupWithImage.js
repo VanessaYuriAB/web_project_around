@@ -11,7 +11,7 @@ export default class PopupWithImage extends Popup {
     );
   }
 
-  //Alterar o método pai open(): adicionar uma imagem ao pop-up e o atributo src da imagem correspondente junto com uma legenda para a imagem.
+  //Altera o método pai open(): adiciona uma imagem ao pop-up e o atributo src da imagem correspondente junto com uma legenda para a imagem.
   open(evt) {
     const imageCard = evt.target.closest(".card__image");
 
@@ -37,10 +37,7 @@ export default class PopupWithImage extends Popup {
 
     this._element.remove();
 
-    // Reativa o scroll do fundo
-    document.body.style.overflow = ""; // Reseta para o valor padrão
+    // reativa o scroll do fundo: reseta para o valor padrão
+    document.body.style.overflow = "";
   }
 }
-
-//Transformação da classe Card
-//Conecte a classe Card ao pop-up. Faça Card levar a função handleCardClick() para dentro do construtor. Quando o usuário clicar no cartão, esta função abrirá o pop-up com uma imagem.
