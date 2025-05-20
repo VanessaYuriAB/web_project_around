@@ -1,12 +1,19 @@
-//Transformação da classe Card
-//Conecte a classe Card ao pop-up. Faça Card levar a função handleCardClick() para dentro do construtor. Quando o usuário clicar no cartão, esta função abrirá o pop-up com uma imagem.
-
 export default class Card {
-  constructor(text, imgLink, cardSelector) {
+  constructor(text, imgLink, cardSelector, handleCardClick) {
     this._text = text;
     this._imgLink = imgLink;
     this._cardSelector = cardSelector;
     this._element = null;
+
+    this._handleCardClick = handleCardClick;
+
+    this._handleLikeClick = (evt) => {
+      evt.target.classList.toggle("card__like-btn_active");
+    };
+
+    this._handleTrashClick = () => {
+      this._removeCard();
+    };
   }
 
   _getCloneFromTemplate() {
@@ -20,14 +27,15 @@ export default class Card {
 
   generateCard() {
     this._element = this._getCloneFromTemplate();
+
+    this._imgCard = this._element.querySelector(".card__image");
+    this._nameCard = this._element.querySelector(".card__name");
+
     this._setEventListeners();
 
-    const imgCard = this._element.querySelector(".card__image");
-    const nameCard = this._element.querySelector(".card__name");
-
-    imgCard.src = this._imgLink;
-    nameCard.textContent = this._text;
-    imgCard.alt = `${this._text}`;
+    this._imgCard.src = this._imgLink;
+    this._nameCard.textContent = this._text;
+    this._imgCard.alt = `${this._text}`;
 
     return this._element;
   }
@@ -35,24 +43,35 @@ export default class Card {
   _setEventListeners() {
     this._prepareCardLikeBtn();
     this._prepareCardTrashBtn();
+    this._prepareCardImageClick();
+  }
+
+  _prepareCardImageClick() {
+    // Adiciona o listener no clique da imagem para abrir o popup
+    this._imgCard.addEventListener("click", this._handleCardClick);
   }
 
   _prepareCardLikeBtn() {
-    const likeBtn = this._element.querySelector(".card__like-btn");
+    this._likeBtn = this._element.querySelector(".card__like-btn");
 
-    likeBtn.classList.remove("card__like-btn_active");
+    this._likeBtn.classList.remove("card__like-btn_active");
 
-    likeBtn.addEventListener("click", (evt) => {
-      evt.target.classList.toggle("card__like-btn_active");
-    });
+    this._likeBtn.addEventListener("click", this._handleLikeClick);
   }
 
   _prepareCardTrashBtn() {
-    const trashBtn = this._element.querySelector(".card__trash-btn");
+    this._trashBtn = this._element.querySelector(".card__trash-btn");
 
-    trashBtn.addEventListener("click", (evt) => {
-      const card = trashBtn.closest(".card-elements");
-      card.remove();
-    });
+    this._trashBtn.addEventListener("click", this._handleTrashClick);
+  }
+
+  _removeCard() {
+    // Remove listeners
+    this._imgCard.removeEventListener("click", this._handleCardClick);
+    this._likeBtn.removeEventListener("click", this._handleLikeClick);
+    this._trashBtn.removeEventListener("click", this._handleTrashClick);
+
+    // Deleta card
+    this._element.remove();
   }
 }
