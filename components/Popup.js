@@ -9,27 +9,31 @@ import {
 export default class Popup {
   //Único parâmetro: o seletor do pop-up.
   constructor(popupSelector) {
+    // para popup image
     if (popupSelector === configCard.popupSelector) {
       this._config = configCard;
       this._element = templatePopupImg
         .querySelector(this._config.popupSelector)
         .cloneNode(true);
+      // para popups form
     } else {
       this._element = document.querySelector(popupSelector);
+      // edt
       if (popupSelector === configEdt.boxFormSelector) {
         this._config = configEdt;
+        // add
       } else if (popupSelector === configAdd.boxFormSelector) {
         this._config = configAdd;
       }
     }
 
+    // para todos popups
     this._closeBtnElement = this._element.querySelector(
       this._config.closeButtonSelector
     );
-    this._formSelector = this._element.querySelector(this._config.formSelector);
+    this._formElement = this._element.querySelector(this._config.formSelector);
   }
 
-  //Abre e fecha o pop-up.
   open() {
     // para popups form
     this._element.classList.remove(this._config.closedPopupClass);
@@ -60,7 +64,6 @@ export default class Popup {
     document.addEventListener("keydown", popupHandlers.keyEsc);
   }
 
-  //Adiciona um ouvinte de evento click ao ícone de fechamento do popup. A janela modal também deve fechar quando os usuários clicarem na área sombreada em torno do formulário.
   setEventListeners() {
     // fecha popup pelo botão fechar
     popupHandlers.closeBtn = () => {
