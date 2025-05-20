@@ -38,7 +38,7 @@ const sectionCards = document.querySelector(".elements__cards");
 // objeto para os campos do perfil (nome e sobre)
 const profileSelectors = {
   name: ".infos__name",
-  job: ".infos__about",
+  about: ".infos__about",
 };
 
 // objetos de configuração edt e add
@@ -70,13 +70,21 @@ const addFormElement = document.querySelector(configAdd.formSelector);
 
 // constantes para campos do popup form edt
 const nameInput = document.querySelector('input[name="name"]');
-const jobInput = document.querySelector('input[name="about"]');
+const aboutInput = document.querySelector('input[name="about"]');
 
-// constantes para campos do popup form add
-const titleInput = document.querySelector('input[name="place"]');
-const imageInput = document.querySelector('input[name="link"]');
-
+// constante para campos do popup form add
 const templateNewCard = document.querySelector("#template-model-card").content;
+
+// constantes para popup image
+const templatePopupImg = document.querySelector("#template-popup-img").content;
+
+const configCard = {
+  popupSelector: ".popup-card",
+  closeButtonSelector: ".popup-card__icon-close-btn",
+  imageSelector: ".popup-card__image",
+  captionSelector: ".popup-card__title",
+  formSelector: ".popup-card__image", // formSelector para acompanhar construtor da classe pai (Popup) > para listener de fechamento > refere-se à área da imagem do popup.
+};
 
 // objeto para handlers dos listeners de fechamento dos popups
 const popupHandlers = { clickOut: null, keyEsc: null, closeBtn: null };
@@ -97,8 +105,8 @@ export {
   edtBtnElement,
   addBtnElement,
   nameInput,
-  jobInput,
-  titleInput,
-  imageInput,
+  aboutInput,
   templateNewCard,
+  templatePopupImg,
+  configCard,
 };
