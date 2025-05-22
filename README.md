@@ -2,7 +2,7 @@
 
 "Around The US" é uma página interativa onde os usuários podem adicionar, remover ou curtir fotos.
 
-Até o momento (29/04/25), são 4 sprints trabalhadas neste projeto (JS Básico e Trabalho com o DOM, Lógica de Programação JS e Métodos, Objetos e Manipulação de Eventos em JS, Introdução à Programação Orientada a Objetos).
+Até o momento (22/05/25), são 5 sprints trabalhadas neste projeto (JS Básico e Trabalho com o DOM, Lógica de Programação JS e Métodos, Objetos e Manipulação de Eventos em JS, Introdução à Programação Orientada a Objetos, POO avançado e NPM).
 
 Feita com HTML e CSS avançados, Flexbox, Metodologia BEM / BEM Flat, Figma, Media Queries, Grid Layout, JavaScript e POO.
 
@@ -104,13 +104,37 @@ Primeiro projeto com JS e POO. Segundo design responsivo (com tamanhos de layout
 
   - POO:
 
-  ![alt text](./images/readme/POO1_class-Card.png)
+  ![alt text](./images/readme/POO1-contants1.png)
 
-  ![alt text](./images/readme/POO2_class-Card.png)
+  ![alt text](./images/readme/POO2-constants2.png)
 
-  ![alt text](./images/readme/POO3_class-FormValidator.png)
+  ![alt text](./images/readme/POO3-index1.png)
 
-  ![alt text](./images/readme/POO4_funções-genéricas.png)
+  ![alt text](./images/readme/POO4-index2.png)
+
+  ![alt text](./images/readme/POO5-index3.png)
+
+  ![alt text](./images/readme/POO6-index4.png)
+
+  ![alt text](./images/readme/POO7-index5.png)
+
+  ![alt text](./images/readme/POO8-index6.png)
+
+  ![alt text](./images/readme/POO9-popupform.png)
+
+  ![alt text](./images/readme/POO10-popupimage.png)
+
+  ![alt text](./images/readme/POO11-popup.png)
+
+  ![alt text](./images/readme/POO12-section.png)
+
+  ![alt text](./images/readme/POO13-userinfo.png)
+
+  ![alt text](./images/readme/POO14-card_formvalidator1.png)
+
+  ![alt text](./images/readme/POO15-card_formvalidator2.png)
+
+  ![alt text](./images/readme/POO16-card_formvalidator3.png)
 
 # Link do GitHub Pages
 
@@ -118,4 +142,6 @@ https://vanessayuriab.github.io/web_project_around/
 
 # Melhorias:
 
-Adicionar funcionalidade para manter as informações editadas e salvas, após atualizar a página.
+- Adicionar funcionalidade para manter as informações editadas e salvas, após atualizar a página.
+- Alterar nome de chaves de objetos de configuração: boxFormSelector e formSelector para containerSelector e boxSelector.
+- Inserir novo cartão na página via classes Section e Card.
