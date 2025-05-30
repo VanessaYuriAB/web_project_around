@@ -41,7 +41,7 @@ const profileSelectors = {
   about: ".infos__about",
 };
 
-// objetos de configuração edt e add
+// objetos de configuração para formulários edt, add e trash
 const configEdt = {
   boxFormSelector: ".popup-edt",
   formSelector: ".popup-edt__container",
@@ -62,6 +62,14 @@ const configAdd = {
   closedPopupClass: "popup-add_closed",
   inactiveButtonClass: "popup-add__btn-form_disabled",
   inputErrorClass: "popup-add__input-error",
+};
+
+const configTrash = {
+  boxFormSelector: ".popup-trash",
+  formSelector: ".popup-trash__container",
+  submitButtonSelector: ".popup-trash__btn-form",
+  closeButtonSelector: ".popup-trash__icon-close-btn",
+  closedPopupClass: "popup-trash_closed",
 };
 
 // constantes para validador
@@ -109,4 +117,5 @@ export {
   templateNewCard,
   templatePopupImg,
   configCard,
+  configTrash,
 };
