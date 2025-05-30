@@ -37,6 +37,19 @@
             </a>
             <h2 class="about infos__about">Dev em desenvolvimento</h2>
           </div>
+
+          <!-- HTML PARA POPUP DE EXCLUSÃO DE CARD -->
+
+          <div class="popup-trash popup-trash_closed">
+            <form class="popup-trash__container" name="trash" novalidate>
+              <h3 class="popup-trash__title-form">Tem certeza?</h3>
+              <button class="popup-trash__btn-form" type="submit">Sim</button>
+            </form>
+            <div class="icon-close-btn popup-trash__icon-close-btn"></div>
+          </div>
+
+          <!---->
+
           <div class="popup-edt popup-edt_closed">
             <form class="popup-edt__container" name="edt" novalidate>
               <h3 class="popup-edt__title-form">Editar perfil</h3>
@@ -246,6 +259,7 @@
     <script type="module" src="./components/Popup.js"></script>
     <script type="module" src="./components/PopupWithForm.js"></script>
     <script type="module" src="./components/PopupWithImage.js"></script>
+    <script type="module" src="./components/PopupWithConfirmation.js"></script>
     <script type="module" src="./components/Section.js"></script>
     <script type="module" src="./components/UserInfo.js"></script>
   </body>
