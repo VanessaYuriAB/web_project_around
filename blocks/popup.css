@@ -85,10 +85,6 @@
   margin-bottom: calc(48px - 31.34px);
 }
 
-/*.popup-add__input-form:last-of-type:valid {
-  margin-bottom: calc(48px - 31.34px - 5px);
-}*/
-
 .popup-edt__input-form::placeholder,
 .popup-add__input-form::placeholder {
   color: #c4c4c4;
