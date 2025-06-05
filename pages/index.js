@@ -9,7 +9,6 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import {
   templateCards,
   sectionCards,
-  profileSelectors,
   configEdt,
   configAdd,
   edtFormElement,
@@ -20,16 +19,21 @@ import {
   aboutInput,
   templateNewCard,
   configCard,
+  configPhoto,
+  photoFormElement,
+  photoBtnElement,
+  profilePhoto,
 } from "../utils/constants.js";
 
 import FormValidator from "../components/FormValidator.js";
 
 import PopupWithImage from "../components/PopupWithImage.js";
 
-// popupwithimage
-const popupCard = new PopupWithImage(configCard.popupSelector);
+import PopupForPhoto from "../components/PopupForPhoto.js";
 
-// section e card: cards iniciais
+//import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
+
+// section e card: renderiza cards iniciais
 const initialCards = new Section(
   {
     items: templateCards,
@@ -51,6 +55,9 @@ const initialCards = new Section(
 
 initialCards.renderer();
 
+// popupwithimage
+const popupCard = new PopupWithImage(configCard.popupSelector);
+
 // para abrir popup dos cards inseridos pela página
 sectionCards.addEventListener("click", (evt) => {
   popupCard.open(evt);
@@ -65,19 +72,66 @@ edtValidator.enableValidation();
 const addValidator = new FormValidator(configAdd, addFormElement);
 addValidator.enableValidation();
 
-// userinfo
+// photo
+const photoValidator = new FormValidator(configPhoto, photoFormElement);
+photoValidator.enableValidation();
+
+// userinfo: para renderizar as informações do perfil
 const profileInfos = new UserInfo({
-  nameSelector: profileSelectors.name,
-  aboutSelector: profileSelectors.about,
+  nameSelector: ".infos__name",
+  aboutSelector: ".infos__about",
 });
 
-// popupwithform e user info
+// api: para renderizar informações inicias do perfil
+/*
+fetch("https://around-api.pt-br.tripleten-services.com/v1/users/me", {
+  headers: {
+    authorization: "f5b337a1-89dd-4f09-826f-0ed62662122f",
+  },
+})
+  .then((res) => res.json())
+  .then((result) => {
+    console.log(result);
+  });
+
+/*
+Use as propriedades name ,about , e avatar nos elementos de cabeçalho correspondentes da página. A propriedade _id é para o ID de usuário; neste caso o seu.
+
+result.name = textContent do elemento para o nome
+etc...
+*/
+
+// popupwithform: abertura e envio
 // form edt
 const popupEdtProfile = new PopupWithForm(
   configEdt.boxFormSelector,
   // atualiza dados do perfil na página
   (dataProfile) => {
-    profileInfos.setUserInfo(dataProfile);
+    fetch("https://around-api.pt-br.tripleten-services.com/v1/users/me", {
+      method: "PATCH",
+      headers: {
+        authorization: "f5b337a1-89dd-4f09-826f-0ed62662122f",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: dataProfile.name,
+        about: dataProfile.about,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        // se o servidor retornar um erro, rejeite a promessa
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .then((data) => {
+        // Atualiza as informações do perfil
+        profileInfos.setUserInfo(data);
+      })
+      .catch((err) => {
+        console.error(`Erro ao atualizar as informações de perfil: ${err}`);
+      });
   }
 );
 
@@ -119,7 +173,51 @@ const popupAddCard = new PopupWithForm(
   }
 );
 
-// listeners de abertura (form)
+// popupforphoto: abertura e envio
+const popupEditPhoto = new PopupForPhoto(
+  configPhoto.boxFormSelector,
+  // envia a nova foto do perfil
+  (dataPhoto) => {
+    fetch(
+      "https://around-api.pt-br.tripleten-services.com/v1/users/me/avatar",
+      {
+        method: "PATCH",
+        headers: {
+          authorization: "f5b337a1-89dd-4f09-826f-0ed62662122f",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          avatar: dataPhoto,
+        }),
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        // se o servidor retornar um erro, rejeite a promessa
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .then((data) => {
+        // Atualiza a imagem do perfil com o novo link do avatar
+        profilePhoto.style.backgroundImage = `url(${data.avatar})`;
+      })
+      .catch((err) => {
+        console.error(`Erro ao atualizar a foto de perfil: ${err}`);
+      });
+  }
+);
+
+// listeners de abertura (popups form)
+// photo
+photoBtnElement.addEventListener("click", () => {
+  // reseta estado da validação (msgs de erro e botão)
+  photoValidator.resetValidation();
+
+  // abre popup para edição da foto do perfil
+  popupEditPhoto.open();
+});
+
 // edt
 edtBtnElement.addEventListener("click", () => {
   // preenche inputs com dados do perfil, antes de abrir
