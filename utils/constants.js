@@ -38,12 +38,6 @@ const sectionCards = document.querySelector(".elements__cards");
 // constante para o elemento de foto do perfil
 const profilePhoto = document.querySelector(".profile__photo");
 
-// objeto para os campos do perfil (nome e sobre)
-const profileSelectors = {
-  name: ".infos__name",
-  about: ".infos__about",
-};
-
 // objetos de configuração para formulários edt, add, trash e photo
 const configEdt = {
   boxFormSelector: ".popup-edt",
@@ -123,7 +117,6 @@ export {
   configEdt,
   configAdd,
   popupHandlers,
-  profileSelectors,
   edtFormElement,
   addFormElement,
   edtBtnElement,
