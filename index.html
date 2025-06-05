@@ -37,13 +37,13 @@
               <h3 class="popup-photo__title-form">Alterar a foto do perfil</h3>
               <input
                 class="popup-photo__input-form"
-                id="link-photo-input"
-                name="link-photo"
+                id="photo-input"
+                name="photo"
                 type="url"
                 placeholder="Link de foto"
                 required
               />
-              <span class="popup-photo__input-error link-input-error"></span>
+              <span class="popup-photo__input-error photo-input-error"></span>
               <button class="popup-photo__btn-form" type="submit">
                 Salvar
               </button>
@@ -267,7 +267,7 @@
       </div>
     </template>
     <script type="module" src="./utils/constants.js"></script>
-    <script type="module" src="./pages/index.js"></script>
+    <script type="module" src="./components/Api.js"></script>
     <script type="module" src="./components/Card.js"></script>
     <script type="module" src="./components/FormValidator.js"></script>
     <script type="module" src="./components/Popup.js"></script>
@@ -277,5 +277,6 @@
     <script type="module" src="./components/PopupWithConfirmation.js"></script>
     <script type="module" src="./components/Section.js"></script>
     <script type="module" src="./components/UserInfo.js"></script>
+    <script type="module" src="./pages/index.js"></script>
   </body>
 </html>
