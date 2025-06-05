@@ -16,6 +16,8 @@ export default class PopupWithForm extends Popup {
       this.close();
     };
 
+    this._formElement.addEventListener("submit", this._handleSubmit);
+
     this._formInputs = Array.from(
       this._formElement.querySelectorAll(this._config.inputSelector)
     );
@@ -36,8 +38,6 @@ export default class PopupWithForm extends Popup {
   close() {
     super.close();
 
-    this._formElement.removeEventListener("submit", this._handleSubmit);
-
     //se o formulário for o add -> reseta campos
     if (this._formElement.classList.contains("popup-add__container")) {
       this._formElement.reset();
@@ -46,7 +46,5 @@ export default class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
-
-    this._formElement.addEventListener("submit", this._handleSubmit);
   }
 }

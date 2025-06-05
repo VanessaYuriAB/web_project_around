@@ -15,6 +15,8 @@ export default class PopupForPhoto extends Popup {
       this.close();
     };
 
+    this._formElement.addEventListener("submit", this._handleSubmit);
+
     this._formInput = this._formElement.querySelector(
       this._config.inputSelector
     );
@@ -28,14 +30,11 @@ export default class PopupForPhoto extends Popup {
   close() {
     super.close();
 
-    this._formElement.removeEventListener("submit", this._handleSubmit);
-
+    // reseta campo do popup
     this._formElement.reset();
   }
 
   setEventListeners() {
     super.setEventListeners();
-
-    this._formElement.addEventListener("submit", this._handleSubmit);
   }
 }
