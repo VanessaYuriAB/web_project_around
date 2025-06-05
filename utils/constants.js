@@ -35,6 +35,9 @@ const templateCards = [
 // constante para seção de cards
 const sectionCards = document.querySelector(".elements__cards");
 
+// constante para o elemento de foto do perfil
+const profilePhoto = document.querySelector(".profile__photo");
+
 // objeto para os campos do perfil (nome e sobre)
 const profileSelectors = {
   name: ".infos__name",
@@ -95,7 +98,7 @@ const aboutInput = document.querySelector('input[name="about"]');
 // constante para campos do popup form add
 const templateNewCard = document.querySelector("#template-model-card").content;
 
-// constantes para popup image
+// constante e obj para popup image
 const templatePopupImg = document.querySelector("#template-popup-img").content;
 
 const configCard = {
@@ -112,7 +115,7 @@ const popupHandlers = { clickOut: null, keyEsc: null, closeBtn: null };
 // constantes para botões de abertura dos popups form
 const edtBtnElement = document.querySelector(".infos__edit-btn");
 const addBtnElement = document.querySelector(".profile__add-btn");
-const photoBtnElement = document.querySelector(".profile__photo");
+const photoBtnElement = document.querySelector(".profile__photo_overlay");
 
 export {
   templateCards,
@@ -134,4 +137,5 @@ export {
   configPhoto,
   photoFormElement,
   photoBtnElement,
+  profilePhoto,
 };
