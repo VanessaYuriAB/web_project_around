@@ -43,8 +43,4 @@ export default class PopupWithForm extends Popup {
       this._formElement.reset();
     }
   }
-
-  setEventListeners() {
-    super.setEventListeners();
-  }
 }

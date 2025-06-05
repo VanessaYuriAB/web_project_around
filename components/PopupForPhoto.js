@@ -33,8 +33,4 @@ export default class PopupForPhoto extends Popup {
     // reseta campo do popup
     this._formElement.reset();
   }
-
-  setEventListeners() {
-    super.setEventListeners();
-  }
 }
