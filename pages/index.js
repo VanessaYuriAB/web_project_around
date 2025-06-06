@@ -31,9 +31,61 @@ import PopupWithImage from "../components/PopupWithImage.js";
 
 import PopupForPhoto from "../components/PopupForPhoto.js";
 
+import Api from "../components/Api.js";
+
 //import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
-// section e card: renderiza cards iniciais
+// api(fetch): renderiza o card inicial do servidor
+const apiServerCard = new Api({
+  baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",
+  headers: {
+    authorization: "f5b337a1-89dd-4f09-826f-0ed62662122f",
+    "Content-Type": "application/json",
+  },
+});
+
+apiServerCard
+  .getInitialCards()
+  .then((result) => {
+    const boxServerCard = templateNewCard
+      .querySelector(".card-model")
+      .cloneNode(true);
+
+    const titleCard = boxServerCard.querySelector(".card__name");
+    const imageCard = boxServerCard.querySelector(".card__image");
+
+    titleCard.textContent = result[0].name;
+    imageCard.src = result[0].link;
+    imageCard.alt = result[0].name;
+
+    // botão curtir
+    const likeButton = boxServerCard.querySelector(".card__like-btn");
+
+    likeButton.classList.remove("card__like-btn_active");
+
+    likeButton.addEventListener("click", (evt) => {
+      evt.target.classList.toggle("card__like-btn_active");
+    });
+
+    // botão excluir
+    const trashButton = boxServerCard.querySelector(".card__trash-btn");
+
+    trashButton.addEventListener("click", (evt) => {
+      const currentCard = evt.target.closest(".card-model");
+      currentCard.remove();
+    });
+
+    return boxServerCard;
+  })
+  .then((boxServerCard) => {
+    // adiciona o novo cartão no início da seção
+    sectionCards.append(boxServerCard);
+  })
+  .catch((err) => {
+    console.log(`Erro ao renderizar o card inicial do servidor: ${err}`);
+  });
+
+// section e card: renderiza meus cards iniciais
 const initialCards = new Section(
   {
     items: templateCards,
@@ -81,25 +133,6 @@ const profileInfos = new UserInfo({
   nameSelector: ".infos__name",
   aboutSelector: ".infos__about",
 });
-
-// api: para renderizar informações inicias do perfil
-/*
-fetch("https://around-api.pt-br.tripleten-services.com/v1/users/me", {
-  headers: {
-    authorization: "f5b337a1-89dd-4f09-826f-0ed62662122f",
-  },
-})
-  .then((res) => res.json())
-  .then((result) => {
-    console.log(result);
-  });
-
-/*
-Use as propriedades name ,about , e avatar nos elementos de cabeçalho correspondentes da página. A propriedade _id é para o ID de usuário; neste caso o seu.
-
-result.name = textContent do elemento para o nome
-etc...
-*/
 
 // popupwithform: abertura e envio
 // form edt
