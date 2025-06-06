@@ -5,19 +5,38 @@ export default class Api {
   }
 
   // captura card inicial do servidor
-  getInitialCards() {
-    return fetch("https://around-api.pt-br.tripleten-services.com/v1/cards/", {
-      headers: {
-        authorization: "3c7ad9a7-200c-4d07-b160-7978cd40d815",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      // se o servidor retornar um erro, rejeite a promessa
-      return Promise.reject(`Error: ${res.status}`);
-    });
+  getInitialCard() {
+    return fetch(`${this._baseUrl}/cards/`, {
+      headers: this._headers,
+    }).then(this._checkResponse);
   }
 
-  // outros métodos para trabalhar com a API
+  // método (privado) para tratamento das respostas
+  _checkResponse(res) {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}.`);
+    // se o servidor retornar um erro, rejeite a promessa
+  }
+
+  // atualiza infos do perfil
+  submitInfosProfile(dataProfile) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: dataProfile.name,
+        about: dataProfile.about,
+      }),
+    }).then(this._checkResponse);
+  }
+
+  // atualiza foto do perfil
+  submitPhotoprofile(dataPhoto) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: dataPhoto,
+      }),
+    }).then(this._checkResponse);
+  }
 }

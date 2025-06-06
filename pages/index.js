@@ -35,8 +35,15 @@ import Api from "../components/Api.js";
 
 //import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
-// api(fetch): renderiza o card inicial do servidor
-const apiServerCard = new Api({
+// api(fetch)
+const apiPublic = new Api({
+  baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",
+  headers: {
+    authorization: "3c7ad9a7-200c-4d07-b160-7978cd40d815",
+  },
+});
+
+const apiPrivate = new Api({
   baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",
   headers: {
     authorization: "f5b337a1-89dd-4f09-826f-0ed62662122f",
@@ -44,8 +51,9 @@ const apiServerCard = new Api({
   },
 });
 
-apiServerCard
-  .getInitialCards()
+// renderiza o card inicial do servidor
+apiPublic
+  .getInitialCard()
   .then((result) => {
     const boxServerCard = templateNewCard
       .querySelector(".card-model")
@@ -82,7 +90,7 @@ apiServerCard
     sectionCards.append(boxServerCard);
   })
   .catch((err) => {
-    console.log(`Erro ao renderizar o card inicial do servidor: ${err}`);
+    console.log(`Erro ao renderizar o card inicial do servidor: ${err}.`);
   });
 
 // section e card: renderiza meus cards iniciais
@@ -134,36 +142,20 @@ const profileInfos = new UserInfo({
   aboutSelector: ".infos__about",
 });
 
-// popupwithform: abertura e envio
+// popupwithform e api: abertura e envio
 // form edt
 const popupEdtProfile = new PopupWithForm(
   configEdt.boxFormSelector,
   // atualiza dados do perfil na página
   (dataProfile) => {
-    fetch("https://around-api.pt-br.tripleten-services.com/v1/users/me", {
-      method: "PATCH",
-      headers: {
-        authorization: "f5b337a1-89dd-4f09-826f-0ed62662122f",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: dataProfile.name,
-        about: dataProfile.about,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // se o servidor retornar um erro, rejeite a promessa
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .then((data) => {
+    apiPrivate
+      .submitInfosProfile(dataProfile)
+      .then((result) => {
         // Atualiza as informações do perfil
-        profileInfos.setUserInfo(data);
+        profileInfos.setUserInfo(result);
       })
       .catch((err) => {
-        console.error(`Erro ao atualizar as informações de perfil: ${err}`);
+        console.log(`Erro ao atualizar as informações de perfil: ${err}.`);
       });
   }
 );
@@ -206,37 +198,19 @@ const popupAddCard = new PopupWithForm(
   }
 );
 
-// popupforphoto: abertura e envio
+// popupforphoto e api: abertura e envio
 const popupEditPhoto = new PopupForPhoto(
   configPhoto.boxFormSelector,
   // envia a nova foto do perfil
   (dataPhoto) => {
-    fetch(
-      "https://around-api.pt-br.tripleten-services.com/v1/users/me/avatar",
-      {
-        method: "PATCH",
-        headers: {
-          authorization: "f5b337a1-89dd-4f09-826f-0ed62662122f",
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          avatar: dataPhoto,
-        }),
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        // se o servidor retornar um erro, rejeite a promessa
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .then((data) => {
-        // Atualiza a imagem do perfil com o novo link do avatar
-        profilePhoto.style.backgroundImage = `url(${data.avatar})`;
+    apiPrivate
+      .submitPhotoprofile(dataPhoto)
+      .then((result) => {
+        // Atualiza a foto do perfil com o novo link do avatar
+        profilePhoto.style.backgroundImage = `url(${result.avatar})`;
       })
       .catch((err) => {
-        console.error(`Erro ao atualizar a foto de perfil: ${err}`);
+        console.log(`Erro ao atualizar a foto de perfil: ${err}.`);
       });
   }
 );
