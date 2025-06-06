@@ -4,17 +4,17 @@ export default class Api {
     this._headers = headers;
   }
 
+  // método (privado) para tratamento das respostas
+  _checkResponse(res) {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}.`);
+    // se o servidor retornar um erro, rejeite a promessa
+  }
+
   // captura card inicial do servidor
   getInitialCard() {
     return fetch(`${this._baseUrl}/cards/`, {
       headers: this._headers,
     }).then(this._checkResponse);
-  }
-
-  // método (privado) para tratamento das respostas
-  _checkResponse(res) {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}.`);
-    // se o servidor retornar um erro, rejeite a promessa
   }
 
   // atualiza infos do perfil
@@ -36,6 +36,18 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify({
         avatar: dataPhoto,
+      }),
+    }).then(this._checkResponse);
+  }
+
+  // adiciona um novo cartão no servidor
+  submitNewCard(dataCard) {
+    return fetch(`${this._baseUrl}/cards/`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: dataCard.place, // o name do input é place
+        link: dataCard.link,
       }),
     }).then(this._checkResponse);
   }

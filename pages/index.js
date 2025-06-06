@@ -165,36 +165,43 @@ const popupAddCard = new PopupWithForm(
   configAdd.boxFormSelector,
   // configura e adiciona um novo cartão na página
   (dataCard) => {
-    const boxNewCard = templateNewCard
-      .querySelector(".card-model")
-      .cloneNode(true);
+    apiPrivate
+      .submitNewCard(dataCard)
+      .then((result) => {
+        const boxNewCard = templateNewCard
+          .querySelector(".card-model")
+          .cloneNode(true);
 
-    const titleCard = boxNewCard.querySelector(".card__name");
-    const imageCard = boxNewCard.querySelector(".card__image");
+        const titleCard = boxNewCard.querySelector(".card__name");
+        const imageCard = boxNewCard.querySelector(".card__image");
 
-    titleCard.textContent = dataCard.place;
-    imageCard.src = dataCard.link;
-    imageCard.alt = dataCard.place;
+        titleCard.textContent = result.place; // o name do input é place
+        imageCard.src = result.link;
+        imageCard.alt = result.place;
 
-    // botão curtir
-    const likeButton = boxNewCard.querySelector(".card__like-btn");
+        // botão curtir
+        const likeButton = boxNewCard.querySelector(".card__like-btn");
 
-    likeButton.classList.remove("card__like-btn_active");
+        likeButton.classList.remove("card__like-btn_active");
 
-    likeButton.addEventListener("click", (evt) => {
-      evt.target.classList.toggle("card__like-btn_active");
-    });
+        likeButton.addEventListener("click", (evt) => {
+          evt.target.classList.toggle("card__like-btn_active");
+        });
 
-    // botão excluir
-    const trashButton = boxNewCard.querySelector(".card__trash-btn");
+        // botão excluir
+        const trashButton = boxNewCard.querySelector(".card__trash-btn");
 
-    trashButton.addEventListener("click", (evt) => {
-      const currentCard = evt.target.closest(".card-model");
-      currentCard.remove();
-    });
+        trashButton.addEventListener("click", (evt) => {
+          const currentCard = evt.target.closest(".card-model");
+          currentCard.remove();
+        });
 
-    // adiciona o novo cartão no início da seção
-    sectionCards.prepend(boxNewCard);
+        // adiciona o novo cartão no início da seção
+        sectionCards.prepend(boxNewCard);
+      })
+      .catch((err) => {
+        console.log(`Erro ao adicionar o novo cartão na página: ${err}.`);
+      });
   }
 );
 
