@@ -10,6 +10,13 @@ export default class Api {
     // se o servidor retornar um erro, rejeite a promessa
   }
 
+  // carrega as informações do usuário do servidor
+  getServerUserInfos() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers, // a solicitação GET é enviada com content-type, mas não interfere no resultado
+    }).then(this._checkResponse);
+  }
+
   // captura card inicial do servidor
   getInitialCard() {
     return fetch(`${this._baseUrl}/cards/`, {

@@ -51,6 +51,28 @@ const apiPrivate = new Api({
   },
 });
 
+// userinfo: para renderizar edições e informações do perfil
+const profileInfos = new UserInfo({
+  nameSelector: ".infos__name",
+  aboutSelector: ".infos__about",
+});
+
+// carrega informações do usuário do servidor
+apiPrivate
+  .getServerUserInfos()
+  .then((result) => {
+    // renderiza a foto do usuário do servidor
+    profilePhoto.style.backgroundImage = `url(${result.avatar})`;
+    // renderiza as infos do usuário do servidor
+    profileInfos.setUserInfo({
+      name: result.name,
+      about: result.about,
+    });
+  })
+  .catch((err) => {
+    console.log(`Erro ao carregar informações do usuário: ${err}.`);
+  });
+
 // renderiza o card inicial do servidor
 apiPublic
   .getInitialCard()
@@ -136,22 +158,16 @@ addValidator.enableValidation();
 const photoValidator = new FormValidator(configPhoto, photoFormElement);
 photoValidator.enableValidation();
 
-// userinfo: para renderizar as informações do perfil
-const profileInfos = new UserInfo({
-  nameSelector: ".infos__name",
-  aboutSelector: ".infos__about",
-});
-
 // popupwithform e api: abertura e envio
 // form edt
 const popupEdtProfile = new PopupWithForm(
   configEdt.boxFormSelector,
-  // atualiza dados do perfil na página
+  // envia as informações do perfil para o servidor
   (dataProfile) => {
     apiPrivate
       .submitInfosProfile(dataProfile)
       .then((result) => {
-        // Atualiza as informações do perfil
+        // atualiza as informações do perfil na página
         profileInfos.setUserInfo(result);
       })
       .catch((err) => {
@@ -208,12 +224,12 @@ const popupAddCard = new PopupWithForm(
 // popupforphoto e api: abertura e envio
 const popupEditPhoto = new PopupForPhoto(
   configPhoto.boxFormSelector,
-  // envia a nova foto do perfil
+  // envia a nova foto do perfil para o servidor
   (dataPhoto) => {
     apiPrivate
       .submitPhotoprofile(dataPhoto)
       .then((result) => {
-        // Atualiza a foto do perfil com o novo link do avatar
+        // atualiza a foto do perfil na página
         profilePhoto.style.backgroundImage = `url(${result.avatar})`;
       })
       .catch((err) => {
@@ -242,6 +258,7 @@ edtBtnElement.addEventListener("click", () => {
   // reseta estado da validação (msgs de erro e botão)
   edtValidator.resetValidation();
 
+  // abre popup para edição das infos do perfil
   popupEdtProfile.open();
 });
 
@@ -250,5 +267,6 @@ addBtnElement.addEventListener("click", () => {
   // reseta estado da validação (msgs de erro e botão)
   addValidator.resetValidation();
 
+  // abre popup para adição de um novo cartão
   popupAddCard.open();
 });
