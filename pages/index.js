@@ -159,7 +159,7 @@ const photoValidator = new FormValidator(configPhoto, photoFormElement);
 photoValidator.enableValidation();
 
 // popupwithform e api: abertura e envio
-// form edt
+// form edt: para editar perfil
 const popupEdtProfile = new PopupWithForm(
   configEdt.boxFormSelector,
   // envia as informações do perfil para o servidor
@@ -172,11 +172,14 @@ const popupEdtProfile = new PopupWithForm(
       })
       .catch((err) => {
         console.log(`Erro ao atualizar as informações de perfil: ${err}.`);
+      })
+      .finally(() => {
+        popupEdtProfile.renderLoading(false);
       });
   }
 );
 
-// form add
+// form add: para adicionar um novo card na página
 const popupAddCard = new PopupWithForm(
   configAdd.boxFormSelector,
   // configura e adiciona um novo cartão na página
@@ -217,11 +220,14 @@ const popupAddCard = new PopupWithForm(
       })
       .catch((err) => {
         console.log(`Erro ao adicionar o novo cartão na página: ${err}.`);
+      })
+      .finally(() => {
+        popupAddCard.renderLoading(false);
       });
   }
 );
 
-// popupforphoto e api: abertura e envio
+// popupforphoto e api: abertura e envio: para editar a foto do perfil
 const popupEditPhoto = new PopupForPhoto(
   configPhoto.boxFormSelector,
   // envia a nova foto do perfil para o servidor
@@ -234,6 +240,9 @@ const popupEditPhoto = new PopupForPhoto(
       })
       .catch((err) => {
         console.log(`Erro ao atualizar a foto de perfil: ${err}.`);
+      })
+      .finally(() => {
+        popupEditPhoto.renderLoading(false);
       });
   }
 );

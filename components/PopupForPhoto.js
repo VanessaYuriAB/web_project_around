@@ -8,9 +8,12 @@ export default class PopupForPhoto extends Popup {
       this._config.submitButtonSelector
     );
 
+    this._originalBtnText = this._submitBtnElement.textContent; // salva o texto original do botão
+
     // dados já são ajustados aqui
     this._handleSubmit = (evt) => {
       evt.preventDefault();
+      this.renderLoading(true);
       handleSubmit(this._getInputValue());
       this.close();
     };
@@ -20,6 +23,17 @@ export default class PopupForPhoto extends Popup {
     this._formInput = this._formElement.querySelector(
       this._config.inputSelector
     );
+  }
+
+  // informa usuário sobre progresso da solicitação
+  renderLoading(isLoading) {
+    if (isLoading) {
+      // altera texto do botão
+      this._submitBtnElement.textContent = "Salvando...";
+    } else {
+      // retorna texto original
+      this._submitBtnElement.textContent = this._originalBtnText;
+    }
   }
 
   //Coleta o link para a nova foto.

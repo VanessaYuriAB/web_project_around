@@ -9,9 +9,12 @@ export default class PopupWithForm extends Popup {
       this._config.submitButtonSelector
     );
 
+    this._originalBtnText = this._submitBtnElement.textContent; // salva o texto original do botão
+
     // dados já são ajustados aqui
     this._handleSubmit = (evt) => {
       evt.preventDefault();
+      this.renderLoading(true);
       handleSubmit(this._getInputValues());
       this.close();
     };
@@ -21,6 +24,17 @@ export default class PopupWithForm extends Popup {
     this._formInputs = Array.from(
       this._formElement.querySelectorAll(this._config.inputSelector)
     );
+  }
+
+  // informa usuário sobre progresso da solicitação
+  renderLoading(isLoading) {
+    if (isLoading) {
+      // altera texto do botão
+      this._submitBtnElement.textContent = "Salvando...";
+    } else {
+      // retorna texto original
+      this._submitBtnElement.textContent = this._originalBtnText;
+    }
   }
 
   //Coleta dados de todos os campos de entrada.
