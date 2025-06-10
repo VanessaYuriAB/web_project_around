@@ -1,34 +1,34 @@
-// array para cards iniciais
-const templateCards = [
+// array para meus cards iniciais
+const myCards = [
   {
-    text: "Japão, Monte Fuji",
-    imgLink: "../images/monte-fuji_japão_popup.jpg",
-    cardSelector: "#popup-jp",
+    title: "Japão, Monte Fuji",
+    imgLink:
+      "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    text: "Portugal, Porto",
-    imgLink: "../images/porto_portugal__popup.jpg",
-    cardSelector: "#popup-pt",
+    title: "Portugal, Porto",
+    imgLink:
+      "https://images.unsplash.com/photo-1582647161018-bbf9819c30b2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    text: "Itália, Matera",
-    imgLink: "../images/matera_itália_popup.jpg",
-    cardSelector: "#popup-it",
+    title: "Itália, Matera",
+    imgLink:
+      "https://images.unsplash.com/photo-1528214096798-37891d32174c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    text: "Filipinas, El Nido",
-    imgLink: "../images/el-nido_filipinas_popup.jpg",
-    cardSelector: "#popup-fl",
+    title: "Filipinas, El Nido",
+    imgLink:
+      "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    text: "Noruega, Lofoten",
-    imgLink: "../images/lofoten_noruega_popup.jpg",
-    cardSelector: "#popup-nr",
+    title: "Noruega, Lofoten",
+    imgLink:
+      "https://images.unsplash.com/photo-1593291619462-e4240344ea21?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    text: "Suécia, Kiruna",
-    imgLink: "../images/kiruna_suécia_popup.jpg",
-    cardSelector: "#popup-sc",
+    title: "Suécia, Kiruna",
+    imgLink:
+      "https://images.unsplash.com/photo-1581361054863-3edb8d2a1afe?q=80&w=1372&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
 ];
 
@@ -112,7 +112,7 @@ const addBtnElement = document.querySelector(".profile__add-btn");
 const photoBtnElement = document.querySelector(".profile__photo_overlay");
 
 export {
-  templateCards,
+  myCards,
   sectionCards,
   configEdt,
   configAdd,

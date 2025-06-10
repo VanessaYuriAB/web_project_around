@@ -1,13 +1,8 @@
-import Card from "../components/Card.js";
-
-import Section from "../components/Section.js";
-
 import UserInfo from "../components/UserInfo.js";
 
 import PopupWithForm from "../components/PopupWithForm.js";
 
 import {
-  templateCards,
   sectionCards,
   configEdt,
   configAdd,
@@ -33,6 +28,8 @@ import PopupForPhoto from "../components/PopupForPhoto.js";
 
 import Api from "../components/Api.js";
 
+import { setupLikeButton } from "../utils/utils.js";
+
 //import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 // api(fetch)
@@ -57,7 +54,7 @@ const profileInfos = new UserInfo({
   aboutSelector: ".infos__about",
 });
 
-// carrega informações do usuário do servidor
+// carrega informações do meu usuário do servidor
 apiPrivate
   .getServerUserInfos()
   .then((result) => {
@@ -75,7 +72,7 @@ apiPrivate
 
 // renderiza o card inicial do servidor
 apiPublic
-  .getInitialCard()
+  .getInitialCards()
   .then((result) => {
     const boxServerCard = templateNewCard
       .querySelector(".card-model")
@@ -91,11 +88,9 @@ apiPublic
     // botão curtir
     const likeButton = boxServerCard.querySelector(".card__like-btn");
 
-    likeButton.classList.remove("card__like-btn_active");
+    const cardId = result[0]._id;
 
-    likeButton.addEventListener("click", (evt) => {
-      evt.target.classList.toggle("card__like-btn_active");
-    });
+    setupLikeButton(likeButton, cardId, apiPublic);
 
     // botão excluir
     const trashButton = boxServerCard.querySelector(".card__trash-btn");
@@ -115,27 +110,58 @@ apiPublic
     console.log(`Erro ao renderizar o card inicial do servidor: ${err}.`);
   });
 
-// section e card: renderiza meus cards iniciais
-const initialCards = new Section(
-  {
-    items: templateCards,
-    renderer: (item) => {
-      let cardItem = new Card(
-        item.text,
-        item.imgLink,
-        item.cardSelector,
-        (evt) => popupCard.open(evt)
-      );
+/*
+CÓDIGO COMENTADO PARA INIBIR AÇÃO, FOI RODADO APENAS PARA ENVIAR OS MEUS CARTÕES INICIAIS.
 
-      cardItem = cardItem.generateCard();
+// envia meus cards iniciais
+// apiPrivate.submitMyNewCards();
+*/
 
-      initialCards.addItem(cardItem);
-    },
-  },
-  ".elements__cards"
-);
+// renderiza meus cards iniciais
+apiPrivate
+  .getInitialCards()
+  .then((dataCards) => {
+    const myCardsData = dataCards.map((card) => {
+      const boxServerCard = templateNewCard
+        .querySelector(".card-model")
+        .cloneNode(true);
 
-initialCards.renderer();
+      const titleCard = boxServerCard.querySelector(".card__name");
+      const imageCard = boxServerCard.querySelector(".card__image");
+
+      titleCard.textContent = card.name;
+      imageCard.src = card.link;
+      imageCard.alt = card.name;
+
+      // botão curtir
+      const likeButton = boxServerCard.querySelector(".card__like-btn");
+
+      const cardId = card._id;
+
+      setupLikeButton(likeButton, cardId, apiPrivate);
+
+      // botão excluir
+      const trashButton = boxServerCard.querySelector(".card__trash-btn");
+
+      trashButton.addEventListener("click", (evt) => {
+        const currentCard = evt.target.closest(".card-model");
+        currentCard.remove();
+      });
+      return boxServerCard;
+    });
+    return myCardsData;
+  })
+  .then((myCardsData) => {
+    myCardsData.forEach((card) => {
+      // adiciona o novo cartão no início da seção
+      sectionCards.append(card);
+    });
+  })
+  .catch((err) => {
+    console.log(
+      `Erro ao renderizar os cartões iniciais do meu usuário no servidor: ${err}.`
+    );
+  });
 
 // popupwithimage
 const popupCard = new PopupWithImage(configCard.popupSelector);
@@ -159,7 +185,7 @@ const photoValidator = new FormValidator(configPhoto, photoFormElement);
 photoValidator.enableValidation();
 
 // popupwithform e api: abertura e envio
-// form edt: para editar perfil
+// form edt: para editar infos do perfil
 const popupEdtProfile = new PopupWithForm(
   configEdt.boxFormSelector,
   // envia as informações do perfil para o servidor
@@ -201,11 +227,9 @@ const popupAddCard = new PopupWithForm(
         // botão curtir
         const likeButton = boxNewCard.querySelector(".card__like-btn");
 
-        likeButton.classList.remove("card__like-btn_active");
+        const cardId = result._id;
 
-        likeButton.addEventListener("click", (evt) => {
-          evt.target.classList.toggle("card__like-btn_active");
-        });
+        setupLikeButton(likeButton, cardId, apiPrivate);
 
         // botão excluir
         const trashButton = boxNewCard.querySelector(".card__trash-btn");
