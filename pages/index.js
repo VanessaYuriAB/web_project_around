@@ -76,8 +76,8 @@ apiPublic
   .getInitialCards()
   .then((result) => {
     const boxServerCard = templateNewCard
-      .querySelector(".card-model")
-      .cloneNode(true);
+      .cloneNode(true)
+      .querySelector(".card-model");
 
     const titleCard = boxServerCard.querySelector(".card__name");
     const imageCard = boxServerCard.querySelector(".card__image");
@@ -143,8 +143,8 @@ apiPrivate
   .then((dataCards) => {
     const myCardsData = dataCards.map((card) => {
       const boxServerCard = templateNewCard
-        .querySelector(".card-model")
-        .cloneNode(true);
+        .cloneNode(true)
+        .querySelector(".card-model");
 
       const titleCard = boxServerCard.querySelector(".card__name");
       const imageCard = boxServerCard.querySelector(".card__image");
@@ -240,8 +240,8 @@ const popupAddCard = new PopupWithForm(
       .submitNewCard(dataCard)
       .then((result) => {
         const boxNewCard = templateNewCard
-          .querySelector(".card-model")
-          .cloneNode(true);
+          .cloneNode(true)
+          .querySelector(".card-model");
 
         const titleCard = boxNewCard.querySelector(".card__name");
         const imageCard = boxNewCard.querySelector(".card__image");
