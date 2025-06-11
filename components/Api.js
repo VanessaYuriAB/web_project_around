@@ -16,14 +16,14 @@ export default class Api {
   getServerUserInfos() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers, // a solicitação GET é enviada com content-type, mas não interfere no resultado
-    }).then(this._checkResponse);
+    }).then((res) => this._checkResponse(res));
   }
 
   // captura cards iniciais de usuários do servidor
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards/`, {
       headers: this._headers,
-    }).then(this._checkResponse);
+    }).then((res) => this._checkResponse(res));
   }
 
   // envia meus cards iniciais ao meu usuário do servidor
@@ -36,7 +36,7 @@ export default class Api {
           name: card.place, // o nome do input e em myCards é place
           link: card.link,
         }),
-      }).then(this._checkResponse);
+      }).then((res) => this._checkResponse(res));
     });
 
     return Promise.all(promises); // retorna uma Promise que só resolve quando todos forem enviados
@@ -51,7 +51,7 @@ export default class Api {
         name: dataProfile.name,
         about: dataProfile.about,
       }),
-    }).then(this._checkResponse);
+    }).then((res) => this._checkResponse(res));
   }
 
   // atualiza foto do perfil
@@ -62,7 +62,7 @@ export default class Api {
       body: JSON.stringify({
         avatar: dataPhoto,
       }),
-    }).then(this._checkResponse);
+    }).then((res) => this._checkResponse(res));
   }
 
   // adiciona um novo cartão no servidor
@@ -74,7 +74,7 @@ export default class Api {
         name: dataCard.place, // o name do input é place
         link: dataCard.link,
       }),
-    }).then(this._checkResponse);
+    }).then((res) => this._checkResponse(res));
   }
 
   // curte um cartão
@@ -98,7 +98,12 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this._checkResponse);
+    }).then((res) => this._checkResponse(res));
+  }
+
+  // captura os meus cartões somente após carregar as informações do meu usuário no servidor
+  getServerInfosAndCardsinPromiseAll() {
+    return Promise.all([this.getServerUserInfos(), this.getInitialCards()]);
   }
 }
 

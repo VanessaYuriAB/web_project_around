@@ -49,28 +49,6 @@ const apiPrivate = new Api({
   },
 });
 
-// userinfo: para renderizar edições e informações do perfil
-const profileInfos = new UserInfo({
-  nameSelector: ".infos__name",
-  aboutSelector: ".infos__about",
-});
-
-// carrega informações do meu usuário do servidor
-apiPrivate
-  .getServerUserInfos()
-  .then((result) => {
-    // renderiza a foto do usuário do servidor
-    profilePhoto.style.backgroundImage = `url(${result.avatar})`;
-    // renderiza as infos do usuário do servidor
-    profileInfos.setUserInfo({
-      name: result.name,
-      about: result.about,
-    });
-  })
-  .catch((err) => {
-    console.log(`Erro ao carregar informações do usuário: ${err}.`);
-  });
-
 // renderiza o card inicial do servidor
 apiPublic
   .getInitialCards()
@@ -108,40 +86,34 @@ apiPublic
     console.log(`Erro ao renderizar o card inicial do servidor: ${err}.`);
   });
 
-// popupwithconfirmation: abre e configura popup para confirmação de exclusão de card
-const popupTrash = new PopupWithConfirmation(
-  configTrash.boxFormSelector,
-  (currentCard, cardId) => {
-    apiPrivate
-      // método da api para excluir o card do servidor
-      .deleteCard(cardId)
-      .then(() => {
-        // exclui o card da página
-        currentCard.remove();
-      })
-      .catch((err) => {
-        console.error(`Erro ao deletar o card: ${err}.`);
-      })
-      .finally(() => {
-        popupTrash.renderLoading(false);
-      });
-  }
-);
+// userinfo: para renderizar edições e informações do perfil
+const profileInfos = new UserInfo({
+  nameSelector: ".infos__name",
+  aboutSelector: ".infos__about",
+});
 
 /*
-CÓDIGO COMENTADO PARA INIBIR AÇÃO, FOI RODADO APENAS PARA ENVIAR OS MEUS CARTÕES INICIAIS.
-*/
-
-/*
+CÓDIGO COMENTADO PARA INIBIR AÇÃO,
+RODADO APENAS PARA ENVIAR OS MEUS CARTÕES INICIAIS.
 // envia meus cards iniciais
 // apiPrivate.submitMyNewCards();
 */
 
-// renderiza meus cards iniciais
+// carrega informações do meu usuário do servidor e renderiza meus cards iniciais
 apiPrivate
-  .getInitialCards()
-  .then((dataCards) => {
-    const myCardsData = dataCards.map((card) => {
+  .getServerInfosAndCardsinPromiseAll()
+  .then(([serverInfos, serverCards]) => {
+    // atualiza o perfil
+    // renderiza a foto do usuário do servidor
+    profilePhoto.style.backgroundImage = `url(${serverInfos.avatar})`;
+    // renderiza as infos do usuário do servidor
+    profileInfos.setUserInfo({
+      name: serverInfos.name,
+      about: serverInfos.about,
+    });
+
+    // renderiza os cartões
+    const myCardsData = serverCards.map((card) => {
       const boxServerCard = templateNewCard
         .cloneNode(true)
         .querySelector(".card-model");
@@ -180,12 +152,12 @@ apiPrivate
   .then((myCardsData) => {
     myCardsData.forEach((card) => {
       // adiciona o novo cartão no início da seção
-      sectionCards.append(card);
+      sectionCards.prepend(card);
     });
   })
   .catch((err) => {
     console.log(
-      `Erro ao renderizar os cartões iniciais do meu usuário no servidor: ${err}.`
+      `Erro ao carregar informações de usuário e/ou renderizar os cartões iniciais do servidor: ${err}.`
     );
   });
 
@@ -197,18 +169,45 @@ sectionCards.addEventListener("click", (evt) => {
   popupCard.open(evt);
 });
 
-// formvalidator
-// edt
-const edtValidator = new FormValidator(configEdt, edtFormElement);
-edtValidator.enableValidation();
+// popupwithconfirmation: abre e configura popup para confirmação de exclusão de card
+const popupTrash = new PopupWithConfirmation(
+  configTrash.boxFormSelector,
+  (currentCard, cardId) => {
+    apiPrivate
+      // método da api para excluir o card do servidor
+      .deleteCard(cardId)
+      .then(() => {
+        // exclui o card da página
+        currentCard.remove();
+      })
+      .catch((err) => {
+        console.error(`Erro ao deletar o card: ${err}.`);
+      })
+      .finally(() => {
+        popupTrash.renderLoading(false);
+      });
+  }
+);
 
-// add
-const addValidator = new FormValidator(configAdd, addFormElement);
-addValidator.enableValidation();
-
-// photo
-const photoValidator = new FormValidator(configPhoto, photoFormElement);
-photoValidator.enableValidation();
+// popupforphoto e api: abertura e envio: para editar a foto do perfil
+const popupEditPhoto = new PopupForPhoto(
+  configPhoto.boxFormSelector,
+  // envia a nova foto do perfil para o servidor
+  (dataPhoto) => {
+    apiPrivate
+      .submitPhotoprofile(dataPhoto)
+      .then((result) => {
+        // atualiza a foto do perfil na página
+        profilePhoto.style.backgroundImage = `url(${result.avatar})`;
+      })
+      .catch((err) => {
+        console.log(`Erro ao atualizar a foto de perfil: ${err}.`);
+      })
+      .finally(() => {
+        popupEditPhoto.renderLoading(false);
+      });
+  }
+);
 
 // popupwithform e api: abertura e envio
 // form edt: para editar infos do perfil
@@ -279,25 +278,18 @@ const popupAddCard = new PopupWithForm(
   }
 );
 
-// popupforphoto e api: abertura e envio: para editar a foto do perfil
-const popupEditPhoto = new PopupForPhoto(
-  configPhoto.boxFormSelector,
-  // envia a nova foto do perfil para o servidor
-  (dataPhoto) => {
-    apiPrivate
-      .submitPhotoprofile(dataPhoto)
-      .then((result) => {
-        // atualiza a foto do perfil na página
-        profilePhoto.style.backgroundImage = `url(${result.avatar})`;
-      })
-      .catch((err) => {
-        console.log(`Erro ao atualizar a foto de perfil: ${err}.`);
-      })
-      .finally(() => {
-        popupEditPhoto.renderLoading(false);
-      });
-  }
-);
+// formvalidator
+// edt
+const edtValidator = new FormValidator(configEdt, edtFormElement);
+edtValidator.enableValidation();
+
+// add
+const addValidator = new FormValidator(configAdd, addFormElement);
+addValidator.enableValidation();
+
+// photo
+const photoValidator = new FormValidator(configPhoto, photoFormElement);
+photoValidator.enableValidation();
 
 // listeners de abertura (popups form)
 // photo
