@@ -246,9 +246,9 @@ const popupAddCard = new PopupWithForm(
         const titleCard = boxNewCard.querySelector(".card__name");
         const imageCard = boxNewCard.querySelector(".card__image");
 
-        titleCard.textContent = result.place; // o name do input é place
+        titleCard.textContent = result.name; // o name do input é place, mas o objeto json retornado da api tem o nome da propriedade como name
         imageCard.src = result.link;
-        imageCard.alt = result.place;
+        imageCard.alt = result.name;
 
         // botão curtir
         const likeButton = boxNewCard.querySelector(".card__like-btn");
