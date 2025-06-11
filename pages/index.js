@@ -18,6 +18,7 @@ import {
   photoFormElement,
   photoBtnElement,
   profilePhoto,
+  configTrash,
 } from "../utils/constants.js";
 
 import FormValidator from "../components/FormValidator.js";
@@ -30,7 +31,7 @@ import Api from "../components/Api.js";
 
 import { setupLikeButton } from "../utils/utils.js";
 
-//import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 // api(fetch)
 const apiPublic = new Api({
