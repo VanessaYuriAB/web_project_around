@@ -92,13 +92,10 @@ apiPublic
 
     setupLikeButton(likeButton, cardId, apiPublic);
 
-    // botão excluir
+    // desativa o botão excluir
     const trashButton = boxServerCard.querySelector(".card__trash-btn");
 
-    trashButton.addEventListener("click", (evt) => {
-      const currentCard = evt.target.closest(".card-model");
-      currentCard.remove();
-    });
+    trashButton.style.display = "none";
 
     return boxServerCard;
   })
