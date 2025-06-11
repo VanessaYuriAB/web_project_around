@@ -4,6 +4,8 @@ import {
   popupHandlers,
   templatePopupImg,
   configCard,
+  configTrash,
+  configPhoto,
 } from "../utils/constants.js";
 
 export default class Popup {
@@ -24,6 +26,10 @@ export default class Popup {
         // add
       } else if (popupSelector === configAdd.boxFormSelector) {
         this._config = configAdd;
+      } else if (popupSelector === configTrash.boxFormSelector) {
+        this._config = configTrash;
+      } else if (popupSelector === configPhoto.boxFormSelector) {
+        this._config = configPhoto;
       }
     }
 
