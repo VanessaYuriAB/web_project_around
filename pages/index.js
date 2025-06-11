@@ -107,9 +107,31 @@ apiPublic
     console.log(`Erro ao renderizar o card inicial do servidor: ${err}.`);
   });
 
+// popupwithconfirmation: abre e configura popup para confirmação de exclusão de card
+const popupTrash = new PopupWithConfirmation(
+  configTrash.boxFormSelector,
+  (currentCard, cardId) => {
+    apiPrivate
+      // método da api para excluir o card do servidor
+      .deleteCard(cardId)
+      .then(() => {
+        // exclui o card da página
+        currentCard.remove();
+      })
+      .catch((err) => {
+        console.error(`Erro ao deletar o card: ${err}.`);
+      })
+      .finally(() => {
+        popupTrash.renderLoading(false);
+      });
+  }
+);
+
 /*
 CÓDIGO COMENTADO PARA INIBIR AÇÃO, FOI RODADO APENAS PARA ENVIAR OS MEUS CARTÕES INICIAIS.
+*/
 
+/*
 // envia meus cards iniciais
 // apiPrivate.submitMyNewCards();
 */
@@ -142,10 +164,16 @@ apiPrivate
 
       trashButton.addEventListener("click", (evt) => {
         const currentCard = evt.target.closest(".card-model");
-        currentCard.remove();
+
+        // abre popup para confirmação de exclusão do card
+        popupTrash.open(currentCard, cardId);
       });
+
+      // retorna cada card configurado
       return boxServerCard;
     });
+
+    // retorna um arrays com objetos de cada card
     return myCardsData;
   })
   .then((myCardsData) => {
@@ -233,7 +261,9 @@ const popupAddCard = new PopupWithForm(
 
         trashButton.addEventListener("click", (evt) => {
           const currentCard = evt.target.closest(".card-model");
-          currentCard.remove();
+
+          // abre popup para confirmação de exclusão do card
+          popupTrash.open(currentCard, cardId);
         });
 
         // adiciona o novo cartão no início da seção
