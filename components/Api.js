@@ -12,21 +12,21 @@ export default class Api {
     // se o servidor retornar um erro, rejeite a promessa
   }
 
-  // carrega as informações do usuário do servidor
+  // carrega as informações de usuário do servidor
   getServerUserInfos() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers, // a solicitação GET é enviada com content-type, mas não interfere no resultado
     }).then((res) => this._checkResponse(res));
   }
 
-  // captura cards iniciais de usuários do servidor
+  // captura cards iniciais do usuário do servidor
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards/`, {
       headers: this._headers,
     }).then((res) => this._checkResponse(res));
   }
 
-  // envia meus cards iniciais ao meu usuário do servidor
+  // envia meus cards iniciais ao usuário do servidor
   submitMyNewCards() {
     const promises = myCards.map((card) => {
       return fetch(`${this._baseUrl}/cards/`, {
@@ -55,7 +55,7 @@ export default class Api {
   }
 
   // atualiza foto do perfil
-  submitPhotoprofile(dataPhoto) {
+  submitPhotoProfile(dataPhoto) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
@@ -65,7 +65,7 @@ export default class Api {
     }).then((res) => this._checkResponse(res));
   }
 
-  // adiciona um novo cartão no servidor
+  // adiciona um novo cartão no usuário do servidor
   submitNewCard(dataCard) {
     return fetch(`${this._baseUrl}/cards/`, {
       method: "POST",
@@ -101,7 +101,7 @@ export default class Api {
     }).then((res) => this._checkResponse(res));
   }
 
-  // captura os meus cartões somente após carregar as informações do meu usuário no servidor
+  // captura cartões somente após carregar as informações do usuário no servidor
   getServerInfosAndCardsinPromiseAll() {
     return Promise.all([this.getServerUserInfos(), this.getInitialCards()]);
   }

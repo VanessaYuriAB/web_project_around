@@ -34,59 +34,15 @@ import { setupLikeButton } from "../utils/utils.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 // api(fetch)
-const apiPublic = new Api({
+const myApi = new Api({
   baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",
   headers: {
     authorization: "3c7ad9a7-200c-4d07-b160-7978cd40d815",
-  },
-});
-
-const apiPrivate = new Api({
-  baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",
-  headers: {
-    authorization: "f5b337a1-89dd-4f09-826f-0ed62662122f",
     "Content-Type": "application/json",
   },
 });
 
-// renderiza o card inicial do servidor
-apiPublic
-  .getInitialCards()
-  .then((result) => {
-    const boxServerCard = templateNewCard
-      .cloneNode(true)
-      .querySelector(".card-model");
-
-    const titleCard = boxServerCard.querySelector(".card__name");
-    const imageCard = boxServerCard.querySelector(".card__image");
-
-    titleCard.textContent = result[0].name;
-    imageCard.src = result[0].link;
-    imageCard.alt = result[0].name;
-
-    // botão curtir
-    const likeButton = boxServerCard.querySelector(".card__like-btn");
-
-    const cardId = result[0]._id;
-
-    setupLikeButton(likeButton, cardId, apiPublic);
-
-    // desativa o botão excluir
-    const trashButton = boxServerCard.querySelector(".card__trash-btn");
-
-    trashButton.style.display = "none";
-
-    return boxServerCard;
-  })
-  .then((boxServerCard) => {
-    // adiciona o novo cartão no início da seção
-    sectionCards.append(boxServerCard);
-  })
-  .catch((err) => {
-    console.log(`Erro ao renderizar o card inicial do servidor: ${err}.`);
-  });
-
-// userinfo: para renderizar edições e informações do perfil
+// userinfo: para renderizar informações do perfil
 const profileInfos = new UserInfo({
   nameSelector: ".infos__name",
   aboutSelector: ".infos__about",
@@ -96,14 +52,13 @@ const profileInfos = new UserInfo({
 CÓDIGO COMENTADO PARA INIBIR AÇÃO,
 RODADO APENAS PARA ENVIAR OS MEUS CARTÕES INICIAIS.
 // envia meus cards iniciais
-// apiPrivate.submitMyNewCards();
+// myApi.submitMyNewCards();
 */
 
 // carrega informações do meu usuário do servidor e renderiza meus cards iniciais
-apiPrivate
+myApi
   .getServerInfosAndCardsinPromiseAll()
   .then(([serverInfos, serverCards]) => {
-    // atualiza o perfil
     // renderiza a foto do usuário do servidor
     profilePhoto.style.backgroundImage = `url(${serverInfos.avatar})`;
     // renderiza as infos do usuário do servidor
@@ -130,17 +85,24 @@ apiPrivate
 
       const cardId = card._id;
 
-      setupLikeButton(likeButton, cardId, apiPrivate);
+      setupLikeButton(likeButton, cardId, myApi);
 
       // botão excluir
       const trashButton = boxServerCard.querySelector(".card__trash-btn");
 
-      trashButton.addEventListener("click", (evt) => {
-        const currentCard = evt.target.closest(".card-model");
+      // verifica se o cartão é o do usuário logado no servidor e não é o cartão que já estava na API
+      const currentUserId = serverInfos._id; // ID do usuário logado
 
-        // abre popup para confirmação de exclusão do card
-        popupTrash.open(currentCard, cardId);
-      });
+      card.owner === currentUserId && card._id !== "683ef584285e50001a4cd806"
+        ? // configura o botão excluir
+          trashButton.addEventListener("click", (evt) => {
+            const currentCard = evt.target.closest(".card-model");
+
+            // abre popup para confirmação de exclusão do card
+            popupTrash.open(currentCard, cardId);
+          })
+        : // desativa o botão excluir
+          (trashButton.style.display = "none");
 
       // retorna cada card configurado
       return boxServerCard;
@@ -152,7 +114,7 @@ apiPrivate
   .then((myCardsData) => {
     myCardsData.forEach((card) => {
       // adiciona o novo cartão no início da seção
-      sectionCards.prepend(card);
+      sectionCards.append(card);
     });
   })
   .catch((err) => {
@@ -173,7 +135,7 @@ sectionCards.addEventListener("click", (evt) => {
 const popupTrash = new PopupWithConfirmation(
   configTrash.boxFormSelector,
   (currentCard, cardId) => {
-    apiPrivate
+    myApi
       // método da api para excluir o card do servidor
       .deleteCard(cardId)
       .then(() => {
@@ -194,8 +156,8 @@ const popupEditPhoto = new PopupForPhoto(
   configPhoto.boxFormSelector,
   // envia a nova foto do perfil para o servidor
   (dataPhoto) => {
-    apiPrivate
-      .submitPhotoprofile(dataPhoto)
+    myApi
+      .submitPhotoProfile(dataPhoto)
       .then((result) => {
         // atualiza a foto do perfil na página
         profilePhoto.style.backgroundImage = `url(${result.avatar})`;
@@ -215,7 +177,7 @@ const popupEdtProfile = new PopupWithForm(
   configEdt.boxFormSelector,
   // envia as informações do perfil para o servidor
   (dataProfile) => {
-    apiPrivate
+    myApi
       .submitInfosProfile(dataProfile)
       .then((result) => {
         // atualiza as informações do perfil na página
@@ -235,7 +197,7 @@ const popupAddCard = new PopupWithForm(
   configAdd.boxFormSelector,
   // configura e adiciona um novo cartão na página
   (dataCard) => {
-    apiPrivate
+    myApi
       .submitNewCard(dataCard)
       .then((result) => {
         const boxNewCard = templateNewCard
@@ -254,7 +216,7 @@ const popupAddCard = new PopupWithForm(
 
         const cardId = result._id;
 
-        setupLikeButton(likeButton, cardId, apiPrivate);
+        setupLikeButton(likeButton, cardId, myApi);
 
         // botão excluir
         const trashButton = boxNewCard.querySelector(".card__trash-btn");
