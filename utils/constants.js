@@ -1,4 +1,4 @@
-// array para meus cards iniciais
+// array para envio dos meus cards iniciais ao servidor
 const myCards = [
   {
     place: "Japão, Monte Fuji",
@@ -26,10 +26,10 @@ const myCards = [
   },
 ];
 
-// constante para seção de cards
+// constante para a seção de cards
 const sectionCards = document.querySelector(".elements__cards");
 
-// constante para o elemento de foto do perfil
+// constante para a seção de foto do perfil
 const profilePhoto = document.querySelector(".profile__photo");
 
 // objetos de configuração para formulários edt, add, trash e photo
@@ -83,7 +83,7 @@ const photoFormElement = document.querySelector(configPhoto.formSelector);
 const nameInput = document.querySelector('input[name="name"]');
 const aboutInput = document.querySelector('input[name="about"]');
 
-// constante para campos do popup form add
+// constante para clones do template de cards
 const templateNewCard = document.querySelector("#template-model-card").content;
 
 // constante e obj para popup image
