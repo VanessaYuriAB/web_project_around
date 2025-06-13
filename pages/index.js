@@ -141,6 +141,8 @@ const popupTrash = new PopupWithConfirmation(
       .then(() => {
         // exclui o card da página
         currentCard.remove();
+        // fecha o popup de confirmação
+        popupTrash.close();
       })
       .catch((err) => {
         console.error(`Erro ao deletar o card: ${err}.`);
@@ -161,6 +163,8 @@ const popupEditPhoto = new PopupForPhoto(
       .then((result) => {
         // atualiza a foto do perfil na página
         profilePhoto.style.backgroundImage = `url(${result.avatar})`;
+        // fecha o popup foto
+        popupEditPhoto.close();
       })
       .catch((err) => {
         console.log(`Erro ao atualizar a foto de perfil: ${err}.`);
@@ -182,6 +186,8 @@ const popupEdtProfile = new PopupWithForm(
       .then((result) => {
         // atualiza as informações do perfil na página
         profileInfos.setUserInfo(result);
+        // fecha popup edt
+        popupEdtProfile.close();
       })
       .catch((err) => {
         console.log(`Erro ao atualizar as informações de perfil: ${err}.`);
@@ -230,6 +236,9 @@ const popupAddCard = new PopupWithForm(
 
         // adiciona o novo cartão no início da seção
         sectionCards.prepend(boxNewCard);
+
+        // fecha popup add
+        popupAddCard.close();
       })
       .catch((err) => {
         console.log(`Erro ao adicionar o novo cartão na página: ${err}.`);

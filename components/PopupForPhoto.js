@@ -15,7 +15,6 @@ export default class PopupForPhoto extends Popup {
       evt.preventDefault();
       this.renderLoading(true);
       handleSubmit(this._getInputValue());
-      this.close();
     };
 
     this._formElement.addEventListener("submit", this._handleSubmit);
