@@ -29,9 +29,13 @@ import PopupForPhoto from "../components/PopupForPhoto.js";
 
 import Api from "../components/Api.js";
 
-import { setupLikeButton } from "../utils/utils.js";
+import toggleLike from "../utils/utils.js";
 
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
+
+import Section from "../components/Section.js";
+
+import Card from "../components/Card.js";
 
 // api(fetch)
 const myApi = new Api({
@@ -59,6 +63,9 @@ RODADO APENAS PARA ENVIAR OS MEUS CARTÕES INICIAIS.
 myApi
   .getServerInfosAndCardsinPromiseAll()
   .then(([serverInfos, serverCards]) => {
+    // atribui valor à variável para o id do usuário (logado)
+    currentUserId = serverInfos._id;
+
     // renderiza a foto do usuário do servidor
     profilePhoto.style.backgroundImage = `url(${serverInfos.avatar})`;
     // renderiza as infos do usuário do servidor
@@ -67,98 +74,96 @@ myApi
       about: serverInfos.about,
     });
 
-    // renderiza os cartões
-    const myCardsData = serverCards.map((card) => {
-      const boxServerCard = templateNewCard
-        .cloneNode(true)
-        .querySelector(".card-model");
-
-      const titleCard = boxServerCard.querySelector(".card__name");
-      const imageCard = boxServerCard.querySelector(".card__image");
-
-      titleCard.textContent = card.name;
-      imageCard.src = card.link;
-      imageCard.alt = card.name;
-
-      // botão curtir
-      const likeButton = boxServerCard.querySelector(".card__like-btn");
-
-      const cardId = card._id;
-
-      setupLikeButton(likeButton, cardId, myApi);
-
-      // botão excluir
-      const trashButton = boxServerCard.querySelector(".card__trash-btn");
-
-      // verifica se o cartão é o do usuário logado no servidor e não é o cartão que já estava na API
-      const currentUserId = serverInfos._id; // ID do usuário logado
-
-      card.owner === currentUserId && card._id !== "683ef584285e50001a4cd806"
-        ? // configura o botão excluir
-          trashButton.addEventListener("click", (evt) => {
-            const currentCard = evt.target.closest(".card-model");
-
-            // abre popup para confirmação de exclusão do card
-            popupTrash.open(currentCard, cardId);
-          })
-        : // desativa o botão excluir
-          (trashButton.style.display = "none");
-
-      // retorna cada card configurado
-      return boxServerCard;
-    });
-
-    // retorna um arrays com objetos de cada card
-    return myCardsData;
-  })
-  .then((myCardsData) => {
-    myCardsData.forEach((card) => {
-      // adiciona o novo cartão no início da seção
-      sectionCards.append(card);
-    });
+    // section e card: renderiza cards iniciais
+    sectionCardsInstance = new Section(
+      {
+        items: serverCards.reverse(), // para inverter e renderizar primeiro o do servidor, após os meus (addItem adiciona com prepend)
+        renderer: (item) => {
+          const cardElement = new Card({
+            name: item.name,
+            link: item.link,
+            cardId: item._id,
+            ownerId: item.owner,
+            currentUserId: currentUserId, // ID do usuário logado declarado no escopo global para ser reutilizado
+            handleImageClick: popupCard.open.bind(popupCard), // sugestão do ChatGPT
+            handleLikeClick: (cardId, likeBtn) => {
+              toggleLike(cardId, likeBtn, myApi);
+            },
+            handleDeleteClick: (cardInstance) => {
+              popupTrash.open(cardInstance); // passa a instância do card
+            },
+          });
+          const cardItem = cardElement.generateCard();
+          sectionCardsInstance.addItem(cardItem);
+        },
+      },
+      sectionCards
+    );
+    sectionCardsInstance.renderAll();
   })
   .catch((err) => {
     console.log(
-      `Erro ao carregar informações de usuário e/ou renderizar os cartões iniciais do servidor: ${err}.`
+      `Erro ao renderizar informações do usuário e/ou cartões iniciais do servidor: ${err}.`
     );
   });
 
-// popupwithimage
-const popupCard = new PopupWithImage(configCard.popupSelector);
+// listeners de abertura (popups form)
+// photo
+photoBtnElement.addEventListener("click", () => {
+  // reseta estado da validação (msgs de erro e botão)
+  photoValidator.resetValidation();
 
-// para abrir popup dos cards inseridos pela página
+  // abre popup para edição da foto do perfil
+  popupEditPhoto.open();
+});
+
+// edt
+edtBtnElement.addEventListener("click", () => {
+  // preenche inputs com dados do perfil, antes de abrir
+  const { name, about } = profileInfos.getUserInfo();
+  nameInput.value = name;
+  aboutInput.value = about;
+
+  // reseta estado da validação (msgs de erro e botão)
+  edtValidator.resetValidation();
+
+  // abre popup para edição das infos do perfil
+  popupEdtProfile.open();
+});
+
+// add
+addBtnElement.addEventListener("click", () => {
+  // reseta estado da validação (msgs de erro e botão)
+  addValidator.resetValidation();
+
+  // abre popup para adição de um novo cartão
+  popupAddCard.open();
+});
+
+// formvalidator
+// edt
+const edtValidator = new FormValidator(configEdt, edtFormElement);
+edtValidator.enableValidation();
+
+// add
+const addValidator = new FormValidator(configAdd, addFormElement);
+addValidator.enableValidation();
+
+// photo
+const photoValidator = new FormValidator(configPhoto, photoFormElement);
+photoValidator.enableValidation();
+
+// para abrir popup image dos cards inseridos pela página
 sectionCards.addEventListener("click", (evt) => {
   popupCard.open(evt);
 });
 
-// popupwithconfirmation: abre e configura popup para confirmação de exclusão de card
-const popupTrash = new PopupWithConfirmation(
-  configTrash.boxFormSelector,
-  (currentCard, cardId) => {
-    myApi
-      // método da api para excluir o card do servidor
-      .deleteCard(cardId)
-      .then(() => {
-        // exclui o card da página
-        currentCard.remove();
-        // fecha o popup de confirmação
-        popupTrash.close();
-      })
-      .catch((err) => {
-        console.error(`Erro ao deletar o card: ${err}.`);
-      })
-      .finally(() => {
-        popupTrash.renderLoading(false);
-      });
-  }
-);
-
-// popupforphoto e api: abertura e envio: para editar a foto do perfil
+// popupforphoto e api: para editar a foto do perfil
 const popupEditPhoto = new PopupForPhoto(
   configPhoto.boxFormSelector,
-  // envia a nova foto do perfil para o servidor
   (dataPhoto) => {
     myApi
+      // envia a nova foto do perfil para o servidor
       .submitPhotoProfile(dataPhoto)
       .then((result) => {
         // atualiza a foto do perfil na página
@@ -198,99 +203,38 @@ const popupEdtProfile = new PopupWithForm(
   }
 );
 
-// form add: para adicionar um novo card na página
+// form add: para adicionar um novo card na página via popup
 const popupAddCard = new PopupWithForm(
   configAdd.boxFormSelector,
-  // configura e adiciona um novo cartão na página
-  (dataCard) => {
+  (dataFromPopupAdd) => {
     myApi
-      .submitNewCard(dataCard)
-      .then((result) => {
-        const boxNewCard = templateNewCard
-          .cloneNode(true)
-          .querySelector(".card-model");
-
-        const titleCard = boxNewCard.querySelector(".card__name");
-        const imageCard = boxNewCard.querySelector(".card__image");
-
-        titleCard.textContent = result.name; // o name do input é place, mas o objeto json retornado da api tem o nome da propriedade como name
-        imageCard.src = result.link;
-        imageCard.alt = result.name;
-
-        // botão curtir
-        const likeButton = boxNewCard.querySelector(".card__like-btn");
-
-        const cardId = result._id;
-
-        setupLikeButton(likeButton, cardId, myApi);
-
-        // botão excluir
-        const trashButton = boxNewCard.querySelector(".card__trash-btn");
-
-        trashButton.addEventListener("click", (evt) => {
-          const currentCard = evt.target.closest(".card-model");
-
-          // abre popup para confirmação de exclusão do card
-          popupTrash.open(currentCard, cardId);
+      // envia dados do popup para a API
+      .submitNewCard(dataFromPopupAdd)
+      // configura e adiciona um novo cartão na página
+      .then((dataResultFromAPI) => {
+        const newCardElement = new Card({
+          name: dataResultFromAPI.name,
+          link: dataResultFromAPI.link,
+          cardId: dataResultFromAPI._id,
+          ownerId: dataResultFromAPI.owner,
+          currentUserId: currentUserId, // variável declarada e atribuída em myApi.getServerInfosAndCardsinPromiseAll()
+          handleImageClick: popupCard.open.bind(popupCard), // sugestão do ChatGPT
+          handleLikeClick: (cardId, likeBtn) =>
+            toggleLike(cardId, likeBtn, myApi),
+          handleDeleteClick: (cardInstance) => {
+            popupTrash.open(cardInstance); // passa a instância do card
+          },
         });
-
-        // adiciona o novo cartão no início da seção
-        sectionCards.prepend(boxNewCard);
-
+        // gera o card
+        const newCardItem = newCardElement.generateCard();
+        // adiciona o card na seção de cards
+        sectionCardsInstance.addItem(newCardItem); // Vai para o topo com prepend
         // fecha popup add
         popupAddCard.close();
       })
       .catch((err) => {
         console.log(`Erro ao adicionar o novo cartão na página: ${err}.`);
       })
-      .finally(() => {
-        popupAddCard.renderLoading(false);
-      });
+      .finally(() => popupAddCard.renderLoading(false));
   }
 );
-
-// formvalidator
-// edt
-const edtValidator = new FormValidator(configEdt, edtFormElement);
-edtValidator.enableValidation();
-
-// add
-const addValidator = new FormValidator(configAdd, addFormElement);
-addValidator.enableValidation();
-
-// photo
-const photoValidator = new FormValidator(configPhoto, photoFormElement);
-photoValidator.enableValidation();
-
-// listeners de abertura (popups form)
-// photo
-photoBtnElement.addEventListener("click", () => {
-  // reseta estado da validação (msgs de erro e botão)
-  photoValidator.resetValidation();
-
-  // abre popup para edição da foto do perfil
-  popupEditPhoto.open();
-});
-
-// edt
-edtBtnElement.addEventListener("click", () => {
-  // preenche inputs com dados do perfil, antes de abrir
-  const { name, about } = profileInfos.getUserInfo();
-  nameInput.value = name;
-  aboutInput.value = about;
-
-  // reseta estado da validação (msgs de erro e botão)
-  edtValidator.resetValidation();
-
-  // abre popup para edição das infos do perfil
-  popupEdtProfile.open();
-});
-
-// add
-addBtnElement.addEventListener("click", () => {
-  // reseta estado da validação (msgs de erro e botão)
-  addValidator.resetValidation();
-
-  // abre popup para adição de um novo cartão
-  popupAddCard.open();
-});
