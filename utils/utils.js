@@ -1,19 +1,18 @@
-function setupLikeButton(likeButton, cardId, api) {
-  likeButton.classList.remove("card__like-btn_active");
+export default function toggleLike(cardId, likeBtn, apiInstance) {
+  const isLiked = likeBtn.classList.contains("card__like-btn_active");
 
-  likeButton.addEventListener("click", (evt) => {
-    const isLiked = evt.target.classList.contains("card__like-btn_active");
+  likeBtn.disabled = true; // desativa botão durante requisição
 
-    const request = isLiked ? api.unlikeCard(cardId) : api.likeCard(cardId);
+  const request = isLiked
+    ? apiInstance.unlikeCard(cardId)
+    : apiInstance.likeCard(cardId);
 
-    request
-      .then(() => {
-        evt.target.classList.toggle("card__like-btn_active");
-      })
-      .catch((err) => {
-        console.log(`Erro ao alternar o like do cartão: ${err}.`);
-      });
-  });
+  request
+    .then(() => {
+      likeBtn.classList.toggle("card__like-btn_active");
+    })
+    .catch((err) => console.log(`Erro ao alternar o like do cartão: ${err}.`))
+    .finally(() => {
+      likeBtn.disabled = false; // reativa botão após resposta
+    });
 }
-
-export { setupLikeButton };
