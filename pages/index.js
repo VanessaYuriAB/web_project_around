@@ -59,7 +59,36 @@ RODADO APENAS PARA ENVIAR OS MEUS CARTÕES INICIAIS.
 // myApi.submitMyNewCards();
 */
 
-// carrega informações do meu usuário do servidor e renderiza meus cards iniciais
+// popupwithimage
+const popupCard = new PopupWithImage(configCard.popupSelector);
+
+// popupwithconfirmation: para confirmação de exclusão de card
+const popupTrash = new PopupWithConfirmation(
+  configTrash.boxFormSelector,
+  (cardInstance) => {
+    myApi
+      // método da api para excluir o card do servidor
+      .deleteCard(cardInstance._cardId)
+      .then(() => {
+        // exclui o card da página
+        cardInstance.removeCard();
+        // fecha o popup de confirmação
+        popupTrash.close();
+      })
+      .catch((err) => {
+        console.error(`Erro ao deletar o card: ${err}.`);
+      })
+      .finally(() => {
+        popupTrash.renderLoading(false);
+      });
+  }
+);
+
+// variáveis para serem acessadas em várias funções
+let currentUserId = null;
+let sectionCardsInstance = null;
+
+// carrega informações do meu usuário do servidor e meus cards iniciais (carregamento inicial)
 myApi
   .getServerInfosAndCardsinPromiseAll()
   .then(([serverInfos, serverCards]) => {
@@ -180,7 +209,7 @@ const popupEditPhoto = new PopupForPhoto(
   }
 );
 
-// popupwithform e api: abertura e envio
+// popupwithform e api: envio de infos
 // form edt: para editar infos do perfil
 const popupEdtProfile = new PopupWithForm(
   configEdt.boxFormSelector,

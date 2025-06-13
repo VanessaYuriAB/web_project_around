@@ -17,17 +17,17 @@ export default class PopupWithConfirmation extends Popup {
     this._handleConfirm = (evt) => {
       evt.preventDefault();
       this.renderLoading(true);
-      handleConfirm(this._currentCard, this._currentCardId);
+      handleConfirm(this._currentCard); // que recebe a instância
     };
 
     this._formElement.addEventListener("submit", this._handleConfirm);
   }
 
   // altera método open da classe mãe, inserindo parâmentros
-  open(cardElement, cardId) {
+  open(cardInstance) {
+    this._currentCard = cardInstance;
+    this._currentCardId = cardInstance._cardId; // definido no argumento da instância do card
     super.open();
-    this._currentCard = cardElement;
-    this._currentCardId = cardId;
   }
 
   // informa usuário sobre progresso da solicitação
@@ -39,5 +39,11 @@ export default class PopupWithConfirmation extends Popup {
       // retorna texto original
       this._confirmBtnElement.textContent = this._originalBtnText;
     }
+  }
+
+  close() {
+    super.close();
+    this._currentCard = null;
+    this._currentCardId = null;
   }
 }
