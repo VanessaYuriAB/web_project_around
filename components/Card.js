@@ -1,4 +1,8 @@
-import { templateNewCard } from "../utils/constants.js";
+import {
+  templateNewCard,
+  validExtensions,
+  knownImageDomains,
+} from "../utils/constants.js";
 
 export default class Card {
   constructor({
@@ -50,6 +54,7 @@ export default class Card {
     this._nameCard.textContent = this._name;
 
     this._setEventListeners();
+    this._setTrashBtnForNoImageBackground();
 
     return this._element;
   }
@@ -110,5 +115,27 @@ export default class Card {
 
     this._element.remove();
     this._element = null;
+  }
+
+  // verifica se a extensão do formato do link da imagem inserida é válida com extensões aceitas para imagens e domínios conhecidos de imagens
+  _isValidImageFormat(url) {
+    const urlLower = url.toLowerCase();
+
+    const hasValidExtension = validExtensions.some((ext) =>
+      urlLower.endsWith(ext)
+    );
+
+    const isFromKnownDomain = knownImageDomains.some((domain) =>
+      url.includes(domain)
+    );
+
+    return hasValidExtension || isFromKnownDomain;
+  }
+
+  // para configurar o ícone de lixeira em cards sem imagem
+  _setTrashBtnForNoImageBackground() {
+    if (!this._isValidImageFormat(this._link)) {
+      this._trashBtn.style.filter = "drop-shadow(0 0 2px rgba(0,0,0,0.5))";
+    }
   }
 }

@@ -26,6 +26,20 @@ const myCards = [
   },
 ];
 
+// constantes para verificação do link de imagem de cards
+const validExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"];
+const knownImageDomains = [
+  "images.unsplash.com",
+  "res.cloudinary.com",
+  "i.imgur.com",
+  "live.staticflickr.com",
+  "lh3.googleusercontent.com",
+  "s3.amazonaws.com",
+  "s3-us-west-1.amazonaws.com",
+  "raw.githubusercontent.com",
+  "upload.wikimedia.org",
+];
+
 // constante para a seção de cards
 const sectionCards = document.querySelector(".elements__cards");
 
@@ -125,4 +139,6 @@ export {
   photoFormElement,
   photoBtnElement,
   profilePhoto,
+  validExtensions,
+  knownImageDomains,
 };
