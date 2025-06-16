@@ -11,18 +11,24 @@ export default class PopupWithForm extends Popup {
 
     this._originalBtnText = this._submitBtnElement.textContent; // salva o texto original do botão
 
+    this._formInputs = Array.from(
+      this._formElement.querySelectorAll(this._config.inputSelector)
+    );
+
     // dados já são ajustados aqui
-    this._handleSubmit = (evt) => {
+    // armazena uma única instância da função de submit para add/remove listener
+    this._handleSubmitForm = (evt) => {
       evt.preventDefault();
       this.renderLoading(true);
       handleSubmit(this._getInputValues());
     };
+  }
 
-    this._formElement.addEventListener("submit", this._handleSubmit);
+  open() {
+    super.open();
 
-    this._formInputs = Array.from(
-      this._formElement.querySelectorAll(this._config.inputSelector)
-    );
+    // adiciona evento para envio do formulário
+    this._formElement.addEventListener("submit", this._handleSubmitForm);
   }
 
   // informa usuário sobre progresso da solicitação
@@ -50,6 +56,9 @@ export default class PopupWithForm extends Popup {
 
   close() {
     super.close();
+
+    // remove evento para envio do formulário
+    this._formElement.removeEventListener("submit", this._handleSubmitForm);
 
     //se o formulário for o add -> reseta campos
     if (this._formElement.classList.contains("popup-add__container")) {
