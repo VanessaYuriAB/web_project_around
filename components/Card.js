@@ -10,6 +10,7 @@ export default class Card {
     link,
     cardId,
     ownerId,
+    isLiked,
     currentUserId,
     handleImageClick,
     handleLikeClick,
@@ -21,6 +22,8 @@ export default class Card {
     this._cardId = cardId;
     this._ownerId = ownerId;
     this._currentUserId = currentUserId; // ID do usuário logado
+
+    this._isLiked = isLiked;
 
     // definido fora da classe, na instanciação
     this._handleImageClick = handleImageClick; // abre popup image
@@ -46,9 +49,21 @@ export default class Card {
     this._imgCard = this._element.querySelector(".card__image");
     this._nameCard = this._element.querySelector(".card__name");
 
-    this._likeBtn = this._element.querySelector(".card__like-btn");
     this._trashBtn = this._element.querySelector(".card__trash-btn");
 
+    this._likeBtn = this._element.querySelector(".card__like-btn");
+
+    if (this._isLiked) {
+      this._likeBtn.classList.add("card__like-btn_active");
+    }
+
+    // gera id único para o card (usando o _id que vem da API)
+    this._element.id = `card-${this._cardId}`;
+
+    // configura href do botão curtir para o próprio id do card
+    this._likeBtn.href = `#card-${this._cardId}`;
+
+    // configura as informações do card
     this._imgCard.src = this._link;
     this._imgCard.alt = `${this._name}`;
     this._nameCard.textContent = this._name;
@@ -73,8 +88,6 @@ export default class Card {
 
   // configura listener de curtida
   _prepareCardLikeClick() {
-    this._likeBtn.classList.remove("card__like-btn_active");
-
     // armazena a função para poder remover listener
     this._boundHandleLike = () => {
       this._handleLikeClick(this._cardId, this._likeBtn);
@@ -137,5 +150,10 @@ export default class Card {
     if (!this._isValidImageFormat(this._link)) {
       this._trashBtn.style.filter = "drop-shadow(0 0 2px rgba(0,0,0,0.5))";
     }
+  }
+
+  // getter para id do card
+  get cardId() {
+    return this._cardId;
   }
 }

@@ -68,7 +68,7 @@ const popupTrash = new PopupWithConfirmation(
   (cardInstance) => {
     myApi
       // método da api para excluir o card do servidor
-      .deleteCard(cardInstance._cardId)
+      .deleteCard(cardInstance.cardId)
       .then(() => {
         // exclui o card da página
         cardInstance.removeCard();
@@ -93,7 +93,7 @@ myApi
   .getServerInfosAndCardsinPromiseAll()
   .then(([serverInfos, serverCards]) => {
     // atribui valor à variável para o id do usuário (logado)
-    currentUserId = serverInfos._id;
+    currentUserId = serverInfos._id; // aqui, _id é o nome da chave da proprieade do objeto de retorno da API, não é necessário getter
 
     // renderiza a foto do usuário do servidor
     profilePhoto.style.backgroundImage = `url(${serverInfos.avatar})`;
@@ -111,9 +111,10 @@ myApi
           const cardElement = new Card({
             name: item.name,
             link: item.link,
-            cardId: item._id,
+            cardId: item._id, // _id é o nome da chave da propriedade do objeto json de resposta da API, não é necessário getter
             ownerId: item.owner,
-            currentUserId: currentUserId, // ID do usuário logado declarado no escopo global para ser reutilizado
+            isLiked: item.isLiked, // verifica se o cartão está curtido pelo usuário
+            currentUserId: currentUserId, // ID do usuário logado declarado no escopo global para ser reutilizado, valor atribuído no início do .then()
             handleImageClick: popupCard.open.bind(popupCard), // sugestão do ChatGPT
             handleLikeClick: (cardId, likeBtn) => {
               toggleLike(cardId, likeBtn, myApi);
@@ -136,58 +137,7 @@ myApi
     );
   });
 
-// listeners de abertura (popups form)
-// photo
-photoBtnElement.addEventListener("click", () => {
-  // reseta estado da validação (msgs de erro e botão)
-  photoValidator.resetValidation();
-
-  // abre popup para edição da foto do perfil
-  popupEditPhoto.open();
-});
-
-// edt
-edtBtnElement.addEventListener("click", () => {
-  // preenche inputs com dados do perfil, antes de abrir
-  const { name, about } = profileInfos.getUserInfo();
-  nameInput.value = name;
-  aboutInput.value = about;
-
-  // reseta estado da validação (msgs de erro e botão)
-  edtValidator.resetValidation();
-
-  // abre popup para edição das infos do perfil
-  popupEdtProfile.open();
-});
-
-// add
-addBtnElement.addEventListener("click", () => {
-  // reseta estado da validação (msgs de erro e botão)
-  addValidator.resetValidation();
-
-  // abre popup para adição de um novo cartão
-  popupAddCard.open();
-});
-
-// formvalidator
-// edt
-const edtValidator = new FormValidator(configEdt, edtFormElement);
-edtValidator.enableValidation();
-
-// add
-const addValidator = new FormValidator(configAdd, addFormElement);
-addValidator.enableValidation();
-
-// photo
-const photoValidator = new FormValidator(configPhoto, photoFormElement);
-photoValidator.enableValidation();
-
-// para abrir popup image dos cards inseridos pela página
-sectionCards.addEventListener("click", (evt) => {
-  popupCard.open(evt);
-});
-
-// popupforphoto e api: para editar a foto do perfil
+// popupforphoto e api: para editar a foto do perfil via popup
 const popupEditPhoto = new PopupForPhoto(
   configPhoto.boxFormSelector,
   (dataPhoto) => {
@@ -210,7 +160,8 @@ const popupEditPhoto = new PopupForPhoto(
 );
 
 // popupwithform e api: envio de infos
-// form edt: para editar infos do perfil
+
+// form edt: para editar infos do perfil via popup
 const popupEdtProfile = new PopupWithForm(
   configEdt.boxFormSelector,
   // envia as informações do perfil para o servidor
@@ -244,8 +195,9 @@ const popupAddCard = new PopupWithForm(
         const newCardElement = new Card({
           name: dataResultFromAPI.name,
           link: dataResultFromAPI.link,
-          cardId: dataResultFromAPI._id,
+          cardId: dataResultFromAPI._id, // valor direto da API, getter só usado ao acessar cardInstance.cardId
           ownerId: dataResultFromAPI.owner,
+          isLiked: dataResultFromAPI.isLiked, // verifica se o cartão está curtido pelo usuário
           currentUserId: currentUserId, // variável declarada e atribuída em myApi.getServerInfosAndCardsinPromiseAll()
           handleImageClick: popupCard.open.bind(popupCard), // sugestão do ChatGPT
           handleLikeClick: (cardId, likeBtn) =>
@@ -267,3 +219,56 @@ const popupAddCard = new PopupWithForm(
       .finally(() => popupAddCard.renderLoading(false));
   }
 );
+
+// listeners de abertura (popups form)
+
+// photo
+photoBtnElement.addEventListener("click", () => {
+  // reseta estado da validação (msgs de erro e botão)
+  photoValidator.resetValidation();
+
+  // abre popup para edição da foto do perfil
+  popupEditPhoto.open();
+});
+
+// edt
+edtBtnElement.addEventListener("click", () => {
+  // preenche inputs com dados do perfil, antes de abrir
+  const { name, about } = profileInfos.getUserInfo();
+  nameInput.value = name;
+  aboutInput.value = about;
+
+  // reseta estado da validação (msgs de erro e botão)
+  edtValidator.resetValidation();
+
+  // abre popup para edição das infos do perfil
+  popupEdtProfile.open();
+});
+
+// add
+addBtnElement.addEventListener("click", () => {
+  // reseta estado da validação (msgs de erro e botão)
+  addValidator.resetValidation();
+
+  // abre popup para adição de um novo cartão
+  popupAddCard.open();
+});
+
+// para abrir popup image dos cards inseridos pela página
+sectionCards.addEventListener("click", (evt) => {
+  popupCard.open(evt);
+});
+
+// formvalidator
+
+// edt
+const edtValidator = new FormValidator(configEdt, edtFormElement);
+edtValidator.enableValidation();
+
+// add
+const addValidator = new FormValidator(configAdd, addFormElement);
+addValidator.enableValidation();
+
+// photo
+const photoValidator = new FormValidator(configPhoto, photoFormElement);
+photoValidator.enableValidation();
