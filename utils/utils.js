@@ -8,7 +8,8 @@ export default function toggleLike(cardId, likeBtn, apiInstance) {
     : apiInstance.likeCard(cardId);
 
   request
-    .then(() => {
+    .then((updatedCardData) => {
+      // atualiza a classe do botão
       likeBtn.classList.toggle("card__like-btn_active");
     })
     .catch((err) => console.log(`Erro ao alternar o like do cartão: ${err}.`))
