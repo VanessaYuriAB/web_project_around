@@ -82,7 +82,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
-    });
+    }).then((res) => this._checkResponse(res));
   }
 
   // descurte um cartão
@@ -90,7 +90,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    });
+    }).then((res) => this._checkResponse(res));
   }
 
   // deleta um cartão do servidor
