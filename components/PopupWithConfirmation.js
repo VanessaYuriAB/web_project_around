@@ -23,7 +23,7 @@ export default class PopupWithConfirmation extends Popup {
     this._formElement.addEventListener("submit", this._handleConfirm);
   }
 
-  // altera método open da classe mãe, inserindo parâmentros
+  // altera método open da classe mãe, inserindo parâmetros
   open(cardInstance) {
     this._currentCard = cardInstance;
     this._currentCardId = cardInstance._cardId; // definido no argumento da instância do card
