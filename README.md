@@ -1,252 +1,294 @@
-# Web_project_around: EUA Afora
+# 🗺️ Around — EUA Afora (Vanilla JavaScript)
 
-"Around The US" é uma página interativa onde os usuários podem adicionar, remover e curtir fotos.
+**Around (EUA Afora)** é uma aplicação web interativa onde usuários podem **editar o**
+**perfil, adicionar, curtir e remover cartões de fotos**, com persistência de dados via
+**`API REST`**.
 
-Até o momento (16/06/25), são 6 sprints trabalhadas neste projeto:
+Este projeto foi desenvolvido ao longo das **Sprints 7 a 12** do bootcamp de
+**Desenvolvimento Web da TripleTen**, representando a evolução completa de um front‑end
+moderno em **`JavaScript` puro**, desde **manipulação básica do `DOM`** até
+**`Programação Orientada a Objetos` avançada** e **integração com `API`**.
 
-1. JS Básico e Trabalho com o DOM,
-2. Lógica de Programação JS e Métodos,
-3. Objetos e Manipulação de Eventos em JS,
-4. Introdução à Programação Orientada a Objetos,
-5. POO avançado e NPM e
-6. JavaScript Assíncrono e Trabalho com APIs.
+🔹 Projeto **âncora** do bootcamp
 
-Feita com HTML e CSS avançados, Flexbox, Metodologia BEM / BEM Flat, Figma, Media Queries, Grid Layout, JavaScript (síncrono e assíncrono), POO e API.
+🔹 Base utilizada posteriormente para versões **`React`**, **`Auth`** e **`Full Stack`**
 
-Primeiro projeto com JS, POO e API.
-Segundo com design responsivo (tamanhos de layout fornecidos no projeto).
+🔹 Primeiro projeto integrando **`JavaScript`**, **`POO`** e **`consumo de API`**
 
-# Técnicas utilizadas
+🔹 Segundo projeto com foco em **design responsivo** (layouts definidos em `Figma`)
 
-## > HTML Semântico: uso de tags HTML que indicam o propósito de cada seção, em vez de apenas definir a estrutura da página.
+---
 
-HTML Semântico 1:
+## 📌 Escopo do projeto (Sprints 7 → 12)
+
+Neste repositório está a **versão final do Around em `JavaScript Vanilla`**, contemplando:
+
+- Interface responsiva baseada em layout do `Figma`
+- Interação completa com usuário (`CRUD` de cartões)
+- Arquitetura modular e orientada a objetos
+- Integração com `API` externa
+- Foco em boas práticas, legibilidade e escalabilidade
+
+---
+
+## 📈 Evolução técnica por sprints
+
+**Sprints abordadas:**
+
+- Sprint 7 - JS Básico e Trabalho com o DOM
+- Sprint 8 - Lógica de Programação JS e Métodos
+- Sprint 9 - Objetos e Manipulação de Eventos em JS
+- Sprint 10 - Introdução à Programação Orientada a Objetos
+- Sprint 11 - POO avançado e NPM
+- Sprint 12 - JavaScript Assíncrono e Trabalho com APIs
+
+### 🟢 Sprints 7–8 — Base e interatividade
+
+- `HTML` semântico e `CSS` responsivo (`BEM` / `BEM Flat`)
+- Manipulação do `DOM` e eventos
+- Popups (editar perfil, adicionar cartão, imagem ampliada)
+- Renderização dinâmica de cartões
+- Curtidas e remoção de cartões (`front‑end`)
+
+### 🟡 Sprint 9 — UX e validação
+
+- Validação de formulários (`HTML5` + `JS`)
+- Controle de estado do botão `submit`
+- Fechamento de popups por `Esc` e clique na sobreposição
+- Código mais reutilizável e organizado
+
+### 🔵 Sprint 10 — Introdução à POO
+
+- Refatoração completa para `classes ES6`
+- Criação das classes:
+  - `Card`
+  - `FormValidator`
+- Modularização com `import` / `export`
+- Separação clara de responsabilidades
+
+### 🟣 Sprint 11 — Arquitetura orientada a objetos
+
+- Criação de classes reutilizáveis e especializadas:
+  - `Section`
+  - `Popup`
+  - `PopupWithForm`
+  - `PopupWithImage`
+  - `UserInfo`
+- Uso de `herança`
+- Baixo acoplamento entre classes
+- `index.js` responsável apenas por orquestração
+
+### 🔴 Sprint 12 — JavaScript assíncrono e API
+
+- Integração completa com `API REST`
+- Criação da classe `Api`
+- `Fetch assíncrono` com tratamento de erros
+- Persistência de dados no servidor:
+  - Perfil do usuário
+  - Avatar
+  - Cartões
+  - Curtidas
+- Popup de confirmação para exclusão
+- Feedback visual de carregamento (`Salvando...`)
+- Renderização condicionada após carregamento do usuário
+
+---
+
+## 🧠 Principais conceitos aplicados
+
+- `HTML5` semântico
+- `CSS` moderno (`Flexbox`, `Grid`, `Media Queries`)
+- `Metodologia BEM` / `BEM Flat`
+- `JavaScript` modular (`ES Modules`)
+- `Programação Orientada a Objetos` (`ES6 Classes`)
+- Herança e encapsulamento
+- Baixo acoplamento e responsabilidade única
+- `JavaScript` assíncrono (`fetch`, `Promise`, `Promise.all`)
+- Consumo de `API REST`
+- Controle de estado e `UX`
+
+---
+
+## 🛠️ Tecnologias
+
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- API REST
+- Figma (layout base)
+
+---
+
+## ▶️ Funcionalidades
+
+- ✅ Edição de perfil do usuário
+- ✅ Atualização de avatar
+- ✅ Adição de cartões
+- ✅ Remoção de cartões (com confirmação)
+- ✅ Curtir / descurtir cartões
+- ✅ Popups acessíveis e reutilizáveis
+- ✅ Validação de formulários
+- ✅ Persistência via `API`
+
+---
+
+## 📦 Como rodar o projeto localmente
+
+Clone o repositório:
+
+```bash
+git clone git@github.com:VanessaYuriAB/web_project_around.git
+cd web_project_around
+```
+
+Instale as dependências:
+
+```bash
+npm install
+npm audit
+```
+
+⚠️ Este projeto utiliza **`JavaScript` modular**, portanto precisa ser executado em um
+servidor local. Opções:
+
+- Extensão `Live Server` (`VS Code`)
+- Ou qualquer servidor local simples
+
+---
+
+## ✅ Observações importantes
+
+❗ **Este NÃO é um projeto `React`**
+
+❗ É um projeto **pré‑`React`**, totalmente **modular**, **orientado a objetos** e
+**integrado com `API`**
+
+❗ Esta base foi usada posteriormente para os projetos:
+
+- Around (React)
+- Around (Auth)
+- Around (Full / Monorepo)
+
+> Isso representa evolução progressiva de arquitetura, não uma limitação.
+
+---
+
+## 📷 Detalhes Técnicos
+
+A seguir, alguns exemplos visuais de decisões técnicas e padrões adotados ao longo do
+desenvolvimento do projeto (estrutura, organização de estilos, arquitetura `JS` e
+integração com `API`).
+
+### 🔹 Estrutura e layout (HTML, Flexbox, Grid, Media Queries)
+
+#### HTML Semântico
+
+Uso de `tags semânticas` (`header`, `main`, `section`, `footer`, etc.) para estruturar a
+interface de forma mais clara e acessível. Isso melhora a manutenibilidade do layout,
+facilita a leitura do código e apoia boas práticas de acessibilidade (por exemplo,
+hierarquia de títulos e uso adequado de elementos de conteúdo).
+
 ![alt text](./images/readme/Semântica1.png)
 
-HTML Semântico 2:
-![alt text](./images/readme/Semântica2.png)
+#### Flexbox
 
-HTML Semântico 3:
-![alt text](./images/readme/Semântica3.png)
+Aplicação de `Flexbox` para organizar componentes e alinhar elementos de forma consistente
+(ex.: `header`, área de perfil e elementos internos dos cards). O foco aqui foi garantir
+alinhamento previsível, espaçamento correto e adaptação fluida entre diferentes larguras
+de tela.
 
-## > Flexbox: modelo de layout unidimensional do CSS que alinha e distribui itens dentro de um container de forma responsiva, seja em linha ou coluna, facilitando a criação de layouts complexos e adaptáveis a diferentes tamanhos de tela.
-
-Flexbox 1:
 ![alt text](./images/readme/Flexbox1.png)
 
-Flexbox 2:
-![alt text](./images/readme/Flexbox2.png)
+#### Grid Layout
 
-Flexbox 3:
-![alt text](./images/readme/Flexbox3.png)
+Uso de `CSS Grid` para estruturar áreas onde a organização em linhas e colunas traz mais
+controle (ex.: distribuição de cards/galeria). Essa abordagem melhora previsibilidade do
+layout em diferentes resoluções e simplifica ajustes de responsividade.
 
-Flexbox 4:
-![alt text](./images/readme/Flexbox4.png)
-
-## > Metodologia BEM: metodologia de desenvolvimento front-end para melhor organizanização do código CSS - facilita a criação de componentes reutilizáveis e a manutenção do código.
-
-Metodologia BEM 1:
-![alt text](./images/readme/BEM1.png)
-
-Metodologia BEM 2:
-![alt text](./images/readme/BEM2.png)
-
-Metodologia BEM 3:
-![alt text](./images/readme/BEM3.png)
-
-Metodologia BEM 4:
-![alt text](./images/readme/BEM4.png)
-
-Metodologia BEM 5:
-![alt text](./images/readme/BEM5.png)
-
-## > BEM Flat: estrutura de arquivos onde cada componente BEM (bloco) tem seu próprio diretório com arquivos HTML, CSS e JavaScript, se necessário, para organização mais limpa e modular do código. A estrutura "flat" é frequentemente usada com BEM para facilitar a manutenção e reutilização.
-
-BEM Flat 1:
-![alt text](./images/readme/BEM-Flat1.png)
-
-BEM Flat 2:
-![alt text](./images/readme/BEM-Flat2.png)
-
-BEM Flat 3:
-![alt text](./images/readme/BEM-Flat3.png)
-
-## > Media Queries: recurso do CSS3 para aplicar estilos específicos a uma página web com base nas características do dispositivo, como tamanho da tela, orientação, resolução, etc. São a base do design responsivo, permite que o site se adapte a diferentes tamanhos de tela e dispositivos.
-
-Media Queries 1:
-![alt text](./images/readme/Media-Queries1.png)
-
-Media Queries 2:
-![alt text](./images/readme/Media-Queries2.png)
-
-Media Queries 3:
-![alt text](./images/readme/Media-Queries3.png)
-
-Media Queries 4:
-![alt text](./images/readme/Media-Queries4.png)
-
-Media Queries 5:
-![alt text](./images/readme/Media-Queries5.png)
-
-Media Queries 6:
-![alt text](./images/readme/Media-Queries6.png)
-
-Media Queries 7:
-![alt text](./images/readme/Media-Queries7.png)
-
-Media Queries 8:
-![alt text](./images/readme/Media-Queries8.png)
-
-Media Queries 9:
-![alt text](./images/readme/Media-Queries9.png)
-
-## > Grid Layout: sistema de layout bidimensional do CSS que permite organizar o conteúdo em linhas e colunas na web. Oferece recursos para a criação de layouts complexos.
-
-Grid Layout 1:
 ![alt text](./images/readme/Grid1.png)
 
-Grid Layout 2:
-![alt text](./images/readme/Grid2.png)
+#### Media Queries
 
-## > JavaScript: linguagem de programação usada para adicionar interatividade e dinamismo a páginas web e aplicações. É uma das tecnologias fundamentais do desenvolvimento web moderno, junto com HTML e CSS. Pode ser usado no navegador (lado do cliente) e no lado do servidor (com plataformas como Node.js).
+Implementação de `Media Queries` para garantir responsividade real conforme os breakpoints
+do design no `Figma` (mobile → tablet → desktop). O objetivo foi preservar consistência
+visual, evitar rolagem horizontal e manter o layout estável entre pontos de quebra.
 
-JavaScript 1:
+![alt text](./images/readme/Media-Queries1.png)
+
+---
+
+### 🔹 Organização de estilos (BEM, BEM Flat)
+
+#### Metodologia BEM
+
+Uso da convenção `BEM` (`Block–Element–Modifier`) para nomeação de classes, tornando
+explícita a relação entre componentes e suas variações de estado (ex.: botões
+desabilitados, cards com estados). Isso reduz conflitos de `CSS` e facilita a evolução do
+layout sem “efeitos colaterais”.
+
+![alt text](./images/readme/BEM1.png)
+
+#### BEM Flat
+
+Organização do `CSS` em estrutura `BEM Flat`, separando estilos por blocos/componentes
+para manter o projeto escalável e navegável. Essa abordagem melhora a manutenção porque
+concentra estilos relacionados no mesmo “domínio” do componente, ajudando a evitar
+duplicação e regras espalhadas.
+
+![alt text](./images/readme/BEM-Flat1.png)
+
+---
+
+### 🔹 Arquitetura JS e POO
+
+#### JavaScript
+
+Implementação da interatividade da aplicação com manipulação do `DOM`, eventos e
+atualização dinâmica da `UI`: abertura/fechamento de popups, renderização de cards,
+estados de curtida, remoção e submissão de formulários. Nesta fase, o projeto evolui para
+uma base modular com `ES Modules`, separando responsabilidades e deixando o código mais
+fácil de manter.
+
 ![alt text](./images/readme/JS01-modular.png)
 
-JavaScript 2:
-![alt text](./images/readme/JS02-imports.png)
+#### POO
 
-JavaScript 3:
-![alt text](./images/readme/JS03-popup_image.png)
+Refatoração para `Programação Orientada a Objetos` usando `classes ES6` para encapsular
+responsabilidades e reduzir acoplamento. O projeto passa a trabalhar com componentes
+reutilizáveis (`Card`, `Section`, `Popup` e subclasses, `UserInfo`, `FormValidator`),
+melhorando a organização e facilitando evolução incremental sem retrabalho.
 
-JavaScript 4:
-![alt text](./images/readme/JS04-popup_confirmation.png)
-
-JavaScript 5:
-![alt text](./images/readme/JS05-getinfosandcards1.png)
-
-JavaScript 6:
-![alt text](./images/readme/JS06-getinfosandcards2.png)
-
-JavaScript 7:
-![alt text](./images/readme/JS07-listeners_abertura_popups.png)
-
-JavaScript 8:
-![alt text](./images/readme/JS08-validators.png)
-
-JavaScript 9:
-![alt text](./images/readme/JS09-popup_photo.png)
-
-JavaScript 10:
-![alt text](./images/readme/JS10-popup_edt.png)
-
-JavaScript 11:
-![alt text](./images/readme/JS11-popup_add1.png)
-
-JavaScript 12:
-![alt text](./images/readme/JS12-popup_add2.png)
-
-## > POO: Programação Orientada a Objetos é um modelo de programação que organiza o código em torno de objetos, em vez de funções ou lógica. Objetos são unidades de código que combinam dados (atributos) e ações (métodos) relacionados.
-
-POO 1:
 ![alt text](./images/readme/POO-01.png)
 
-POO 2:
-![alt text](./images/readme/POO-02.png)
+---
 
-POO 3:
-![alt text](./images/readme/POO-03.png)
+### 🔹 Integração com API
 
-POO 4:
-![alt text](./images/readme/POO-04.png)
+Integração com `API REST` para persistência e sincronização de dados (usuário, avatar,
+cards e likes). As requisições assíncronas são centralizadas em uma classe `Api`, com
+checagem de respostas e tratamento de erros; o carregamento inicial pode ser orquestrado
+com `Promise.all` para buscar usuário e cards em paralelo antes de renderizar a interface.
 
-POO 5:
-![alt text](./images/readme/POO-05.png)
-
-POO 6:
-![alt text](./images/readme/POO-06.png)
-
-POO 7:
-![alt text](./images/readme/POO-07.png)
-
-POO 8:
-![alt text](./images/readme/POO-08.png)
-
-POO 9:
-![alt text](./images/readme/POO-09.png)
-
-POO 10:
-![alt text](./images/readme/POO-10.png)
-
-POO 11:
-![alt text](./images/readme/POO-11.png)
-
-POO 12:
-![alt text](./images/readme/POO-12.png)
-
-POO 13:
-![alt text](./images/readme/POO-13.png)
-
-POO 14:
-![alt text](./images/readme/POO-14.png)
-
-## > API: Interface de Programação de Aplicações é um conjunto de regras e protocolos que permite que diferentes softwares se comuniquem e compartilhem dados entre si. Atua como um intermediário, facilitando a interação entre diferentes aplicações, sem que elas precisem conhecer os detalhes internos de implementação uma da outra. São ferramentas essenciais para o desenvolvimento moderno de software, permitindo que diferentes sistemas interajam e compartilhem dados de forma eficiente, segura e escalável.
-
-API 1:
 ![alt text](./images/readme/API-01.png)
 
-API 2:
-![alt text](./images/readme/API-02.png)
+---
 
-API 3:
-![alt text](./images/readme/API-03.png)
+## 🎥 Demonstração em vídeo
 
-API 4:
-![alt text](./images/readme/API-04.png)
+📽️ Loom: https://www.loom.com/share/b81efa1bc8124cbab69e3746d445ef3a
 
-API 5:
-![alt text](./images/readme/API-05.png)
+---
 
-API 6:
-![alt text](./images/readme/API-06.png)
+## 🌐 Deploy
 
-API 7:
-![alt text](./images/readme/API-07.png)
+🔗 GitHub Pages: https://vanessayuriab.github.io/web_project_around/
 
-API 8:
-![alt text](./images/readme/API-08.png)
+---
 
-API 9:
-![alt text](./images/readme/API-09.png)
+## 🚀 Possíveis melhorias futuras
 
-API 10:
-![alt text](./images/readme/API-10.png)
-
-API 11:
-![alt text](./images/readme/API-11.png)
-
-API 12:
-![alt text](./images/readme/API-12.png)
-
-API 13:
-![alt text](./images/readme/API-13.png)
-
-API 14:
-![alt text](./images/readme/API-14.png)
-
-# Uma demonstração em vídeo do projeto no Loom:
-
-[![Para assistir, clique aqui no link](https://cdn.loom.com/sessions/thumbnails/b81efa1bc8124cbab69e3746d445ef3a-with-play.gif)](https://www.loom.com/share/b81efa1bc8124cbab69e3746d445ef3a?sid=f89d2437-621c-40e1-aa29-3eaa324c014a)
-
-# Link do GitHub Pages:
-
-https://vanessayuriab.github.io/web_project_around/
-
-# Melhorias:
-
-- Processar erros dentro dos catch()'s com lógica mais complexa.
-- Adicionar verificação para evitar a duplicação de card na página.
-- Melhorar a verificação para links de imagens de cards, para configuração do ícone de lixeira.
-- Separar handlers do Popup numa classe ou objeto dedicado.
-- Usar uma fábrica para criar cards.
-- Centralizar configs e alterar nomes de chaves (consistência na nomenclatura): boxFormSelector e formSelector para containerSelector e boxSelector, por exemplo.
+- Tratamento de erros mais robusto nos `catch()`
+- Centralização de configurações compartilhadas
+- Fábrica para criação de cartões
+- Padronização adicional de nomenclatura
+- Estratégias para evitar duplicidade de cards no `DOM`
