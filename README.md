@@ -19,6 +19,14 @@ moderno em **`JavaScript` puro**, desde **manipulação básica do `DOM`** até
 
 ---
 
+## 🌐 Visualização do Projeto
+
+Está disponível via **GitHub Pages**:
+
+🔗 https://vanessayuriab.github.io/web_project_around/
+
+---
+
 ## 📌 Escopo do projeto (Sprints 7 → 12)
 
 Neste repositório está a **versão final do Around em `JavaScript Vanilla`**, contemplando:
@@ -276,12 +284,6 @@ com `Promise.all` para buscar usuário e cards em paralelo antes de renderizar a
 ## 🎥 Demonstração em vídeo
 
 📽️ Loom: https://www.loom.com/share/b81efa1bc8124cbab69e3746d445ef3a
-
----
-
-## 🌐 Deploy
-
-🔗 GitHub Pages: https://vanessayuriab.github.io/web_project_around/
 
 ---
 
