@@ -1,4 +1,5 @@
 .DS_Store
+.vscode/*
 
 # Windows folder metadata
 desktop.ini
